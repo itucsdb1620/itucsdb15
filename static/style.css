@@ -1,3 +1,30 @@
+nav ul{
+    margin: 0;
+    overflow: hidden;
+    }
+
+nav ul li{
+    float: left;
+    display: inline-block;
+    padding: 1% 0 1% 0;
+}
+
+nav ul li a{
+    text-align: center;
+    color: black;
+    background-color: #5BBAE0;
+    text-decoration: none;
+    padding: 5px;
+}
+
+nav ul li a:hover{
+    background-color: #106282;
+}
+
+nav ul li a:active{
+    background-color: #666;
+}
+
 body {
   background-color: white;
   color: #6F6F6F;
