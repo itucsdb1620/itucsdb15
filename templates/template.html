@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+	<header>
+	    <nav>
+		<ul>
+		    <li><a href="{{ url_for('home_page') }}">Home</a></li>
+		    <li><a href="{{ url_for('culture_page') }}">Culture</a></li>
+		    <li><a href="#">Placeholder</a></li>
+		    <li><a href="#">Placeholder</a></li>
+		    <li><a href="#">Placeholder</a></li>
+		    <li><a href="#">Placeholder</a></li>
+		</ul>
+	    </nav>
+	</header>
+    </head>
+    <body>
+	{% block content %}
+	{% endblock %}
+	<footer>
+	    <div id="datetime">{{ current_time }}</div>
+	</footer>
+    </body>
+</html>
