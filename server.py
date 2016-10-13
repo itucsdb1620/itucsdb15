@@ -18,6 +18,11 @@ def culture_page():
     now = datetime.datetime.now()
     return render_template('culture.html', current_time=now.ctime())
 
+@app.route('/entertainment')
+def entertainment_page():
+    entertainment = datetime.datetime.now()
+    return render_template('entertainment.html')
+
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
