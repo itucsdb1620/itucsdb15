@@ -1,5 +1,7 @@
 applications:
-- disk_quota: 1024M
+- services:
+  - ElephantSQL-3n
+  disk_quota: 1024M
   host: itucsdb1620
   name: itucsdb1620
   path: .
