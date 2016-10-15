@@ -23,6 +23,12 @@ def entertainment_page():
     entertainment = datetime.datetime.now()
     return render_template('entertainment.html')
 
+@app.route('/landmark')
+def landmark_page():
+    now = datetime.datetime.now()
+    return render_template('landmark.html', current_time=now.ctime())
+
+
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
