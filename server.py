@@ -20,8 +20,8 @@ def culture_page():
 
 @app.route('/entertainment')
 def entertainment_page():
-    entertainment = datetime.datetime.now()
-    return render_template('entertainment.html')
+    now = datetime.datetime.now()
+    return render_template('entertainment.html', current_time=now.ctime())
 
 @app.route('/landmark')
 def landmark_page():
