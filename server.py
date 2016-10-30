@@ -112,7 +112,7 @@ def entertainment_page():
         query = """SELECT * FROM Entertainment"""
         cursor.execute(query)
         entertainment_data = json.dumps(cursor.fetchall())
-        entertainment = json.dumps(cursor.fetchall())
+        entertainment = json.loads(entertainment_data)
     now = datetime.datetime.now()
     return render_template('entertainment.html', current_time=now.ctime(), entertainment = entertainment)
 
