@@ -41,7 +41,7 @@ def initialize_database():
         query = """INSERT INTO COUNTER (N) VALUES (0)"""
         cursor.execute(query)
 
-        query = """DROP TABLE IF EXISTS CULTURE"""
+        query = """DROP TABLE IF EXISTS Culture"""
         cursor.execute(query)
 
         query = """CREATE TABLE Culture (
@@ -55,6 +55,23 @@ def initialize_database():
                     VALUES ('Cultural Placeholder 1', 8.5),
                            ('Cultural Placeholder 2', 9),
                            ('Cultural Placeholder 3', 7.7)"""
+        cursor.execute(query)
+        
+        query = """DROP TABLE IF EXIST Entertainment"""
+        cursor.execute(query)
+        
+        query = """CREATE TABLE Entertainment(
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                PLACE VARCHAR(255) NULL,
+                SCORE FLOAT NULL
+                )"""
+        cursor.execute(query)
+        
+        query = """INSERT INTO Entertainment(NAME, PLACE,SCORE)
+                    VALUES ('Semerkant', 'Taksim', 6.5),
+                           ('Cati', 'Resitpasa', 6.0)
+                           ('Beat', 'Taksim', 8.0)"""
         cursor.execute(query)
 
         connection.commit()
@@ -89,8 +106,15 @@ def culture_page():
 
 @app.route('/entertainment')
 def entertainment_page():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        cursor = connection.cursor()
+        
+        query = """SELECT * FROM Entertainment"""
+        cursor.execute(query)
+        entertainment_data = json.dumps(cursor.fetchall())
+        entertainment = json.dumps(cursor.fetchall())
     now = datetime.datetime.now()
-    return render_template('entertainment.html', current_time=now.ctime())
+    return render_template('entertainment.html', current_time=now.ctime(), entertainment = entertainment)
 
 @app.route('/landmark')
 def landmark_page():
