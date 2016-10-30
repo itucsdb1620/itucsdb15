@@ -41,6 +41,7 @@ def initialize_database():
         query = """INSERT INTO COUNTER (N) VALUES (0)"""
         cursor.execute(query)
 
+
         query = """DROP TABLE IF EXISTS Culture"""
         cursor.execute(query)
 
@@ -56,6 +57,7 @@ def initialize_database():
                            ('Cultural Placeholder 2', 9),
                            ('Cultural Placeholder 3', 7.7)"""
         cursor.execute(query)
+
 
         query = """DROP TABLE IF EXISTS Entertainment"""
         cursor.execute(query)
@@ -74,6 +76,7 @@ def initialize_database():
                            ('Beat', 'Taksim', 8.0)"""
         cursor.execute(query)
 
+
         query = """DROP TABLE IF EXISTS LANDMARK"""
         cursor.execute(query)
 
@@ -89,6 +92,25 @@ def initialize_database():
                            ('Statue of Liberty ', 900),
                            ('Colossus of Rhodes ', 700),
                            ('Lighthouse of Alexandria ', 850)"""
+        cursor.execute(query)
+
+
+        query = """DROP TABLE IF EXISTS CafeRest"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE CafeRest (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                CITY VARCHAR(255) NOT NULL,
+                CUISINE VARCHAR(255) NULL,
+                SCORE FLOAT
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO CafeRest (NAME, CITY, CUISINE, SCORE)
+                    VALUES ('Le Cinq', 'Paris', 'French', 9.2),
+                           ('The Ledbury', 'London', 'European', 8.7),
+                           ('Lekker Cafe Restaurant', 'Istanbul', 'Turkish', 9.4)"""
         cursor.execute(query)
 
 
@@ -149,8 +171,16 @@ def landmark_page():
 
 @app.route('/caferest')
 def caferest_page():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        cursor = connection.cursor()
+
+        query = """SELECT * FROM CafeRest"""
+        cursor.execute(query)
+        caferest_data = json.dumps(cursor.fetchall())
+        caferest = json.loads(caferest_data)
+
     now = datetime.datetime.now()
-    return render_template('caferest.html', current_time=now.ctime())
+    return render_template('caferest.html', current_time=now.ctime(), caferest = caferest)
 
 @app.route('/agency')
 def agency_page():

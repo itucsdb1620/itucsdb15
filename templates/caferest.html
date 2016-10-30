@@ -1,4 +1,20 @@
 {% extends "template.html" %}
 {% block content %}
     <h1>Cafes & Restaurants</h1>
+    <table>
+    	<th>ID</th>
+    	<th>Name</th>
+    	<th>City</th>
+    	<th>Cuisine</th>
+    	<th>Score</th>
+        {%for place in caferest %}
+    	<tr>
+    		<td>{{ place[0] }}</td>
+    		<td>{{ place[1] }}</td>
+    		<td>{{ place[2] }}</td>
+    		<td>{{ place[3] }}</td>
+    		<td>{{ place[4] }}</td>
+    	</tr>
+        {% endfor %}
+    </table>
 {% endblock %}
