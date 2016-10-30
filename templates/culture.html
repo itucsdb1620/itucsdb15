@@ -1,4 +1,16 @@
 {% extends "template.html" %}
 {% block content %}
     <h1>Places of art & culture</h1>
+    <table>
+    	<th>Id</th>
+    	<th>Name</th>
+    	<th>Score</th>
+    	{% for place in culture %}
+    	<tr>
+    		<td>{{ place[0] }}</td>
+    		<td>{{ place[1] }}</td>
+    		<td>{{ place[2] }}</td>
+    	</tr>
+    	{% endfor %}
+    </table>
 {% endblock %}
