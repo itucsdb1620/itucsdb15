@@ -1,3 +1,18 @@
+table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: left;
+    padding: 5px;
+}
+
+th{
+    font-weight: bold;
+}
+
+td{
+    background-color: #eee;
+}
+
 nav ul{
     margin: 0;
     overflow: hidden;
