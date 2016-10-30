@@ -8,11 +8,13 @@
     		<td>Place</td>
     		<td>Score</td>
     	</thead>
+        {%for place in entertainment %}
     	<tr>
     		<td>{{ place[0] }}</td>
     		<td>{{ place[1] }}</td>
     		<td>{{ place[2] }}</td>
     		<td>{{ place[3] }}</td>
     	</tr>
+        {% endfor %}
     </table>
 {% endblock %}
