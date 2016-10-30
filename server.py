@@ -56,10 +56,10 @@ def initialize_database():
                            ('Cultural Placeholder 2', 9),
                            ('Cultural Placeholder 3', 7.7)"""
         cursor.execute(query)
-        
+
         query = """DROP TABLE IF EXISTS Entertainment"""
         cursor.execute(query)
-        
+
         query = """CREATE TABLE Entertainment(
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(255) NOT NULL,
@@ -67,12 +67,30 @@ def initialize_database():
                 SCORE FLOAT NULL
                 )"""
         cursor.execute(query)
-        
+
         query = """INSERT INTO Entertainment(NAME, PLACE,SCORE)
                     VALUES ('Semerkant', 'Taksim', 6.5),
                            ('Cati', 'Resitpasa', 6.0),
                            ('Beat', 'Taksim', 8.0)"""
         cursor.execute(query)
+
+        query = """DROP TABLE IF EXISTS LANDMARK"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE LANDMARK (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                SCORE INT
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO LANDMARK (NAME, SCORE)
+                    VALUES ('Maiden Tower ', 1000),
+                           ('Statue of Liberty ', 900),
+                           ('Colossus of Rhodes ', 700),
+                           ('Lighthouse of Alexandria ', 850)"""
+        cursor.execute(query)
+
 
         connection.commit()
     return redirect(url_for('home_page'))
@@ -108,7 +126,7 @@ def culture_page():
 def entertainment_page():
     with dbapi2.connect(app.config['dsn']) as connection:
         cursor = connection.cursor()
-        
+
         query = """SELECT * FROM Entertainment"""
         cursor.execute(query)
         entertainment_data = json.dumps(cursor.fetchall())
@@ -118,8 +136,16 @@ def entertainment_page():
 
 @app.route('/landmark')
 def landmark_page():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        cursor = connection.cursor()
+
+        query = """SELECT * FROM LANDMARK"""
+        cursor.execute(query)
+        landmark_data = json.dumps(cursor.fetchall())
+        landmark = json.loads(landmark_data)
+
     now = datetime.datetime.now()
-    return render_template('landmark.html', current_time=now.ctime())
+    return render_template('landmark.html', current_time=now.ctime(),landmark=landmark)
 
 @app.route('/caferest')
 def caferest_page():
