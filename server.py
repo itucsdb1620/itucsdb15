@@ -57,7 +57,7 @@ def initialize_database():
                            ('Cultural Placeholder 3', 7.7)"""
         cursor.execute(query)
         
-        query = """DROP TABLE IF EXIST Entertainment"""
+        query = """DROP TABLE IF EXISTS Entertainment"""
         cursor.execute(query)
         
         query = """CREATE TABLE Entertainment(
@@ -70,7 +70,7 @@ def initialize_database():
         
         query = """INSERT INTO Entertainment(NAME, PLACE,SCORE)
                     VALUES ('Semerkant', 'Taksim', 6.5),
-                           ('Cati', 'Resitpasa', 6.0)
+                           ('Cati', 'Resitpasa', 6.0),
                            ('Beat', 'Taksim', 8.0)"""
         cursor.execute(query)
 
