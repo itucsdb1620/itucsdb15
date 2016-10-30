@@ -1,4 +1,18 @@
 {% extends "template.html" %}
 {% block content %}
     <h1>Landmarks of Countries & Cities</h1>
+    <table>
+    	<th>Id</th>
+    	<th>Name</th>
+    	<th>Score</th>
+    	{% for landmark in landmark %}
+    	<tr>
+    		<td>{{ landmark[0] }}</td>
+    		<td>{{ landmark[1] }}</td>
+    		<td>{{ landmark[2] }}</td>
+    		<td>{{ landmark[3] }}</td>
+    	</tr>
+    	{% endfor %}
+    </table>
 {% endblock %}
+
