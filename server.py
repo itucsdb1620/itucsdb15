@@ -41,6 +41,22 @@ def initialize_database():
         query = """INSERT INTO COUNTER (N) VALUES (0)"""
         cursor.execute(query)
 
+        query = """DROP TABLE IF EXISTS CULTURE"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE Culture (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                SCORE FLOAT
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO Culture (NAME, SCORE)
+                    VALUES ('Cultural Placeholder 1', 8.5),
+                           ('Cultural Placeholder 2', 9),
+                           ('Cultural Placeholder 3', 7.7)"""
+        cursor.execute(query)
+
         connection.commit()
     return redirect(url_for('home_page'))
 
@@ -60,8 +76,16 @@ def counter_page():
 
 @app.route('/culture')
 def culture_page():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        cursor = connection.cursor()
+
+        query = """SELECT * FROM Culture"""
+        cursor.execute(query)
+        culture_data = json.dumps(cursor.fetchall())
+        culture = json.loads(culture_data)
+
     now = datetime.datetime.now()
-    return render_template('culture.html', current_time=now.ctime())
+    return render_template('culture.html', current_time=now.ctime(), culture=culture)
 
 @app.route('/entertainment')
 def entertainment_page():
