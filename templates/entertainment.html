@@ -1,20 +1,48 @@
 {% extends "template.html" %}
 {% block content %}
     <h1>Places of entertainment</h1>
+    <form action="{{ url_for('entertainment_details') }}" method = "post">
     <table>
-    	<thead>
-    		<td>ID</td>
-    		<td>Name</td>
-    		<td>Place</td>
-    		<td>Score</td>
-    	</thead>
+    	<th>Select</th>
+    	<th>ID</th>
+    	<th>Name</th>
+    	<th>Place</th>
+    	<th>Score</th>
         {%for place in entertainment %}
     	<tr>
+    		<td><input type="checkbox" name="select" value="{{ place[0] }}"></td>
     		<td>{{ place[0] }}</td>
     		<td>{{ place[1] }}</td>
     		<td>{{ place[2] }}</td>
     		<td>{{ place[3] }}</td>
     	</tr>
-        {% endfor %}
+        {% endfor %} 
     </table>
+    <input type="submit" value="Update Selected Value">
+    </form>
+    <h2>Operations on the table</h2>
+    	<h3>Insert</h3>
+    	<form action="{{ url_for('entertainment_insert') }}" method="post">
+    		Name:<br>
+    		<input type="text" name="entertainment_place_name">
+    		<br>
+    		Place:<br>
+    		<input type="text" name="entertainment_place_place">
+    		<br>
+    		Score:<br>
+    		<input type="text" name="entertainment_place_score">
+    		<br><br>
+    		<input type="submit" value="Insert to database">
+    	</form>
+    	<h3>Delete</h3>
+    	<form action="{{url_for('entertainment_delete')}}"  method="post">
+    		ID:<br>
+    		<input type="text" name="entertainment_place_ID">
+    		<br><br>
+    		<input type="submit" value="Delete from database">
+    	</form>
+    	<h3>Delete All</h3>
+    	<form action="{{url_for('entertainment_delete_all')}}" >
+    		<input type="submit" value="Delete all records">
+    	</form>
 {% endblock %}
