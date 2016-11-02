@@ -13,6 +13,10 @@ td{
     background-color: #eee;
 }
 
+td a{
+	text-decoration: none;
+	font-weight: bold;
+}
 nav ul{
     margin: 0;
     overflow: hidden;
