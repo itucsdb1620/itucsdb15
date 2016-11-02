@@ -1,5 +1,6 @@
 from settings import *
 from culture import *
+from entertainment import *
 
 @app.route('/')
 def home_page():
@@ -109,18 +110,6 @@ def counter_page():
         cursor.execute(query)
         count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
-
-@app.route('/entertainment')
-def entertainment_page():
-    with dbapi2.connect(app.config['dsn']) as connection:
-        cursor = connection.cursor()
-
-        query = """SELECT * FROM Entertainment"""
-        cursor.execute(query)
-        entertainment_data = json.dumps(cursor.fetchall())
-        entertainment = json.loads(entertainment_data)
-    now = datetime.datetime.now()
-    return render_template('entertainment.html', current_time=now.ctime(), entertainment = entertainment)
 
 @app.route('/landmark')
 def landmark_page():
