@@ -1,26 +1,5 @@
-import datetime
-import os
-import psycopg2 as dbapi2
-import json
-import re
-
-from flask import Flask
-from flask import redirect
-from flask import render_template
-from flask.helpers import url_for
-
-app = Flask(__name__)
-
-def get_elephantsql_dsn(vcap_services):
-    """Returns the data source name for ElephantSQL."""
-    parsed = json.loads(vcap_services)
-    uri = parsed["elephantsql"][0]["credentials"]["uri"]
-    match = re.match('postgres://(.*?):(.*?)@(.*?)(:(\d+))?/(.*)', uri)
-    user, password, host, _, port, dbname = match.groups()
-    dsn = """user='{}' password='{}' host='{}' port={}
-             dbname='{}'""".format(user, password, host, port, dbname)
-    return dsn
-
+from settings import *
+from culture import *
 
 @app.route('/')
 def home_page():
@@ -130,19 +109,6 @@ def counter_page():
         cursor.execute(query)
         count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
-
-@app.route('/culture')
-def culture_page():
-    with dbapi2.connect(app.config['dsn']) as connection:
-        cursor = connection.cursor()
-
-        query = """SELECT * FROM Culture"""
-        cursor.execute(query)
-        culture_data = json.dumps(cursor.fetchall())
-        culture = json.loads(culture_data)
-
-    now = datetime.datetime.now()
-    return render_template('culture.html', current_time=now.ctime(), culture=culture)
 
 @app.route('/entertainment')
 def entertainment_page():
