@@ -2,15 +2,40 @@
 {% block content %}
     <h1>Places of art & culture</h1>
     <table>
+    	<th>Select</th>
     	<th>Id</th>
     	<th>Name</th>
     	<th>Score</th>
     	{% for place in culture %}
     	<tr>
+    		<td><input type="checkbox" name="select"></td>
     		<td>{{ place[0] }}</td>
-    		<td>{{ place[1] }}</td>
+    		<td><a href="{{url_for('culture_details', name= place[1]  ) }}">{{ place[1] }}</a></td>
     		<td>{{ place[2] }}</td>
     	</tr>
     	{% endfor %}
     </table>
+    <h2>Operations on the table</h2>
+
+    	<h3>Insert</h3>
+    	<form action="{{ url_for('culture_insert') }}">
+    		Name:<br>
+    		<input type="text">
+    		<br>
+    		Score:<br>
+    		<input type="text">
+    		<br><br>
+    		<input type="submit" value="Insert to database">
+    	</form>
+
+    	<h3>Delete</h3>
+    	<form action="{{url_for('culture_delete')}}">
+    		<input type="submit" value="Remove selected">
+    	</form>
+    	<form action="{{url_for('culture_delete')}}">
+    		<input type="submit" value="Delete all">
+    	</form>
+
+    	<h3>Update</h3>
+    	<p>to update go to page of entry by clicking its name</p>
 {% endblock %}
