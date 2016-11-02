@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+{% block content %}
+	<form action="{{url_for('entertainment_update')}}" method="post">
+	<table>
+		<th>Attribute</th>
+		<th>Current Value</th>
+		<th>Updated Value</th>
+		<tr>
+			<td>Name</td>
+			<td>{{ entertainment[0][1] }}</td>
+			<td><input type="text" name="entertainment_update_name"></td>
+		</tr>
+		<tr>
+			<td>Place</td>
+			<td>{{ entertainment[0][2] }}</td>
+			<td><input type="text" name="entertainment_update_place"></td>
+		</tr>
+		<tr>
+			<td>Score</td>
+			<td>{{ entertainment[0][3] }}</td>
+			<td><input type="text" name="entertainment_update_score"></td>
+		</tr>
+	</table>
+	<br>
+	<input type="hidden" name="entertainment_index" value="{{ entertainment[0][0] }}">
+	<td><input type="submit" value="Update"></td>
+   	</form>
+{% endblock %}
