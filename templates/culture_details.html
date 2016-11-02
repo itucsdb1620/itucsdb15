@@ -1,23 +1,24 @@
 {% extends "template.html" %}
 {% block content %}
-	<h1>This page is {{ name }}</h1>
+	<h1>This page is {{ culture[0][1] }}</h1>
+	<form action="{{url_for('culture_update')}}" method="post">
 	<table>
 		<th>Attribute</th>
 		<th>Current Value</th>
 		<th>Updated Value</th>
 		<tr>
 			<td>Name</td>
-			<td>{{ name }}</td>
-			<td><form><input type="text"></form></td>
+			<td>{{ culture[0][1] }}</td>
+			<td><input type="text" name="cultural_name_update"></td>
 		</tr>
 		<tr>
 			<td>Score</td>
-			<td>9.0</td>
-			<td><form><input type="text"></form>
+			<td>{{ culture[0][2] }}</td>
+			<td><input type="text" name="cultural_score_update"></td>
 		</tr>
 	</table>
 	<br>
-	<form action="{{url_for('culture_update')}}">
-    	<input type="submit" value="Update">
+	<input type="hidden" name="cultural_index" value="{{ culture[0][0] }}">
+	<td><input type="submit" value="Update"></td>
    	</form>
 {% endblock %}
