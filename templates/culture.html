@@ -1,6 +1,7 @@
 {% extends "template.html" %}
 {% block content %}
     <h1>Places of art & culture</h1>
+    <form action="{{url_for('culture_delete')}}" method="post">
     <table>
     	<th>Select</th>
     	<th>Id</th>
@@ -8,13 +9,15 @@
     	<th>Score</th>
     	{% for place in culture %}
     	<tr>
-    		<td><input type="checkbox" name="select"></td>
+    		<td><input type="radio" name="select" value="{{ place[0] }}"></td>
     		<td>{{ place[0] }}</td>
-    		<td><a href="{{url_for('culture_details', name= place[1]  ) }}">{{ place[1] }}</a></td>
+    		<td><a href="{{url_for('culture_details', id = place[0]  ) }}">{{ place[1] }}</a></td>
     		<td>{{ place[2] }}</td>
     	</tr>
     	{% endfor %}
     </table>
+    <input type="submit" value="Remove selected">
+    </form>
     <h2>Operations on the table</h2>
 
     	<h3>Insert</h3>
@@ -29,9 +32,6 @@
     	</form>
 
     	<h3>Delete</h3>
-    	<form action="{{url_for('culture_delete')}}">
-    		<input type="submit" value="Remove selected">
-    	</form>
     	<form action="{{url_for('culture_delete_all')}}">
     		<input type="submit" value="Delete all">
     	</form>
