@@ -18,12 +18,12 @@
     <h2>Operations on the table</h2>
 
     	<h3>Insert</h3>
-    	<form action="{{ url_for('culture_insert') }}">
+    	<form action="{{ url_for('culture_insert') }}" method="post">
     		Name:<br>
-    		<input type="text">
+    		<input type="text" name="cultural_place_name">
     		<br>
     		Score:<br>
-    		<input type="text">
+    		<input type="text" name="cultural_place_score">
     		<br><br>
     		<input type="submit" value="Insert to database">
     	</form>
@@ -32,7 +32,7 @@
     	<form action="{{url_for('culture_delete')}}">
     		<input type="submit" value="Remove selected">
     	</form>
-    	<form action="{{url_for('culture_delete')}}">
+    	<form action="{{url_for('culture_delete_all')}}">
     		<input type="submit" value="Delete all">
     	</form>
 
