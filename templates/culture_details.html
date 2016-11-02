@@ -1,0 +1,23 @@
+{% extends "template.html" %}
+{% block content %}
+	<h1>This page is {{ name }}</h1>
+	<table>
+		<th>Attribute</th>
+		<th>Current Value</th>
+		<th>Updated Value</th>
+		<tr>
+			<td>Name</td>
+			<td>{{ name }}</td>
+			<td><form><input type="text"></form></td>
+		</tr>
+		<tr>
+			<td>Score</td>
+			<td>9.0</td>
+			<td><form><input type="text"></form>
+		</tr>
+	</table>
+	<br>
+	<form action="{{url_for('culture_update')}}">
+    	<input type="submit" value="Update">
+   	</form>
+{% endblock %}
