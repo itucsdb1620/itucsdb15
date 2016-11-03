@@ -1,6 +1,7 @@
 from settings import *
 from culture import *
 from entertainment import *
+from landmark import *
 
 @app.route('/')
 def home_page():
@@ -63,15 +64,15 @@ def initialize_database():
         query = """CREATE TABLE LANDMARK (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(255) NOT NULL,
-                SCORE INT
+                SCORE FLOAT
                 )"""
         cursor.execute(query)
 
         query = """INSERT INTO LANDMARK (NAME, SCORE)
-                    VALUES ('Maiden Tower ', 1000),
-                           ('Statue of Liberty ', 900),
-                           ('Colossus of Rhodes ', 700),
-                           ('Lighthouse of Alexandria ', 850)"""
+                    VALUES ('Maiden Tower ', 9.9),
+                           ('Statue of Liberty ', 8.7),
+                           ('Colossus of Rhodes ', 7.2),
+                           ('Lighthouse of Alexandria ', 5.7)"""
         cursor.execute(query)
 
 
@@ -110,19 +111,6 @@ def counter_page():
         cursor.execute(query)
         count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
-
-@app.route('/landmark')
-def landmark_page():
-    with dbapi2.connect(app.config['dsn']) as connection:
-        cursor = connection.cursor()
-
-        query = """SELECT * FROM LANDMARK"""
-        cursor.execute(query)
-        landmark_data = json.dumps(cursor.fetchall())
-        landmark = json.loads(landmark_data)
-
-    now = datetime.datetime.now()
-    return render_template('landmark.html', current_time=now.ctime(),landmark=landmark)
 
 @app.route('/caferest')
 def caferest_page():
