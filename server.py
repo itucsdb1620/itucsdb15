@@ -2,6 +2,7 @@ from settings import *
 from culture import *
 from entertainment import *
 from landmark import *
+from caferest import *
 
 @app.route('/')
 def home_page():
@@ -111,19 +112,6 @@ def counter_page():
         cursor.execute(query)
         count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
-
-@app.route('/caferest')
-def caferest_page():
-    with dbapi2.connect(app.config['dsn']) as connection:
-        cursor = connection.cursor()
-
-        query = """SELECT * FROM CafeRest"""
-        cursor.execute(query)
-        caferest_data = json.dumps(cursor.fetchall())
-        caferest = json.loads(caferest_data)
-
-    now = datetime.datetime.now()
-    return render_template('caferest.html', current_time=now.ctime(), caferest = caferest)
 
 @app.route('/agency')
 def agency_page():

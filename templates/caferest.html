@@ -1,20 +1,48 @@
 {% extends "template.html" %}
 {% block content %}
     <h1>Cafes & Restaurants</h1>
+    <form action="{{ url_for('delete_caferest') }}" method="post">
     <table>
+    	<th>Select</th>
     	<th>ID</th>
     	<th>Name</th>
     	<th>City</th>
     	<th>Cuisine</th>
     	<th>Score</th>
-        {%for place in caferest %}
+        {%for cafe in caferest %}
     	<tr>
-    		<td>{{ place[0] }}</td>
-    		<td>{{ place[1] }}</td>
-    		<td>{{ place[2] }}</td>
-    		<td>{{ place[3] }}</td>
-    		<td>{{ place[4] }}</td>
+    		<td><input type="checkbox" name="cafes_to_delete"value="{{cafe[0]}}" /></td>
+    		<td>{{ cafe[0] }}</td>
+    		<td><a href="{{ url_for('caferest_update_page', id=cafe[0]) }}">{{ cafe[1] }}</a></td>
+    		<td>{{ cafe[2] }}</td>
+    		<td>{{ cafe[3] }}</td>
+    		<td>{{ cafe[4] }}</td>
     	</tr>
         {% endfor %}
     </table>
+    <br><input type="submit" value="Remove Selected" />
+	</form>
+
+	<form action="{{ url_for('delete_all_caferest') }}">
+	<br><input type="submit" value="Remove All" /><br>
+	</form>
+
+    <h3>Add New Cafe/Restaurant</h3>
+    <form action="{{ url_for('insert_caferest') }}" method="post">
+    <table>
+    	<tr>
+    		<td>Name</td>
+    		<td>City</td>
+    		<td>Cuisine</td>
+    		<td>Score</td>
+    	</tr>
+    	<tr>
+    		<td> <input type="text" name="name"> </td>
+    		<td> <input type="text" name="city"> </td>
+    		<td> <input type="text" name="cuisine"> </td>
+    		<td> <input type="text" name="score"> </td>
+    	</tr>
+    </table>
+    <br><td> <input type="submit" value="Add" /></td>
+    </form>
 {% endblock %}
