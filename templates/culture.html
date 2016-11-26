@@ -4,13 +4,11 @@
     <form action="{{url_for('culture_delete')}}" method="post">
     <table>
     	<th>Select</th>
-    	<th>Id</th>
     	<th>Name</th>
     	<th>Score</th>
     	{% for place in culture %}
     	<tr>
     		<td><input type="radio" name="select" value="{{ place[0] }}"></td>
-    		<td>{{ place[0] }}</td>
     		<td><a href="{{url_for('culture_details', id = place[0]  ) }}">{{ place[1] }}</a></td>
     		<td>{{ place[2] }}</td>
     	</tr>
@@ -28,6 +26,8 @@
     		Score:<br>
     		<input type="text" name="cultural_place_score">
     		<br><br>
+    		<textarea rows="5" cols="50" name="cultural_place_info"></textarea>
+			<br>
     		<input type="submit" value="Insert to database">
     	</form>
 
