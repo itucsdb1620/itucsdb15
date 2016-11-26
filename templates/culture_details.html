@@ -1,6 +1,10 @@
 {% extends "template.html" %}
 {% block content %}
-	<h1>This page is {{ culture[0][1] }}</h1>
+	<h1>{{ culture[0][1] }}</h1>
+	<img src="{{culture[0][5]}}" alt="Photo" style="float:left;max-width:500px;max-height:500px;padding:5px 10px 0 0;">
+	<p style="padding:20px 0 0 0; white-space: pre-wrap;">{{ culture[0][4] }}</p>
+	<br style="clear:both"><br>
+
 	<form action="{{url_for('culture_update')}}" method="post">
 	<table>
 		<th>Attribute</th>
@@ -14,11 +18,21 @@
 		<tr>
 			<td>Score</td>
 			<td>{{ culture[0][2] }}</td>
-			<td><input type="text" name="cultural_score_update"></td>
+			<td>Vote below to update</td>
 		</tr>
 	</table>
 	<br>
+	<input type="url" name="cultural_photo_update" placeholder="Enter link to your photo to add"></input>
+	<br>
 	<input type="hidden" name="cultural_index" value="{{ culture[0][0] }}">
 	<td><input type="submit" value="Update"></td>
+   	</form>
+	<br>
+
+   	<form action="{{url_for('culture_voting')}}" method="post">
+		<input type="number" name="vote" min="1" max="10">
+		<input type="hidden" name="cultural_index2" value="{{ culture[0][0] }}">
+		<br>
+		<input type="submit" value="Vote">
    	</form>
 {% endblock %}
