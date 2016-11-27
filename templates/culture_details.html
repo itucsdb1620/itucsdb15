@@ -3,6 +3,7 @@
 	<h1>{{ culture[0][1] }}</h1>
 	<img src="{{culture[0][5]}}" alt="Photo" style="float:left;max-width:500px;max-height:500px;padding:5px 10px 0 0;">
 	<p style="padding:20px 0 0 0; white-space: pre-wrap;">{{ culture[0][4] }}</p>
+	<p style="font-weight: bold;">DISCLAIMER: All the information in this page including the images are taken from wikipedia.com and used for education purposes only</p>
 	<br style="clear:both"><br>
 
 	<form action="{{url_for('culture_update')}}" method="post">
@@ -16,6 +17,16 @@
 			<td><input type="text" name="cultural_name_update"></td>
 		</tr>
 		<tr>
+			<td><a href="{{url_for('activities_page')}}">Activity</a></td>
+			<td><a href="{{url_for('activities_details', id = culture[0][6]  ) }}">{{ culture[0][7] }}</a></td>
+			<td><select name="culture_activity_update">
+    			{% for activity in activities %}
+    				<option value="{{ activity[0] }}">{{ activity[1] }}</option>
+    			{% endfor %}
+				</select>
+			</td>
+		</tr>
+		<tr>
 			<td>Score</td>
 			<td>{{ culture[0][2] }}</td>
 			<td>Vote below to update</td>
@@ -23,6 +34,8 @@
 	</table>
 	<br>
 	<input type="url" name="cultural_photo_update" placeholder="Enter link to your photo to add"></input>
+	<br>
+	<textarea rows="5" cols="50" name="cultural_info_update"></textarea>
 	<br>
 	<input type="hidden" name="cultural_index" value="{{ culture[0][0] }}">
 	<td><input type="submit" value="Update"></td>
