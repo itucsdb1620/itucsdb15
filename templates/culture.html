@@ -5,11 +5,13 @@
     <table>
     	<th>Select</th>
     	<th>Name</th>
+    	<th><a href="{{url_for('activities_page')}}">Activity</a></th>
     	<th>Score</th>
     	{% for place in culture %}
     	<tr>
     		<td><input type="radio" name="select" value="{{ place[0] }}"></td>
     		<td><a href="{{url_for('culture_details', id = place[0]  ) }}">{{ place[1] }}</a></td>
+    		<td><a href="{{url_for('activities_details', id = place[6])}}">{{ place[7] }}</a></td>
     		<td>{{ place[2] }}</td>
     	</tr>
     	{% endfor %}
@@ -24,8 +26,22 @@
     		<input type="text" name="cultural_place_name">
     		<br>
     		Score:<br>
-    		<input type="text" name="cultural_place_score">
+    		<input type="number" name="cultural_place_score" min="1" max="10">
+    		<br>
+    		Votes:<br>
+    		<input type="number" name="cultural_place_votes">
+    		<br>
+    		Photo:<br>
+    		<input type="url" name="cultural_place_photo">
+    		<br>
+    		Activity:<br>
+    		<select name="cultural_activity_id">
+    		{% for activity in activities %}
+    			<option value="{{ activity[0] }}">{{ activity[1] }}</option>
+    		{% endfor %}
+    		</select>
     		<br><br>
+    		Info:<br>
     		<textarea rows="5" cols="50" name="cultural_place_info"></textarea>
 			<br>
     		<input type="submit" value="Insert to database">
