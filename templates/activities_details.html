@@ -1,0 +1,44 @@
+{% extends "template.html" %}
+{% block content %}
+	<h1>{{ activities[0][1] }}</h1>
+	<img src="{{activities[0][3]}}" alt="Photo" style="float:left;max-width:500px;max-height:500px;padding:5px 10px 0 0;">
+	<p style="padding:20px 0 0 0; white-space: pre-wrap;">{{ activities[0][2] }}</p>
+	<br style="clear:both"><br>
+
+	<form action="{{url_for('activities_update')}}" method="post">
+	<table>
+		<th>Attribute</th>
+		<th>Current Value</th>
+		<th>Updated Value</th>
+		<tr>
+			<td>Name</td>
+			<td>{{ activities[0][1] }}</td>
+			<td><input type="text" name="activity_name_update"></td>
+		</tr>
+		<tr>
+			<td>Type</td>
+			<td>{{ activities[0][4] }}</td>
+			<td><select name="activity_type_update">
+    				<option value="Cultural">Cultural</option>
+    				<option value="Eat & Drink">Eat & Drink</option>
+    				<option value="Sport">Sport</option>
+    				<option value="Accommodation">Accommodation</option>
+    				<option value="Travel">Travel</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<input type="url" name="activity_photo_update" placeholder="Enter link to your photo to add"></input>
+	<br>
+	<textarea rows="5" cols="50" name="activity_info_update"></textarea>
+	<br>
+	<input type="hidden" name="activity_index" value="{{ activities[0][0] }}">
+	<td><input type="submit" value="Update"></td>
+   	</form>
+
+	<br>
+   	<form action="{{url_for('activities_page')}}">
+  	<input type="submit" value="Back to List of Activities ">
+  	</form>
+{% endblock %}
