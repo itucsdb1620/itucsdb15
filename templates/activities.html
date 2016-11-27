@@ -1,0 +1,47 @@
+{% extends "template.html" %}
+{% block content %}
+    <h1>List of Activities</h1>
+    <form action="{{url_for('activities_delete')}}" method="post">
+    <table>
+    	<th>Select</th>
+    	<th>Name</th>
+    	<th>Activity Type</th>
+    	{% for activity in activities %}
+    	<tr>
+    		<td><input type="radio" name="select" value="{{ activity[0] }}"></td>
+    		<td><a href="{{url_for('activities_details', id = activity[0]  ) }}">{{ activity[1] }}</a></td>
+    		<td>{{ activity[4] }}</td>
+    	</tr>
+    	{% endfor %}
+    </table>
+    <input type="submit" value="Remove selected">
+	</form>
+
+	<h3>Insert</h3>
+	<form action="{{url_for('activities_insert')}}" method="post">
+    	Name:<br>
+    	<input type="text" name="activities_name">
+    	<br>
+    	Photo:<br>
+    	<input type="url" name="activities_photo">
+    	<br>
+    	Type:<br>
+    	<select name="activities_type">
+    		<option value="Cultural">Cultural</option>
+    		<option value="Eat & Drink">Eat & Drink</option>
+    		<option value="Sport">Sport</option>
+    		<option value="Accommodation">Accommodation</option>
+    		<option value="Travel">Travel</option>
+    	</select>
+    	<br>
+    	Info:<br>
+    	<textarea rows="5" cols="50" name="activities_info"></textarea>
+		<br>
+    	<input type="submit" value="Insert to database">
+	</form>
+
+	<h3>Delete all</h3>
+    <form action="{{url_for('activities_delete_all')}}">
+    	<input type="submit" value="Delete all">
+	</form>
+{% endblock %}
