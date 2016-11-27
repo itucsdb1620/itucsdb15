@@ -3,6 +3,7 @@ from culture import *
 from entertainment import *
 from landmark import *
 from caferest import *
+from activities import *
 
 @app.route('/')
 def home_page():
@@ -18,7 +19,16 @@ def initialize_database():
         cursor.execute(query)
 
         query = """CREATE DOMAIN SCORES AS FLOAT
-                    CHECK ((VALUE >= 1.0) AND (VALUE <= 10.0))"""
+                    CHECK ((VALUE >= 0.0) AND (VALUE <= 10.0))"""
+        cursor.execute(query)
+
+        query = """DROP DOMAIN IF EXISTS ACTIVITY_TYPES CASCADE"""
+        cursor.execute(query)
+
+        query = """CREATE DOMAIN ACTIVITY_TYPES AS VARCHAR(255)
+                    CHECK ((VALUE = 'Cultural') OR (VALUE = 'Eat & Drink')
+                           OR (VALUE = 'Sport') OR (VALUE = 'Accommodation')
+                           OR (VALUE = 'Travel'))"""
         cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS COUNTER"""
@@ -30,6 +40,32 @@ def initialize_database():
         query = """INSERT INTO COUNTER (N) VALUES (0)"""
         cursor.execute(query)
 
+        query = """DROP TABLE IF EXISTS Activities CASCADE"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE Activities (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                INFO TEXT,
+                PHOTO VARCHAR(255),
+                TYPE ACTIVITY_TYPES
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO Activities (NAME, INFO, PHOTO, TYPE)
+                    VALUES ('Visit & Discover', 'To be added',
+                            'https://thumb1.shutterstock.com/display_pic_with_logo/1070501/329988668/stock-photo-new-york-usa-sep-interior-of-the-metropolitan-museum-of-art-the-met-the-largest-art-329988668.jpg', 'Cultural'),
+                           ('Attend & Watch', 'To be added',
+                           'http://thumb101.shutterstock.com/display_pic_with_logo/476932/134693633/stock-photo-theater-interior-view-134693633.jpg', 'Cultural'),
+                           ('Dine', 'To be added', 'https://thumb9.shutterstock.com/display_pic_with_logo/337030/282446912/stock-photo-table-set-restaurant-282446912.jpg', 'Eat & Drink'),
+                           ('Breakfast & Brunch', 'To be added', 'http://theeverygirl.com/sites/default/files/articles/inlineimages/Everygirl%20Brunch_1034.jpg', 'Eat & Drink'),
+                           ('Patisserie', 'To be added', 'http://c8.alamy.com/comp/BG82RM/france-paris-interior-of-a-patisserie-BG82RM.jpg', 'Eat & Drink'),
+                           ('Drink (Alcohol)', 'To be added', 'https://thumb1.shutterstock.com/display_pic_with_logo/1433222/202914193/stock-photo-bar-and-desk-202914193.jpg', 'Eat & Drink'),
+                           ('Swim', 'To be added', 'https://thumb9.shutterstock.com/display_pic_with_logo/764968/187844036/stock-photo-children-swimming-pool-187844036.jpg', 'Sport'),
+                           ('Rest', 'To be added', 'https://thumb9.shutterstock.com/display_pic_with_logo/160510/123035896/stock-photo-hotel-room-123035896.jpg', 'Accommodation'),
+                           ('Sightseeing', 'To be added', 'http://c8.alamy.com/comp/BHM71R/stanley-park-vancouver-bc-british-columbia-canada-sightseeing-tour-BHM71R.jpg', 'Travel'),
+                           ('Transportaion', 'To be added', 'http://c8.alamy.com/comp/A9F95W/germany-berlin-a-hybrid-bus-belonging-to-the-city-s-transportation-A9F95W.jpg', 'Travel')"""
+        cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS Culture"""
         cursor.execute(query)
@@ -37,30 +73,28 @@ def initialize_database():
         query = """CREATE TABLE Culture (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(255) NOT NULL,
-                SCORE SCORES DEFAULT 1,
+                SCORE SCORES DEFAULT 0,
                 VOTES INTEGER DEFAULT 0,
                 INFO TEXT,
-                PHOTO VARCHAR(255)
+                PHOTO VARCHAR(255),
+                ACTIVITY_ID INTEGER REFERENCES Activities (ID) ON DELETE CASCADE
                 )"""
         cursor.execute(query)
 
-        query = """INSERT INTO Culture (NAME, INFO, PHOTO)
+        query = """INSERT INTO Culture (NAME, INFO, PHOTO, ACTIVITY_ID)
                     VALUES ('Great Wall of China', 'The Great Wall of China is a series of fortifications made of stone, brick, tamped earth, wood, and other materials, generally built along an east-to-west line across the historical northern borders of China to protect the Chinese states and empires against the raids and invasions of the various nomadic groups of the Eurasian Steppe. Several walls were being built as early as the 7th century BCE;[2] these, later joined together and made bigger and stronger, are now collectively referred to as the Great Wall.[3] Especially famous is the wall built 220–206 BCE by Qin Shi Huang, the first Emperor of China. Little of that wall remains. Since then, the Great Wall has on and off been rebuilt, maintained, and enhanced; the majority of the existing wall is from the Ming Dynasty (1368–1644).
 
-Other purposes of the Great Wall have included border controls, allowing the imposition of duties on goods transported along the Silk Road, regulation or encouragement of trade and the control of immigration and emigration. Furthermore, the defensive characteristics of the Great Wall were enhanced by the construction of watch towers, troop barracks, garrison stations, signaling capabilities through the means of smoke or fire, and the fact that the path of the Great Wall also served as a transportation corridor.
-
-DISCLAIMER: All the information in this page including the images are taken from wikipedia.com and used for education purposes only',
-                            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/The_Great_Wall_of_China_at_Jinshanling-edit.jpg/240px-The_Great_Wall_of_China_at_Jinshanling-edit.jpg'),
+Other purposes of the Great Wall have included border controls, allowing the imposition of duties on goods transported along the Silk Road, regulation or encouragement of trade and the control of immigration and emigration. Furthermore, the defensive characteristics of the Great Wall were enhanced by the construction of watch towers, troop barracks, garrison stations, signaling capabilities through the means of smoke or fire, and the fact that the path of the Great Wall also served as a transportation corridor.',
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/The_Great_Wall_of_China_at_Jinshanling-edit.jpg/240px-The_Great_Wall_of_China_at_Jinshanling-edit.jpg',1),
+                           ('Süreyya Opera House', 'Süreyya Opera House, also called Süreyya Cultural Center (Turkish: Süreyya Operası or Süreyya Kültür Merkezi), is an opera hall located in Kadıköy district of Istanbul, Turkey. The building is designed by Armenian architect Kegam Kavafyan[1] by order of a Deputy for Istanbul Süreyya İlmen, it was originally established in 1927 as the first musical theatre on the Anatolian part of Istanbul. However, due to lack of appropriate facilities and equipment in the theatre, operettas were never staged. The venue was rather used as a movie theatre until the building underwent a functional restoration and reopened as an opera house by the end of 2007.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/20131207_Istanbul_076.jpg/250px-20131207_Istanbul_076.jpg', 2),
                            ('Hagia Sophia', 'Hagia Sophia (from the Greek: Ἁγία Σοφία, [aˈʝia soˈfia]), "Holy Wisdom"; Latin: Sancta Sophia or Sancta Sapientia; Turkish: Ayasofya) was a Greek Orthodox Christian patriarchal basilica (church), later an imperial mosque, and now a museum (Ayasofya Müzesi) in Istanbul, Turkey. From the date of its construction in 537 AD, and until 1453, it served as an Eastern Orthodox cathedral and seat of the Patriarch of Constantinople,[1] except between 1204 and 1261, when it was converted by the Fourth Crusaders to a Catholic cathedral under the Latin Empire. The building was later converted into an Ottoman mosque from 29 May 1453 until 1931. It was then secularized and opened as a museum on 1 February 1935.[2]
 
 Famous in particular for its massive dome, it is considered the epitome of Byzantine architecture[3] and is said to have "changed the history of architecture".[4] It remained the world''s largest cathedral for nearly a thousand years, until Seville Cathedral was completed in 1520.
 
 The current building was originally constructed as a church between 532 and 537 on the orders of the Byzantine Emperor Justinian I and was the third Church of the Holy Wisdom to occupy the site, the previous two having both been destroyed by rioters. It was designed by the Greek geometers Isidore of Miletus and Anthemius of Tralles.[5]
 
-The church was dedicated to the Wisdom of God, the Logos, the second person of the Trinity,[6] its patronal feast taking place on 25 December, the commemoration of the birth of the incarnation of the Logos in Christ.[6] Although sometimes referred to as Sancta Sophia (as though it were named after Sophia the Martyr), sophia being the phonetic spelling in Latin of the Greek word for wisdom, its full name in Greek is Ναὸς τῆς Ἁγίας τοῦ Θεοῦ Σοφίας, Naos tēs Hagias tou Theou Sophias, "Shrine of the Holy Wisdom of God".[7][8] The church contained a large collection of relics and featured, among other things, a 15-metre (49 ft) silver iconostasis. The focal point of the Eastern Orthodox Church for nearly one thousand years, the building witnessed the excommunication of Patriarch Michael I Cerularius on the part of Humbert of Silva Candida, the papal envoy of Pope Leo IX in 1054, an act that is commonly considered the start of the East–West Schism.
-
-DISCLAIMER: All the information in this page including the images are taken from wikipedia.com and used for education purposes only',
-                            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hagia_Sophia_Mars_2013.jpg/220px-Hagia_Sophia_Mars_2013.jpg'),
+The church was dedicated to the Wisdom of God, the Logos, the second person of the Trinity,[6] its patronal feast taking place on 25 December, the commemoration of the birth of the incarnation of the Logos in Christ.[6] Although sometimes referred to as Sancta Sophia (as though it were named after Sophia the Martyr), sophia being the phonetic spelling in Latin of the Greek word for wisdom, its full name in Greek is Ναὸς τῆς Ἁγίας τοῦ Θεοῦ Σοφίας, Naos tēs Hagias tou Theou Sophias, "Shrine of the Holy Wisdom of God".[7][8] The church contained a large collection of relics and featured, among other things, a 15-metre (49 ft) silver iconostasis. The focal point of the Eastern Orthodox Church for nearly one thousand years, the building witnessed the excommunication of Patriarch Michael I Cerularius on the part of Humbert of Silva Candida, the papal envoy of Pope Leo IX in 1054, an act that is commonly considered the start of the East–West Schism.',
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hagia_Sophia_Mars_2013.jpg/220px-Hagia_Sophia_Mars_2013.jpg',1),
                            ('Broadway Theatre (53rd Street)', 'The Broadway Theatre (formerly Universal''s Colony Theatre, B.S. Moss'' Broadway Theatre, Earl Carroll''s Broadway Theatre, and Ciné Roma) is a Broadway theatre located in midtown Manhattan. It has a large seating capacity of 1,761, and unlike most Broadway theaters, it is actually located on Broadway, at number 1681.
 
 Designed by architect Eugene De Rosa for Benjamin S. Moss, it opened as B.S. Moss''s Colony Theatre on Christmas Day 1924 as a venue for vaudeville shows and motion pictures. The theater has operated under many names and owners. It was renamed Universal''s Colony Theatre, B.S. Moss'' Broadway Theatre, and Earl Carroll''s Broadway Theatre before becoming a legitimate theater house simply called Broadway Theatre on December 8, 1930. In 1937, known as Ciné Roma, it showed Italian films.[1] For a short time during the 1950s it showed Cinerama films.[2]
@@ -68,10 +102,8 @@ Designed by architect Eugene De Rosa for Benjamin S. Moss, it opened as B.S. Mos
 On November 18, 1928 the first Mickey Mouse cartoon released to the public, Steamboat Willie, debuted at the Colony. Producer Walt Disney returned on November 13, 1940 to debut the feature film Fantasia in Fantasound, an early stereo system.
 The legitimate theater opened in 1930 with The New Yorkers by Cole Porter. Stars such as Milton Berle, Alfred Drake, José Ferrer, Eartha Kitt, Vivien Leigh, Zero Mostel, and Mae West have appeared on stage.[1]
 
-The Shubert Organization bought the theater in 1939 and renovated it extensively in 1956 and 1986. It has long been a popular theatre for producers of musicals because of large seating capacity, and the large stage, which is nearly sixty feet deep. Often plays that have become successful in smaller theaters have transferred to the Broadway Theatre.[1]
-
-DISCLAIMER: All the information in this page including the images are taken from wikipedia.com and used for education purposes only',
-                            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Promises_Promises_at_Broadway_Theatre.JPG/220px-Promises_Promises_at_Broadway_Theatre.JPG')"""
+The Shubert Organization bought the theater in 1939 and renovated it extensively in 1956 and 1986. It has long been a popular theatre for producers of musicals because of large seating capacity, and the large stage, which is nearly sixty feet deep. Often plays that have become successful in smaller theaters have transferred to the Broadway Theatre.[1]',
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Promises_Promises_at_Broadway_Theatre.JPG/220px-Promises_Promises_at_Broadway_Theatre.JPG',2)"""
         cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS Entertainment"""
