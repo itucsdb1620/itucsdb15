@@ -6,6 +6,8 @@ from caferest import *
 from activities import *
 from location import *
 from places import *
+from festival import *
+from cities import *
 
 @app.route('/')
 def home_page():
@@ -31,6 +33,15 @@ def initialize_database():
                     CHECK ((VALUE = 'Cultural') OR (VALUE = 'Eat & Drink')
                            OR (VALUE = 'Sport') OR (VALUE = 'Accommodation')
                            OR (VALUE = 'Travel'))"""
+        cursor.execute(query)
+
+        query = """DROP DOMAIN IF EXISTS FESTIVALS CASCADE"""
+        cursor.execute(query)
+
+        query = """CREATE DOMAIN FESTIVALS AS VARCHAR(255)
+                    CHECK ((VALUE = 'Music') OR (VALUE = 'Food')
+                           OR (VALUE = 'Film') OR (VALUE = 'Art')
+                           OR (VALUE = 'Seasonal'))"""
         cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS COUNTER"""
@@ -84,25 +95,23 @@ def initialize_database():
         cursor.execute(query)
 
         query = """INSERT INTO Culture (NAME, INFO, PHOTO, ACTIVITY_ID)
-                    VALUES ('Great Wall of China', 'The Great Wall of China is a series of fortifications made of stone, brick, tamped earth, wood, and other materials, generally built along an east-to-west line across the historical northern borders of China to protect the Chinese states and empires against the raids and invasions of the various nomadic groups of the Eurasian Steppe. Several walls were being built as early as the 7th century BCE;[2] these, later joined together and made bigger and stronger, are now collectively referred to as the Great Wall.[3] Especially famous is the wall built 220Ã¢â‚¬â€œ206 BCE by Qin Shi Huang, the first Emperor of China. Little of that wall remains. Since then, the Great Wall has on and off been rebuilt, maintained, and enhanced; the majority of the existing wall is from the Ming Dynasty (1368Ã¢â‚¬â€œ1644).
+                    VALUES ('Great Wall of China', 'The Great Wall of China is a series of fortifications made of stone, brick, tamped earth, wood, and other materials, generally built along an east-to-west line across the historical northern borders of China to protect the Chinese states and empires against the raids and invasions of the various nomadic groups of the Eurasian Steppe. Several walls were being built as early as the 7th century BCE;[2] these, later joined together and made bigger and stronger, are now collectively referred to as the Great Wall.[3] Especially famous is the wall built 220ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“206 BCE by Qin Shi Huang, the first Emperor of China. Little of that wall remains. Since then, the Great Wall has on and off been rebuilt, maintained, and enhanced; the majority of the existing wall is from the Ming Dynasty.
 
 Other purposes of the Great Wall have included border controls, allowing the imposition of duties on goods transported along the Silk Road, regulation or encouragement of trade and the control of immigration and emigration. Furthermore, the defensive characteristics of the Great Wall were enhanced by the construction of watch towers, troop barracks, garrison stations, signaling capabilities through the means of smoke or fire, and the fact that the path of the Great Wall also served as a transportation corridor.',
                             'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/The_Great_Wall_of_China_at_Jinshanling-edit.jpg/240px-The_Great_Wall_of_China_at_Jinshanling-edit.jpg',1),
-                           ('SÃƒÂ¼reyya Opera House', 'SÃƒÂ¼reyya Opera House, also called SÃƒÂ¼reyya Cultural Center (Turkish: SÃƒÂ¼reyya OperasÃ„Â± or SÃƒÂ¼reyya KÃƒÂ¼ltÃƒÂ¼r Merkezi), is an opera hall located in KadÃ„Â±kÃƒÂ¶y district of Istanbul, Turkey. The building is designed by Armenian architect Kegam Kavafyan[1] by order of a Deputy for Istanbul SÃƒÂ¼reyya Ã„Â°lmen, it was originally established in 1927 as the first musical theatre on the Anatolian part of Istanbul. However, due to lack of appropriate facilities and equipment in the theatre, operettas were never staged. The venue was rather used as a movie theatre until the building underwent a functional restoration and reopened as an opera house by the end of 2007.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/20131207_Istanbul_076.jpg/250px-20131207_Istanbul_076.jpg', 2),
-                           ('Hagia Sophia', 'Hagia Sophia (from the Greek: Ã¡Â¼â€°Ã�Â³Ã�Â¯Ã�Â± Ã�Â£Ã�Â¿Ã�â€ Ã�Â¯Ã�Â±, [aÃ‹Ë†ÃŠï¿½ia soÃ‹Ë†fia]), "Holy Wisdom"; Latin: Sancta Sophia or Sancta Sapientia; Turkish: Ayasofya) was a Greek Orthodox Christian patriarchal basilica (church), later an imperial mosque, and now a museum (Ayasofya MÃƒÂ¼zesi) in Istanbul, Turkey. From the date of its construction in 537 AD, and until 1453, it served as an Eastern Orthodox cathedral and seat of the Patriarch of Constantinople,[1] except between 1204 and 1261, when it was converted by the Fourth Crusaders to a Catholic cathedral under the Latin Empire. The building was later converted into an Ottoman mosque from 29 May 1453 until 1931. It was then secularized and opened as a museum on 1 February 1935.[2]
+                           ('Sureyya Opera House', 'Sureyya Opera House, also called Sureyya Cultural Center (Turkish: Sureyya Operasi or Sureyya Kultur Merkezi), is an opera hall located in Kadikoy district of Istanbul, Turkey. The building is designed by Armenian architect Kegam Kavafyan[1] by order of a Deputy for Istanbul Sureyya Ilmen, it was originally established in 1927 as the first musical theatre on the Anatolian part of Istanbul. However, due to lack of appropriate facilities and equipment in the theatre, operettas were never staged. The venue was rather used as a movie theatre until the building underwent a functional restoration and reopened as an opera house by the end of 2007.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/20131207_Istanbul_076.jpg/250px-20131207_Istanbul_076.jpg', 2),
+                           ('Hagia Sophia', "Holy Wisdom"; Latin: Sancta Sophia or Sancta Sapientia; Turkish: Ayasofya) was a Greek Orthodox Christian patriarchal basilica (church), later an imperial mosque, and now a museum (Ayasofya Muzesi) in Istanbul, Turkey. From the date of its construction in 537 AD, and until 1453, it served as an Eastern Orthodox cathedral and seat of the Patriarch of Constantinople,[1] except between 1204 and 1261, when it was converted by the Fourth Crusaders to a Catholic cathedral under the Latin Empire. The building was later converted into an Ottoman mosque from 29 May 1453 until 1931. It was then secularized and opened as a museum on 1 February 1935.[2]
 
 Famous in particular for its massive dome, it is considered the epitome of Byzantine architecture[3] and is said to have "changed the history of architecture".[4] It remained the world''s largest cathedral for nearly a thousand years, until Seville Cathedral was completed in 1520.
 
-The current building was originally constructed as a church between 532 and 537 on the orders of the Byzantine Emperor Justinian I and was the third Church of the Holy Wisdom to occupy the site, the previous two having both been destroyed by rioters. It was designed by the Greek geometers Isidore of Miletus and Anthemius of Tralles.[5]
-
-The church was dedicated to the Wisdom of God, the Logos, the second person of the Trinity,[6] its patronal feast taking place on 25 December, the commemoration of the birth of the incarnation of the Logos in Christ.[6] Although sometimes referred to as Sancta Sophia (as though it were named after Sophia the Martyr), sophia being the phonetic spelling in Latin of the Greek word for wisdom, its full name in Greek is Ã�ï¿½Ã�Â±Ã¡Â½Â¸Ã�â€š Ã�â€�Ã¡Â¿â€ Ã�â€š Ã¡Â¼â€°Ã�Â³Ã�Â¯Ã�Â±Ã�â€š Ã�â€�Ã�Â¿Ã¡Â¿Â¦ Ã�ËœÃ�ÂµÃ�Â¿Ã¡Â¿Â¦ Ã�Â£Ã�Â¿Ã�â€ Ã�Â¯Ã�Â±Ã�â€š, Naos tÃ„â€œs Hagias tou Theou Sophias, "Shrine of the Holy Wisdom of God".[7][8] The church contained a large collection of relics and featured, among other things, a 15-metre (49 ft) silver iconostasis. The focal point of the Eastern Orthodox Church for nearly one thousand years, the building witnessed the excommunication of Patriarch Michael I Cerularius on the part of Humbert of Silva Candida, the papal envoy of Pope Leo IX in 1054, an act that is commonly considered the start of the EastÃ¢â‚¬â€œWest Schism.',
+The current building was originally constructed as a church between 532 and 537 on the orders of the Byzantine Emperor Justinian I and was the third Church of the Holy Wisdom to occupy the site, the previous two having both been destroyed by rioters. It was designed by the Greek geometers Isidore of Miletus and Anthemius of Tralles.
                             'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hagia_Sophia_Mars_2013.jpg/220px-Hagia_Sophia_Mars_2013.jpg',1),
-                           ('Broadway Theatre (53rd Street)', 'The Broadway Theatre (formerly Universal''s Colony Theatre, B.S. Moss'' Broadway Theatre, Earl Carroll''s Broadway Theatre, and CinÃƒÂ© Roma) is a Broadway theatre located in midtown Manhattan. It has a large seating capacity of 1,761, and unlike most Broadway theaters, it is actually located on Broadway, at number 1681.
+                           ('Broadway Theatre (53rd Street)', 'The Broadway Theatre (formerly Universal''s Colony Theatre, B.S. Moss'' Broadway Theatre, Earl Carroll''s Broadway Theatre) is a Broadway theatre located in midtown Manhattan. It has a large seating capacity of 1,761, and unlike most Broadway theaters, it is actually located on Broadway, at number 1681.
 
-Designed by architect Eugene De Rosa for Benjamin S. Moss, it opened as B.S. Moss''s Colony Theatre on Christmas Day 1924 as a venue for vaudeville shows and motion pictures. The theater has operated under many names and owners. It was renamed Universal''s Colony Theatre, B.S. Moss'' Broadway Theatre, and Earl Carroll''s Broadway Theatre before becoming a legitimate theater house simply called Broadway Theatre on December 8, 1930. In 1937, known as CinÃƒÂ© Roma, it showed Italian films.[1] For a short time during the 1950s it showed Cinerama films.[2]
+Designed by architect Eugene De Rosa for Benjamin S. Moss, it opened as B.S. Moss''s Colony Theatre on Christmas Day 1924 as a venue for vaudeville shows and motion pictures. The theater has operated under many names and owners. It was renamed Universal''s Colony Theatre, B.S. Moss'' Broadway Theatre, and Earl Carroll''s Broadway Theatre before becoming a legitimate theater house simply called Broadway Theatre on December 8, 1930. In 1937, it showed Italian films.[1] For a short time during the 1950s it showed Cinerama films.[2]
 
 On November 18, 1928 the first Mickey Mouse cartoon released to the public, Steamboat Willie, debuted at the Colony. Producer Walt Disney returned on November 13, 1940 to debut the feature film Fantasia in Fantasound, an early stereo system.
-The legitimate theater opened in 1930 with The New Yorkers by Cole Porter. Stars such as Milton Berle, Alfred Drake, JosÃƒÂ© Ferrer, Eartha Kitt, Vivien Leigh, Zero Mostel, and Mae West have appeared on stage.[1]
+The legitimate theater opened in 1930 with The New Yorkers by Cole Porter. Stars such as Milton Berle, Alfred Drake, Jose Ferrer, Eartha Kitt, Vivien Leigh, Zero Mostel, and Mae West have appeared on stage.[1]
 
 The Shubert Organization bought the theater in 1939 and renovated it extensively in 1956 and 1986. It has long been a popular theatre for producers of musicals because of large seating capacity, and the large stage, which is nearly sixty feet deep. Often plays that have become successful in smaller theaters have transferred to the Broadway Theatre.[1]',
                             'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Promises_Promises_at_Broadway_Theatre.JPG/220px-Promises_Promises_at_Broadway_Theatre.JPG',2)"""
@@ -169,7 +178,7 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
 
         query = """INSERT INTO PEOPLE (NAME, SURNAME)
                     VALUES ('Fatih ', 'Budak '),
-                           ('GÃ¼ray ', 'Ocak '),
+                           ('GÃƒÂ¼ray ', 'Ocak '),
                            ('Mehmet ', 'Ozen '),
                            ('Berkan ', 'Dinar ')"""
         cursor.execute(query)
@@ -240,27 +249,64 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
 
             ##################################################################
 
+        query = """DROP TABLE IF EXISTS Cities CASCADE"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE Cities (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255),
+                COUNTRY VARCHAR(255) NOT NULL
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO Cities (NAME, COUNTRY)
+                    VALUES ('Paris', 'France'),
+                           ('London', 'England'),
+                           ('Istanbul', 'Turkey'),
+                           ('Berlin', 'Germany')"""
+        cursor.execute(query)
+
         query = """DROP TABLE IF EXISTS CafeRest"""
         cursor.execute(query)
 
         query = """CREATE TABLE CafeRest (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(255) NOT NULL,
-                CITY VARCHAR(255) NOT NULL,
+                CITY_ID INTEGER REFERENCES Cities ON DELETE SET NULL,
                 CUISINE VARCHAR(255) NULL,
-                SCORE FLOAT
+                SCORE SCORES DEFAULT 0,
+                VOTES INTEGER DEFAULT 0
                 )"""
         cursor.execute(query)
 
-        query = """INSERT INTO CafeRest (NAME, CITY, CUISINE, SCORE)
-                    VALUES ('Le Cinq', 'Paris', 'French', 9.2),
-                           ('The Ledbury', 'London', 'European', 8.7),
-                           ('Lekker Cafe Restaurant', 'Istanbul', 'Turkish', 9.4)"""
+        query = """INSERT INTO CafeRest (NAME, CITY_ID, CUISINE, SCORE)
+                    VALUES ('Le Cinq', 1, 'French', 9.2),
+                           ('The Ledbury', 2, 'European', 8.7),
+                           ('Lekker Cafe Restaurant', 3, 'Turkish', 9.4)"""
+        cursor.execute(query)
+
+        query = """DROP TABLE IF EXISTS Festival"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE Festival (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                CITY_ID INTEGER REFERENCES Cities ON DELETE SET NULL,
+                CATEGORY FESTIVALS,
+                SCORE SCORES DEFAULT 0
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO Festival (NAME, CITY_ID, CATEGORY, SCORE)
+                    VALUES ('Autumn Festival', 1, 'Seasonal', 7.1),
+                           ('Glastonbury', 2, 'Music', 9.2),
+                           ('Istanbul Film Festival', 3, 'Film', 8.5)"""
         cursor.execute(query)
 
 
         connection.commit()
     return redirect(url_for('home_page'))
+
 
 @app.route('/count')
 def counter_page():
