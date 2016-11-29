@@ -1,0 +1,48 @@
+{% extends "template.html" %}
+{% block content %}
+<h1>{{ entertainment[0][1] }}</h1>
+<img src="{{entertainment[0][5]}}" alt="Photo" style="float:left;max-width:500px;max-height:500px;padding:5px 10px 0 0;">
+<p style="padding:20px 0 0 0; white-space: pre-wrap;">{{ entertainment[0][4] }}</p>
+<form action="{{url_for('entertainment_update')}}" method="post">
+<br style="clear:both"><br>
+	<table>
+		<th>Attribute</th>
+		<th>Current Value</th>
+		<th>Updated Value</th>
+		<tr>
+			<td>Name</td>
+			<td>{{ entertainment[0][1] }}</td>
+			<td><input type="text" name="entertainment_update_name"></td>
+		</tr>
+		<tr>
+			<td><a href="{{url_for('places_page')}}">Place</a></td>
+			<td><a href="{{url_for('places_details', id = entertainment[0][6]  ) }}">{{ entertainment[0][7] }}</a></td>
+			<td><select name="entertainment_update_place">
+    			{% for place in places %}
+    				<option value="{{ place[0]}}">{{ place[1] }}</option>
+    			{% endfor %}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Score</td>
+			<td>{{ entertainment[0][2] }}</td>
+			<td>Vote below to update</td>
+		</tr>
+	</table>
+	<br>
+	<input type="url" name="entertainment_update_photo" placeholder="Enter link to your photo to add"></input>
+	<br>
+	<textarea rows="5" cols="50" name="entertainment_update_info" placeholder="Enter Information For Place"></textarea>
+	<br>
+	<input type="hidden" name="entertainment_index" value="{{ entertainment[0][0] }}">
+	<td><input type="submit" value="Update"></td>
+   	</form>
+	<br>
+	<form action="{{url_for('entertainment_voting')}}" method="post">
+		<input type="number" name="vote" min="1" max="10">
+		<input type="hidden" name="entertainment_index2" value="{{ entertainment[0][0] }}">
+		<br>
+		<input type="submit" value="Vote">
+   	</form>
+{% endblock %}
