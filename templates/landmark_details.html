@@ -9,13 +9,42 @@
 		<tr>
 			<td>Name</td>
 			<td>{{ landmark[0][1] }}</td>
-			<td><input type="text" name="landmark_name_update"></td>
+			<td><input type="text" name="name_update"></td>
 		</tr>
 		<tr>
 			<td>Score</td>
 			<td>{{ landmark[0][2] }}</td>
-			<td><input type="text" name="landmark_score_update"></td>
+			<td><input type="text" name="score_update"></td>
 		</tr>
+		<tr>
+			<td>Information</td>
+			<td>{{ landmark[0][3] }}</td>
+			<td><input type="text" name="info_update"></td>
+		</tr>
+<!--
+		<tr>
+			<td>Country</td>
+			<td>{{ landmark[0][5] }}</td>
+			<td><select name="country_update">
+    			{% for location in locations %}
+    				<option value="{{ location[0] }}">{{ location[1] }}</option>
+    			{% endfor %}
+				</select>
+			</td>
+		</tr>
+ -->
+		<tr>
+			<td>City</td>
+			<td>{{ landmark[0][5] }}</td>
+			<td><select name="city_update">
+    			{% for location in locations %}
+    				<option value="{{ location[0] }}">{{ location[1] }}</option>
+    			{% endfor %}
+				</select>
+			</td>
+		</tr>
+
+
 	</table>
 	<br>
 	<input type="hidden" name="landmark_index" value="{{ landmark[0][0] }}">
