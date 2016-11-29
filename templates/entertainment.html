@@ -1,24 +1,22 @@
 {% extends "template.html" %}
 {% block content %}
-    <h1>Places of entertainment</h1>
-    <form action="{{ url_for('entertainment_details') }}" method = "post">
+    <h1>Places of Entertainment</h1>
+    <form action="{{ url_for('entertainment_delete') }}" method = "post">
     <table>
     	<th>Select</th>
-    	<th>ID</th>
     	<th>Name</th>
-    	<th>Place</th>
+    	<th><a href="{{url_for('places_page')}}">Place</a></th>
     	<th>Score</th>
         {%for place in entertainment %}
     	<tr>
     		<td><input type="radio" name="select" value="{{ place[0] }}"></td>
-    		<td>{{ place[0] }}</td>
-    		<td>{{ place[1] }}</td>
+    		<td><a href="{{url_for('entertainment_place', id = place[0]  ) }}">{{ place[1] }}</a></td>
+    		<td><a href="{{url_for('places_details', id = place[6])}}">{{ place[7] }}</a></td>
     		<td>{{ place[2] }}</td>
-    		<td>{{ place[3] }}</td>
     	</tr>
-        {% endfor %} 
+        {% endfor %}
     </table>
-    <input type="submit" value="Update Selected Value">
+    <input type="submit" value="Delete Selected Record">
     </form>
     <h2>Operations on the table</h2>
     	<h3>Insert</h3>
@@ -26,23 +24,31 @@
     		Name:<br>
     		<input type="text" name="entertainment_place_name">
     		<br>
-    		Place:<br>
-    		<input type="text" name="entertainment_place_place">
-    		<br>
     		Score:<br>
-    		<input type="text" name="entertainment_place_score">
-    		<br><br>
-    		<input type="submit" value="Insert to database">
-    	</form>
-    	<h3>Delete</h3>
-    	<form action="{{url_for('entertainment_delete')}}"  method="post">
-    		ID:<br>
-    		<input type="text" name="entertainment_place_ID">
-    		<br><br>
-    		<input type="submit" value="Delete from database">
+    		<input type="number" name="entertainment_place_score" min="1" max="10">
+    		<br>
+    		Votes:<br>
+    		<input type="number" name="entertainment_place_votes">
+    		<br>
+    		Photo:<br>
+    		<input type="url" name="entertainment_place_photo">
+    		<br>
+    		Place:<br>
+    		<select name="entertainment_place">
+    		{% for place in places %}
+    			<option value="{{ place[0] }}">{{ place[1] }}</option>
+    		{% endfor %}
+    		</select>
+    		<br>
+    		Info:<br>
+    		<textarea rows="5" cols="50" name="entertainment_place_info"></textarea>
+			<br>
+    		<input type="submit" value="Insert">
     	</form>
     	<h3>Delete All</h3>
     	<form action="{{url_for('entertainment_delete_all')}}" >
     		<input type="submit" value="Delete all records">
     	</form>
+    	<h3>Update</h3>
+    	<p>Click to the Entertainment Place Name</p>
 {% endblock %}
