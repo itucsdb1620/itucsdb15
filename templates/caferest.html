@@ -4,17 +4,15 @@
     <form action="{{ url_for('delete_caferest') }}" method="post">
     <table>
     	<th>Select</th>
-    	<th>ID</th>
     	<th>Name</th>
-    	<th>City</th>
+    	<th><a href="{{ url_for('cities_page') }}">City</a></th>
     	<th>Cuisine</th>
     	<th>Score</th>
-        {%for cafe in caferest %}
+        {% for cafe in caferest %}
     	<tr>
-    		<td><input type="checkbox" name="cafes_to_delete"value="{{cafe[0]}}" /></td>
-    		<td>{{ cafe[0] }}</td>
+    		<td><input type="checkbox" name="cafes_to_delete" value="{{ cafe[0] }}"/></td>
     		<td><a href="{{ url_for('caferest_update_page', id=cafe[0]) }}">{{ cafe[1] }}</a></td>
-    		<td>{{ cafe[2] }}</td>
+    		<td>{{ cafe[5] }}</td>
     		<td>{{ cafe[3] }}</td>
     		<td>{{ cafe[4] }}</td>
     	</tr>
@@ -38,7 +36,12 @@
     	</tr>
     	<tr>
     		<td> <input type="text" name="name"> </td>
-    		<td> <input type="text" name="city"> </td>
+    		<td> <select name="city">
+    				{% for city in cities %}
+    					<option value="{{ city[0] }}">{{ city[1] }}</option>
+    				{% endfor %}
+    			 </select>
+    		</td>
     		<td> <input type="text" name="cuisine"> </td>
     		<td> <input type="text" name="score"> </td>
     	</tr>

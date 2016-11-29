@@ -1,0 +1,24 @@
+{% extends "template.html" %}
+{% block content %}
+	<h2>Update {{ cities[0][1] }}</h2>
+	<form action="{{url_for('update_cities')}}" method="post">
+	<table>
+		<th>Attribute</th>
+		<th>Current Value</th>
+		<th>New Value</th>
+		<tr>
+			<td>Name</td>
+			<td>{{ cities[0][1] }}</td>
+			<td><input type="text" name="update_city_name"></td>
+		</tr>
+		<tr>
+			<td>Country</td>
+			<td>{{ cities[0][2] }}</td>
+			<td><input type="text" name="update_city_country"></td>
+		</tr>
+	</table>
+	<br>
+	<input type="hidden" name="cities_index" value="{{ cities[0][0] }}">
+	<td><input type="submit" value="Update"></td>
+   	</form>
+{% endblock %}

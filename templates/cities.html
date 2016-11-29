@@ -1,0 +1,39 @@
+{% extends "template.html" %}
+{% block content %}
+    <h1>Cities</h1>
+    <form action="{{ url_for('delete_cities') }}" method="post">
+    <table>
+    	<th>Select</th>
+    	<th>Name</th>
+    	<th>Country</th>
+        {%for city in cities %}
+    	<tr>
+    		<td><input type="checkbox" name="city_to_delete"value="{{city[0]}}" /></td>
+    		<td><a href="{{ url_for('cities_update_page', id=city[0]) }}">{{ city[1] }}</a></td>
+    		<td>{{ city[2] }}</td>
+    	</tr>
+        {% endfor %}
+    </table>
+    <br><input type="submit" value="Remove Selected" />
+	</form>
+
+	<form action="{{ url_for('delete_all_cities') }}">
+	<br><input type="submit" value="Remove All" /><br>
+	</form>
+
+    <h3>Add New City</h3>
+    <form action="{{ url_for('insert_city') }}" method="post">
+    <table>
+    	<tr>
+    		<td>Name</td>
+    		<td>Country</td>
+    	</tr>
+    	<tr>
+    		<td> <input type="text" name="name"> </td>
+    		<td> <input type="text" name="country"> </td>
+    	</tr>
+    </table>
+    <br><td> <input type="submit" value="Add" /></td>
+    </form>
+    <h4>You can click on the name of a city to update its values.</h4>
+{% endblock %}

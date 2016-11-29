@@ -4,7 +4,7 @@
 	<form action="{{url_for('update_caferest')}}" method="post">
 	<table>
 		<th>Attribute</th>
-		<th>Old Value</th>
+		<th>Current Value</th>
 		<th>New Value</th>
 		<tr>
 			<td>Name</td>
@@ -13,8 +13,13 @@
 		</tr>
 		<tr>
 			<td>City</td>
-			<td>{{ caferest[0][2] }}</td>
-			<td><input type="text" name="update_caferest_city"></td>
+			<td>{{ caferest[0][5] }}</td>
+			<td> <select name="update_caferest_city">
+    				{% for city in cities %}
+    					<option value="{{ city[0] }}">{{ city[1] }}</option>
+    				{% endfor %}
+    			 </select>
+    		</td>
 		</tr>
 		<tr>
 			<td>Cuisine</td>
