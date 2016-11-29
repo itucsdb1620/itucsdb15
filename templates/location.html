@@ -1,0 +1,30 @@
+{% extends "template.html" %}
+{% block content %}
+    <h1>List of Cities</h1>
+    <form action="{{url_for('location_delete')}}" method="post">
+    <table>
+    	<th>Select</th>
+    	<th>City Name</th>
+    	{% for location in location %}
+    	<tr>
+    		<td><input type="radio" name="select" value="{{ location[0] }}"></td>
+    		<td>{{ location[1] }}</a></td>
+    	</tr>
+    	{% endfor %}
+    </table>
+    <input type="submit" value="Remove selected">
+	</form>
+
+	<h3>Insert</h3>
+	<form action="{{url_for('location_insert')}}" method="post">
+    	City Name:<br>
+    	<input type="text" name="city_name">
+    	<br><br>
+    	<input type="submit" value="Insert to database">
+	</form>
+
+	<h3>Delete all</h3>
+    <form action="{{url_for('location_delete_all')}}">
+    	<input type="submit" value="Delete all">
+	</form>
+{% endblock %}
