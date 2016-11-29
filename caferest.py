@@ -1,30 +1,43 @@
 from settings import *
+from cities import *
 
 @app.route('/caferest')
 def caferest_page():
-    query = """SELECT * FROM CafeRest ORDER BY ID"""
+    statement_caferest = """SELECT CafeRest.ID, CafeRest.NAME, CITY_ID, CUISINE, SCORE, Cities.Name FROM CafeRest
+                        LEFT OUTER JOIN Cities ON (CafeRest.CITY_ID = Cities.ID)"""
+    statement_cities = """SELECT ID,NAME FROM Cities"""
 
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
-            cursor.execute(query)
+            cursor.execute(statement_caferest)
             caferest_data = json.dumps(cursor.fetchall())
             caferest = json.loads(caferest_data)
 
+            cursor.execute(statement_cities)
+            cities_data = json.dumps(cursor.fetchall())
+            cities = json.loads(cities_data)
+
     now = datetime.datetime.now()
-    return render_template('caferest.html', current_time=now.ctime(), caferest=caferest)
+    return render_template('caferest.html', current_time=now.ctime(), caferest=caferest, cities = cities)
 
 
 @app.route('/caferest/<int:id>')
 def caferest_update_page(id):
-    statement = """SELECT * FROM CafeRest WHERE ID = %s"""
+    statement_caferest = """SELECT CafeRest.ID, CafeRest.NAME, CITY_ID, CUISINE, SCORE, Cities.Name FROM CafeRest
+                        LEFT OUTER JOIN Cities ON (CafeRest.CITY_ID = Cities.ID)  WHERE (CafeRest.ID = %s)"""
+    statement_cities = """SELECT ID,NAME FROM Cities"""
 
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
-            cursor.execute(statement, (id,))
+            cursor.execute(statement_caferest, (id,))
             caferest_data = json.dumps(cursor.fetchall())
             caferest = json.loads(caferest_data)
 
-    return render_template('caferest_update.html', caferest=caferest)
+            cursor.execute(statement_cities)
+            cities_data = json.dumps(cursor.fetchall())
+            cities = json.loads(cities_data)
+
+    return render_template('caferest_update.html', caferest=caferest, cities = cities)
 
 
 @app.route('/caferest/delete_all')
@@ -40,7 +53,7 @@ def delete_all_caferest():
 
 @app.route('/caferest/insert', methods=["POST"])
 def insert_caferest():
-    statement = "INSERT INTO CafeRest (NAME, CITY, CUISINE, SCORE) VALUES (%s, %s, %s, %s)"
+    statement_caferest = "INSERT INTO CafeRest (NAME, CITY_ID, CUISINE, SCORE) VALUES (%s, %s, %s, %s)"
     name = request.form['name']
     city = request.form['city']
     cuisine = request.form['cuisine']
@@ -48,7 +61,7 @@ def insert_caferest():
 
     with dbapi2.connect(app.config['dsn']) as connection:
          with connection.cursor() as cursor:
-                cursor.execute(statement, (name, city, cuisine, score))
+            cursor.execute(statement_caferest, (name, city, cuisine, score))
 
     return redirect(url_for('caferest_page'))
 
@@ -80,7 +93,7 @@ def update_caferest():
                 statement = """UPDATE CafeRest SET NAME = %s WHERE ID = %s"""
                 cursor.execute(statement, (name, id))
             if city:
-                statement = """UPDATE CafeRest SET CITY = %s WHERE ID = %s"""
+                statement = """UPDATE CafeRest SET CITY_ID = %s WHERE ID = %s"""
                 cursor.execute(statement, (city, id))
             if cuisine:
                 statement = """UPDATE CafeRest SET CUISINE = %s WHERE ID = %s"""
