@@ -62,7 +62,7 @@ def entertainment_insert():
     place = request.form['entertainment_place']
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
-            if name and score and votes and activity:
+            if name and score and votes and place:
                 query = """SELECT * FROM Places WHERE (ID = %s)"""
                 cursor.execute(query, (place,))
                 exists_data = json.dumps(cursor.fetchall())
