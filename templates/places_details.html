@@ -1,0 +1,32 @@
+{% extends "template.html" %}
+{% block content %}
+	<h1>{{ places[0][1] }}</h1>
+	<img src="{{places[0][3]}}" alt="Photo" style="float:left;max-width:500px;max-height:500px;padding:5px 10px 0 0;">
+	<p style="padding:20px 0 0 0; white-space: pre-wrap;">{{ places[0][2] }}</p>
+	<br style="clear:both"><br>
+
+	<form action="{{url_for('places_update')}}" method="post">
+	<table>
+		<th>Attribute</th>
+		<th>Current Value</th>
+		<th>Updated Value</th>
+		<tr>
+			<td>Name</td>
+			<td>{{ places[0][1] }}</td>
+			<td><input type="text" name="places_update_name"></td>
+		</tr>
+	</table>
+	<br>
+	<input type="url" name="places_update_photo" placeholder="Enter link to your photo to add"></input>
+	<br>
+	<textarea rows="5" cols="50" name="places_update_info" placeholder="Enter Information For Place"></textarea>
+	<br>
+	<input type="hidden" name="place_index" value="{{ places[0][0] }}">
+	<td><input type="submit" value="Update"></td>
+   	</form>
+
+	<br>
+   	<form action="{{url_for('places_page')}}">
+  	<input type="submit" value="Back to List of Places ">
+  	</form>
+{% endblock %}
