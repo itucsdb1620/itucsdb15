@@ -1,23 +1,32 @@
 {% extends "template.html" %}
+{% block title %}Culture{% endblock %}
 {% block content %}
-    <h1>Places of art & culture</h1>
+	<div class="page-header">
+    	<h1>Places of art & culture</h1>
+    </div>
+    <div class="container">
     <form action="{{url_for('culture_delete')}}" method="post">
-    <table>
-    	<th>Select</th>
-    	<th>Name</th>
-    	<th><a href="{{url_for('activities_page')}}">Activity</a></th>
-    	<th>Score</th>
+    	<div class="col-sm-2"></div>
+    	<div class="col-sm-2">Name</div>
+    	<div class="col-sm-2"><a href="{{url_for('activities_page')}}">Main activity</a></div>
+    	<div class="col-xs-1">Score</div>
+    	<br><br>
     	{% for place in culture %}
-    	<tr>
-    		<td><input type="radio" name="select" value="{{ place[0] }}"></td>
-    		<td><a href="{{url_for('culture_details', id = place[0]  ) }}">{{ place[1] }}</a></td>
-    		<td><a href="{{url_for('activities_details', id = place[6])}}">{{ place[7] }}</a></td>
-    		<td>{{ place[2] }}</td>
-    	</tr>
+    	<div class="row">
+    		<div class="col-sm-2"><a href="{{url_for('culture_details', id = place[0]  ) }}"><img src="{{place[5]}}" class="img-thumbnail" alt="Photo"></a></div>
+    		<div class="col-sm-2">{{ place[1] }}</div>
+    		<div class="col-sm-2"><a href="{{url_for('activities_details', id = place[6])}}">{{ place[7] }}</a></div>
+    		<div class="col-xs-1">{{ place[2] }}</div>
+    		<input type="radio" name="select" value="{{ place[0] }}" class="items-to-hide">
+    		<p id="a"></p>
+    	</div>
     	{% endfor %}
-    </table>
-    <input type="submit" value="Remove selected">
+    <br>
+    <input type="submit" value="Remove selected" class="items-to-hide">
     </form>
+    </div>
+
+    <div class="container items-to-hide">
     <h2>Operations on the table</h2>
 
     	<h3>Insert</h3>
@@ -54,4 +63,6 @@
 
     	<h3>Update</h3>
     	<p>to update go to page of entry by clicking its name</p>
+    </div>
 {% endblock %}
+

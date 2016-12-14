@@ -1,6 +1,9 @@
 {% extends "template.html" %}
+{% block title %}{{ culture[0][1] }}{% endblock %}
 {% block content %}
-	<h1>{{ culture[0][1] }}</h1>
+	<div class="page-header">
+		<h1>{{ culture[0][1] }}</h1>
+	</div>
 	<img src="{{culture[0][5]}}" alt="Photo" style="float:left;max-width:500px;max-height:500px;padding:5px 10px 0 0;">
 	<p style="padding:20px 0 0 0; white-space: pre-wrap;">{{ culture[0][4] }}</p>
 	<p style="font-weight: bold;">DISCLAIMER: All the information in this page including the images are taken from wikipedia.com and used for education purposes only</p>

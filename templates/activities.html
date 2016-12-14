@@ -1,6 +1,9 @@
 {% extends "template.html" %}
+{% block title %}Activities{% endblock %}
 {% block content %}
-    <h1>List of Activities</h1>
+	<div class="page-header">
+    	<h1>List of Activities</h1>
+    </div>
     <form action="{{url_for('activities_delete')}}" method="post">
     <table>
     	<th>Select</th>
