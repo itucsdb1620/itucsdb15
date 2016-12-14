@@ -2,24 +2,35 @@ from settings import *
 
 @app.route('/culture')
 def culture_page():
+    #if g.user:
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
             query = """SELECT Culture.ID, Culture.NAME, Culture.SCORE,
                         Culture.VOTES, Culture.INFO, Culture.PHOTO,
                         Culture.ACTIVITY_ID, Activities.NAME FROM Culture
                         LEFT OUTER JOIN Activities
-                        ON Culture.ACTIVITY_ID=Activities.ID"""
+                        ON Culture.ACTIVITY_ID=Activities.ID
+                        ORDER BY Culture.SCORE DESC"""
             cursor.execute(query)
             culture_data = json.dumps(cursor.fetchall())
             culture = json.loads(culture_data)
-
+            for place in culture:
+                place[2] = "{:2.2f}".format(place[2])
             query = """SELECT ID,NAME FROM Activities"""
             cursor.execute(query)
             activity_data = json.dumps(cursor.fetchall())
             activities = json.loads(activity_data)
 
     now = datetime.datetime.now()
-    return render_template('culture.html', current_time=now.ctime(), culture=culture, activities=activities)
+    if g.user:
+        if(g.user == "admin"):
+            usernum = 0
+        else:
+            usernum = 1
+    else:
+        usernum = 2
+    return render_template('culture.html', current_time=now.ctime(), culture=culture, activities=activities, usernum=usernum)
+    #return redirect(url_for('login_page'))
 
 @app.route('/culture/<int:id>')
 def culture_details(id):
