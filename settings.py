@@ -8,9 +8,12 @@ from flask import Flask
 from flask import redirect
 from flask import render_template
 from flask import request
+from flask import session
+from flask import g
 from flask.helpers import url_for
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 def get_elephantsql_dsn(vcap_services):
     """Returns the data source name for ElephantSQL."""
