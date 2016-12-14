@@ -17,49 +17,43 @@ td a{
 	text-decoration: none;
 	font-weight: bold;
 }
-nav ul{
-    margin: 0;
-    overflow: hidden;
-    }
 
-nav ul li{
-    float: left;
-    display: inline-block;
-    padding: 1% 0 1% 0;
+h1{
+	text-align:center;
 }
 
-nav ul li a{
-    text-align: center;
-    color: black;
-    background-color: #5BBAE0;
-    text-decoration: none;
-    padding: 5px;
+.img-thumbnail:hover{
+	opacity:0.5;
 }
 
-nav ul li a:hover{
-    background-color: #106282;
+.navbar{
+	background-color:#38767c;
+
 }
 
-nav ul li a:active{
-    background-color: #666;
+.row{
+	height:140px;
+	overflow:hidden;
+	padding:20px;
 }
 
-body {
-  background-color: white;
-  color: #6F6F6F;
-  font-family: 'Droid Sans', 'Helvetica', 'sans';
-  font-size: 12pt;
-  margin: 2ex 2em;
+.centered{
+	float:none;
+	margin: 0 auto;
 }
 
+.navbar-custom{
+	background-color:#204043;
+	color: #e3564d;
+}
+
+li>a{
+	background-color:#38767c;
+}
 h1, h2, h3, h4 {
-  color: #E9601A;
+  color: #1aade9;
 }
 
-a {
-  color: #6F6F6F;
-  text-decoration: underline;
-}
 
 div#datetime {
   font-size: 80%;
