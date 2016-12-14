@@ -11,8 +11,15 @@ from cities import *
 
 @app.route('/')
 def home_page():
+    if g.user:
+        if (g.user == "admin"):
+            usernum = 0
+        else:
+            usernum = 1
+    else:
+        usernum = 2
     now = datetime.datetime.now()
-    return render_template('home.html', current_time=now.ctime())
+    return render_template('home.html', current_time=now.ctime(), usernum=usernum)
 
 @app.route('/initdb')
 def initialize_database():
@@ -99,7 +106,7 @@ def initialize_database():
 
 Other purposes of the Great Wall have included border controls, allowing the imposition of duties on goods transported along the Silk Road, regulation or encouragement of trade and the control of immigration and emigration. Furthermore, the defensive characteristics of the Great Wall were enhanced by the construction of watch towers, troop barracks, garrison stations, signaling capabilities through the means of smoke or fire, and the fact that the path of the Great Wall also served as a transportation corridor.',
                             'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/The_Great_Wall_of_China_at_Jinshanling-edit.jpg/240px-The_Great_Wall_of_China_at_Jinshanling-edit.jpg',1),
-                           ('Sureyya Opera House', 'Sureyya Opera House, also called Sureyya Cultural Center (Turkish: Sureyya Operasi or Sureyya Kultur Merkezi), is an opera hall located in Kadikoy district of Istanbul, Turkey. The building is designed by Armenian architect Kegam Kavafyan[1] by order of a Deputy for Istanbul Sureyya Ilmen, it was originally established in 1927 as the first musical theatre on the Anatolian part of Istanbul. However, due to lack of appropriate facilities and equipment in the theatre, operettas were never staged. The venue was rather used as a movie theatre until the building underwent a functional restoration and reopened as an opera house by the end of 2007.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/20131207_Istanbul_076.jpg/250px-20131207_Istanbul_076.jpg', 2),
+                           ('Süreyya Opera House', 'Sureyya Opera House, also called Sureyya Cultural Center (Turkish: Sureyya Operasi or Sureyya Kultur Merkezi), is an opera hall located in Kadikoy district of Istanbul, Turkey. The building is designed by Armenian architect Kegam Kavafyan[1] by order of a Deputy for Istanbul Sureyya Ilmen, it was originally established in 1927 as the first musical theatre on the Anatolian part of Istanbul. However, due to lack of appropriate facilities and equipment in the theatre, operettas were never staged. The venue was rather used as a movie theatre until the building underwent a functional restoration and reopened as an opera house by the end of 2007.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/20131207_Istanbul_076.jpg/250px-20131207_Istanbul_076.jpg', 2),
                            ('Hagia Sophia', '"Holy Wisdom"; Latin: Sancta Sophia or Sancta Sapientia; Turkish: Ayasofya) was a Greek Orthodox Christian patriarchal basilica (church), later an imperial mosque, and now a museum (Ayasofya Muzesi) in Istanbul, Turkey. From the date of its construction in 537 AD, and until 1453, it served as an Eastern Orthodox cathedral and seat of the Patriarch of Constantinople,[1] except between 1204 and 1261, when it was converted by the Fourth Crusaders to a Catholic cathedral under the Latin Empire. The building was later converted into an Ottoman mosque from 29 May 1453 until 1931. It was then secularized and opened as a museum on 1 February 1935.[2]
 
 Famous in particular for its massive dome, it is considered the epitome of Byzantine architecture[3] and is said to have "changed the history of architecture".[4] It remained the world''s largest cathedral for nearly a thousand years, until Seville Cathedral was completed in 1520.
@@ -307,6 +314,25 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
         connection.commit()
     return redirect(url_for('home_page'))
 
+@app.route('/login', methods=['GET','POST'])
+def login_page():
+    if request.method == 'POST':
+        session.pop('user', None)
+        if request.form['password'] == 'password':
+            session['user'] = request.form['username']
+            return redirect(url_for('home_page'))
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout_page():
+    session.pop('user', None)
+    return redirect(url_for('home_page'))
+
+@app.before_request
+def before_request():
+    g.user = None
+    if 'user' in session:
+        g.user = session['user']
 
 @app.route('/count')
 def counter_page():
