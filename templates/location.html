@@ -1,26 +1,55 @@
 {% extends "template.html" %}
+{% block title %}Locations{% endblock %}
 {% block content %}
-    <h1>List of Cities</h1>
+	<div class="page-header">
+    	<h1>List of Locations</h1>
+    </div>
+    <div class="container">
     <form action="{{url_for('location_delete')}}" method="post">
-    <table>
-    	<th>Select</th>
-    	<th>City Name</th>
-    	{% for location in location %}
-    	<tr>
-    		<td><input type="radio" name="select" value="{{ location[0] }}"></td>
-    		<td>{{ location[1] }}</a></td>
-    	</tr>
+    	<div class="col-sm-2"></div>
+    	<div class="col-sm-2">Name</div>
+    	<div class="col-sm-2">City</div>
+    	<div class="col-sm-2">Country</div>
+    	<br><br>
+    	{% for place in location %}
+    	<div class="row">
+    		<div class="col-sm-2"><a href="{{url_for('location_details', id = place[0]  ) }}"><img src="{{place[3]}}" class="img-thumbnail" alt="Photo"></a></div>
+    		<div class="col-sm-2">{{ place[1] }}</div>
+    		<div class="col-sm-2">{{ place[4] }}</div>
+    		<div class="col-xs-1">{{ place[5] }}</div>
+    		<input type="radio" name="select" value="{{ place[0] }}" class="items-to-hide">
+    		<p id="a"></p>
+    	</div>
     	{% endfor %}
-    </table>
     <input type="submit" value="Remove selected">
 	</form>
 
 	<h3>Insert</h3>
 	<form action="{{url_for('location_insert')}}" method="post">
-    	City Name:<br>
-    	<input type="text" name="city_name">
-    	<br><br>
-    	<input type="submit" value="Insert to database">
+    	Name:<br>
+    	<input type="text" name="location_name">
+    	<br>
+    	Photo:<br>
+    	<input type="url" name="location_photo" placeholder="Enter link to your photo to add"></input>
+    	<br>
+    	Info:<br>
+    	<textarea rows="5" cols="50" name="location_info" placeholder="Enter Information For Location"></textarea>
+		<br>
+		City:<br>
+    	<select name="location_city">
+    		{% for place in city %}
+    			<option value="{{ place[0] }}">{{ place[1] }}</option>
+    		{% endfor %}
+    	</select>
+    	<br>
+    	Country:<br>
+    	<select name="location_country">
+    		{% for place in country %}
+    			<option value="{{ place[0] }}">{{ place[1] }}</option>
+    		{% endfor %}
+    	</select>
+    	<br>
+    	<input type="submit" value="Insert">
 	</form>
 
 	<h3>Delete all</h3>
