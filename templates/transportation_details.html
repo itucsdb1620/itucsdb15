@@ -1,0 +1,42 @@
+{% extends "template.html" %}
+{% block title %}{{ transportation[0][1] }}{% endblock %}
+{% block content %}
+	<div class="page-header">
+		<h1>{{ transportation[0][1] }}</h1>
+	</div>
+	<img src="{{transportation[0][3]}}" alt="Photo" style="float:left;max-width:500px;max-height:500px;padding:5px 10px 0 0;">
+	<p style="padding:20px 0 0 0; white-space: pre-wrap;">{{ transportation[0][2] }}</p>
+	<p style="font-weight: bold;">DISCLAIMER: All the information in this page including the images are taken from wikipedia.com and used for education purposes only</p>
+	<br style="clear:both"><br>
+	
+	<form action="{{url_for('transportation_update')}}" method="post">
+	<table>
+		<th>Attribute</th>
+		<th>Current Value</th>
+		<th>Updated Value</th>
+		<tr>
+			<td>Name</td>
+			<td>{{ transportation[0][1] }}</td>
+			<td><input type="text" name="transportation_update_name"></td>
+		</tr>
+		<tr>
+			<td><a href="{{url_for('location_page')}}">Place</a></td>
+			<td><a href="{{url_for('location_details', id = transportation[0][4]  ) }}">{{ transportation[0][5] }}</a></td>
+			<td><select name="transportation_update_place">
+    			{% for place in location %}
+    				<option value="{{ place[0]}}">{{ place[1] }}</option>
+    			{% endfor %}
+				</select>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<input type="url" name="transportation_update_photo" placeholder="Enter link to your photo to add"></input>
+	<br>
+	<textarea rows="5" cols="50" name="transportation_update_info" placeholder="Enter Information For Place"></textarea>
+	<br>
+	<input type="hidden" name="transportation_index" value="{{ transportation[0][0] }}">
+	<td><input type="submit" value="Update"></td>
+   	</form>
+	<br>
+{% endblock %}

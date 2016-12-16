@@ -1,0 +1,58 @@
+{% extends "template.html" %}
+{% block title %}Transportation{% endblock %}
+{% block content %}
+    <div class="page-header">
+    	<h1>Places of Transportation</h1>
+    </div>
+    <div class="container">
+    <form action="{{url_for('transportation_delete')}}" method="post">
+        <div class="col-sm-2"></div>
+    	<div class="col-sm-2">Name</div>
+    	<div class="col-sm-2"><a href="{{url_for('location_page')}}">Place</a></div>
+    	<br><br>
+    	{% for place in transportation %}
+    	<div class="row">
+    		<div class="col-sm-2"><a href="{{url_for('transportation_details', id = place[0]  ) }}"><img src="{{place[3]}}" class="img-thumbnail" alt="Photo"></a></div>
+    		<div class="col-sm-2">{{ place[1] }}</div>
+    		<div class="col-sm-2"><a href="{{url_for('location_details', id = place[4])}}">{{ place[5] }}</a></div>
+    		<input type="radio" name="select" value="{{ place[0] }}" class="items-to-hide">
+    		<p id="a"></p>
+    	</div>
+    	{% endfor %}
+    <br>
+    <input type="submit" value="Remove selected" class="items-to-hide">
+    </form>
+    </div>
+    
+    <div class="container items-to-hide">
+    <h2>Operations on the table</h2>
+    <h3>Insert</h3>
+    	<form action="{{ url_for('transportation_insert') }}" method="post">
+    		Name:<br>
+    		<input type="text" name="transportation_place_name">
+    		<br>
+    		Photo:<br>
+    		<input type="url" name="transportation_place_photo">
+    		<br>
+    		Place:<br>
+    		<select name="transportation_place">
+    		{% for place in location %}
+    			<option value="{{ place[0] }}">{{ place[1] }}</option>
+    		{% endfor %}
+    		</select>
+    		<br><br>
+    		Info:<br>
+    		<textarea rows="5" cols="50" name="transportation_place_info"></textarea>
+			<br>
+    		<input type="submit" value="Insert to database">
+    	</form>
+
+    	<h3>Delete</h3>
+    	<form action="{{url_for('transportation_delete_all')}}">
+    		<input type="submit" value="Delete all">
+    	</form>
+
+    	<h3>Update</h3>
+    	<p>to update go to page of entry by clicking its name</p>
+    </div>
+{% endblock %}

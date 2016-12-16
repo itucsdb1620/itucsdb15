@@ -1,0 +1,49 @@
+{% extends "template.html" %}
+{% block title %}{{ location[0][1] }}{% endblock %}
+{% block content %}
+	<div class="page-header">
+		<h1>{{ location[0][1] }}</h1>
+	</div>
+	<img src="{{location[0][3]}}" alt="Photo" style="float:left;max-width:500px;max-height:500px;padding:5px 10px 0 0;">
+	<p style="padding:20px 0 0 0; white-space: pre-wrap;">{{ location[0][2] }}</p>
+	<br style="clear:both"><br>
+
+	<form action="{{url_for('location_update')}}" method="post">
+	<table>
+		<th>Attribute</th>
+		<th>Current Value</th>
+		<th>Updated Value</th>
+		<tr>
+			<td>Name</td>
+			<td>{{ location[0][1] }}</td>
+			<td><input type="text" name="location_update_name"></td>
+		</tr>
+	</table>
+	<br>
+	<input type="url" name="location_update_photo" placeholder="Enter link to your photo to add"></input>
+	<br>
+	<textarea rows="5" cols="50" name="location_update_info" placeholder="Enter Information For Place"></textarea>
+	<br>
+	City:<br>
+    <select name="location_update_city">
+    	{% for place in city %}
+    		<option value="{{ place[0] }}">{{ place[1] }}</option>
+    	{% endfor %}
+    </select>
+    <br>
+    Country:<br>
+    <select name="location_update_country">
+    	{% for place in country %}
+    		<option value="{{ place[0] }}">{{ place[1] }}</option>
+    	{% endfor %}
+    </select>
+    <br>
+	<input type="hidden" name="location_index" value="{{ location[0][0] }}">
+	<td><input type="submit" value="Update"></td>
+   	</form>
+
+	<br>
+   	<form action="{{url_for('location_page')}}">
+  	<input type="submit" value="Back to List of Locations ">
+  	</form>
+{% endblock %}
