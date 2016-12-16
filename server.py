@@ -1,13 +1,9 @@
 from settings import *
 from culture import *
 from entertainment import *
-from landmark import *
-from caferest import *
+from transportation import *
 from activities import *
 from location import *
-from places import *
-from festival import *
-from cities import *
 
 @app.route('/')
 def home_page():
@@ -124,10 +120,10 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
                             'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Promises_Promises_at_Broadway_Theatre.JPG/220px-Promises_Promises_at_Broadway_Theatre.JPG',2)"""
         cursor.execute(query)
 
-        query = """DROP TABLE IF EXISTS Places CASCADE"""
+        query = """DROP TABLE IF EXISTS Countries CASCADE"""
         cursor.execute(query)
 
-        query = """CREATE TABLE Places (
+        query = """CREATE TABLE Countries (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(255) NOT NULL,
                 INFO TEXT,
@@ -135,18 +131,60 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
                 )"""
         cursor.execute(query)
 
-        query = """INSERT INTO Places (NAME, INFO, PHOTO)
-                    VALUES ('Resitpasa', '',
-                            'http://www.sariyerposta.com/wp-content/uploads/32618398.jpg'),
-                           ('Taksim', '',
-                           'http://www.volard.com.tr/anamorfix/Content/images/1024x768/taksim-01.jpg'),
-                           ('Kadikoy', '',
-                           'http://kadikoyerkekogrenciyurtlari.com/wp-content/uploads/2016/01/kadikoy-boga.jpg'),
-                           ('Uzunkopru', '',
-                           'http://www.gezipgorduk.com/wp-content/uploads/2009/05/uzunkopru2.jpg'),
-                           ('Corlu', '',
-                           'http://img.haberler.com/haber/000/corlu-nun-sokaklari-isil-isil-8003000_x_o.jpg')
-                           """
+        query = """INSERT INTO Countries (NAME, INFO, PHOTO)
+                    VALUES  ('Turkey', 'To be added', 'http://center-maxima.com/wp-content/uploads/2014/02/turkey.jpg'),
+                            ('Germany', 'To be added', 'https://s-media-cache-ak0.pinimg.com/originals/81/a2/61/81a2617c60520a95701cf34834966035.png'),
+                            ('USA', 'To be added', 'http://www.cambridgedu.com/images/img/usa.png')"""
+        cursor.execute(query)
+
+        query = """DROP TABLE IF EXISTS Cities CASCADE"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE Cities (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                INFO TEXT,
+                PHOTO VARCHAR(255),
+                COUNTRY INTEGER REFERENCES Countries (ID) ON DELETE CASCADE
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO Cities (NAME, INFO, PHOTO, COUNTRY)
+                    VALUES  ('İstanbul', 'To be added', 'https://lh6.googleusercontent.com/--whYuqd2Zso/U5gZkZxQMmI/AAAAAAAAu-E/A4VH6Cr2IX8/s1152/k%25C4%25B1zkulaesi.jpg', 1),
+                            ('Edirne', 'To be added', 'https://www.era111.com/files/import/images/en-guzel-edirne-resimleri.jpeg', 1),
+                            ('Berlin', 'To be added', 'http://www.easyjet.com/en/holidays/shared/images/guides/germany/berlin.jpg', 2),
+                            ('San Francisco', 'To be added', 'http://www.mrwallpaper.com/wallpapers/san-francisco-1600x900.jpg', 3),
+                            ('Ankara', 'To be Added', 'http://www.neredekal.com/res/haber/hb_b_20115444_l-b.jpg', 1)
+                            """
+        cursor.execute(query)
+
+        query = """DROP TABLE IF EXISTS Location CASCADE"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE Location (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                INFO TEXT,
+                PHOTO VARCHAR(255) DEFAULT 'https://d30y9cdsu7xlg0.cloudfront.net/png/1832-200.png',
+                CITY INTEGER REFERENCES Cities (ID) ON DELETE CASCADE,
+                COUNTRY INTEGER REFERENCES Countries (ID) ON DELETE CASCADE
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO Location (NAME, PHOTO, CITY, COUNTRY)
+                    VALUES  ('Kadıköy', 'http://www.tatil.com/cmsImage/1449131787kadikoy2__730x352.jpg', 1, 2),
+                            ('Tophane', 'http://www.hurriyetdailynews.com/images/news/201311/n_57635_1.jpg', 1, 2),
+                            ('Taksim', 'http://www.tatiluzmani.tv/wp-content/uploads/2015/03/Taksim.jpg', 1, 2),
+                            ('Şişli', 'http://www.sislibocekilaclama.gen.tr/wp-content/uploads/2015/01/sisli.png', 1, 2),
+                            ('Reşitpaşa', 'http://www.sariyerposta.com/wp-content/uploads/32618398.jpg', 1, 2),
+                            ('Uzunköprü', 'http://www.gezilecekyerler.biz/wp-content/uploads/2016/08/Uzunk%C3%B6pr%C3%BC-Hangi-%C5%9Eehirde.jpg', 2, 2),
+                            ('San Jose', 'http://www.sanjoseca.gov/images/pages/N1736/DowntownSummer2005%20edited%20(1).JPG', 4, 3),
+                            ('Reinickendorf', 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Ratusz_Reinickendorf.jpg', 3, 2),
+                            ('Esenler', 'http://i.milliyet.com.tr/YeniAnaResim/2015/05/26/fft99_mf5675408.Jpeg', 1, 2),
+                            ('Bakırköy', 'http://elmasilaclama.com/bocek-ilaclama/bakirkoy-fare-ilaclama.jpg', 1, 2),
+                            ('Pendik', 'http://i.sozcu.com.tr/wp-content/uploads/2016/01/04/pendik-dha.jpg', 1, 2),
+                            ('Akyurt-Çubuk', 'https://www.projepedia.com/media/upload/ANKARA/akyurt-ulasim.jpg', 5, 2)
+                            """
         cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS Entertainment"""
@@ -158,20 +196,41 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
                 SCORE SCORES DEFAULT 0,
                 VOTES INTEGER DEFAULT 0,
                 INFO TEXT,
-                PHOTO VARCHAR(255),
-                PLACE INTEGER REFERENCES Places (ID) ON DELETE CASCADE
+                PHOTO VARCHAR(255) DEFAULT 'https://cdn3.iconfinder.com/data/icons/glypho-movie-and-video/64/theater-masks-512.png',
+                ACTIVITY INTEGER REFERENCES Activities (ID) ON DELETE CASCADE,
+                PLACE INTEGER REFERENCES Location (ID) ON DELETE CASCADE
                 )"""
         cursor.execute(query)
 
-        query = """INSERT INTO Entertainment(NAME,INFO,PHOTO,PLACE)
-                    VALUES ('Semerkent Bar', 'One of the most historical places of Taksim. It has a perfect ambiance. Drink prices are very affordable', 'https://b.zmtcdn.com/data/pictures/1/5918831/d4ff1cc535a78e569417682f6db6d4f4_featured_v2.jpg', 2),
-                           ('Zohre Ustanin Yeri', 'A perfect dinner place. It has fixed prices for breakfasts and dinners. Tea is free', 'http://www.cesnitimur.com//uploads/images/837959kuslemeci-misafirler-ailem.--22.jpg', 1),
-                           ('Sukru Saracoglu Stadi', 'Home place of football team Fenerbahce. One of the most important areas of Turkish football. Fenerbahce won significant victories  at there including 3-0 against Manchester and 6-0 against Galatasaray. They have also not lost there to their rival teams for more than fiffteen years', 'https://fys.tff.org/TFFUploadFolder/StadResimleri/3402/6.jpg', 3),
-                           ('Cazgir Cafe', 'Most crovded and biggest cafe of Uzunkopru. It has a good landscape. A litle bit expensive. But its landscape neutrolizes it', 'http://www.uzunkoprutb.org.tr/uploads/gallery/DU2aQ/20022014OFkvpM.JPG', 4)
+        query = """INSERT INTO Entertainment(NAME,INFO,PHOTO,ACTIVITY,PLACE)
+                    VALUES ('İstanbul Modern', 'İstanbul Modern, aka Istanbul Museum of Modern Art, (Turkish: İstanbul Modern Sanat Müzesi) is a museum of contemporary art in the BeyoÄŸlu district of Istanbul, Turkey. Inaugurated on December 11, 2004, the museum features the work of Turkish artists. The director of the museum is Levent Ã‡alÄ±koglu, and the chair of the board of directors is Oya EczacÄ±baÅŸÄ±.', 'http://angelshomehotel.com/wp-content/uploads/2014/07/istanbul-modern-2.jpg', 2, 2),
+                           ('Zöhre Ustanın Yeri', 'A perfect dinner place. It has fixed prices for breakfasts and dinners. Tea is free', 'https://scontent-frt3-1.xx.fbcdn.net/v/t1.0-9/12936641_116577862075997_6646060229600396520_n.jpg?oh=8f8770a4d7aca61a3dad9a4a7c2dd1cb&oe=58B4EFD6', 3, 5),
+                           ('Sükrü Saraçoğlu Stadı', 'The Sükrü Saraçoğlu Stadium, also officially known as Ülker Stadium Fenerbahçe Şükrü Saraçoğlu Sports Complex or simply Ülker Stadium due to sponsorship reasons, is a football stadium in Kadıköy, İstanbul, Turkey, and is the home venue of Fenerbahçe S.K. It was inaugurated in 1908 and renovated between 1929 and 1932, 1965 and 1982, and 1999 and 2006. On October 4, 2006, after numerous inspections by UEFA, Fenerbahçe Şükrü Saraçoğlu Stadium was selected to host the 2009 UEFA Cup Final that went down to history as the last Final of the UEFA Cup football tournament, which was replaced by the UEFA Europa League starting from the 2009-2010 season.', 'https://fys.tff.org/TFFUploadFolder/StadResimleri/3402/6.jpg', 2, 1),
+                           ('Cemil Topuzlu Open-Air Theatre', 'The Cemil Topuzlu Open-Air Theatre (Turkish: Cemil Topuzlu Harbiye Açık Hava Tiyatrosu, also called simply Açık Hava Tiyatrosu) is a contemporary amphitheatre located at Harbiye neighborhood of Şişli district in Istanbul, Turkey. It is situated across from the Istanbul Lütfi Kırdar Convention and Exhibition Center, and behind the Hilton Istanbul Bosphorus on the European side of the city.', 'http://www.buldumbuldum.com/blog/wp-content/uploads/2014/05/anneler-gununu-aktivitelere-bogmak-ister-misiniz-6.jpg', 2, 4),
+                           ('Cazgır Cafe', 'Most crovded and biggest cafe of Uzunkopru. It has a good landscape. A litle bit expensive. But its landscape neutrolizes it', 'http://www.uzunkoprutb.org.tr/uploads/gallery/DU2aQ/20022014OFkvpM.JPG', 4, 6),
+                           ('Golden Bridge', 'The Golden Gate Bridge is a suspension bridge spanning the Golden Gate strait, the one-mile-wide (1.6 km), three-mile-long (4.8 km) channel between San Francisco Bay and the Pacific Ocean. The structure links the American city of San Francisco, California â€“ the northern tip of the San Francisco Peninsula â€“ to Marin County, carrying both U.S. Route 101 and California State Route 1 across the strait. The bridge is one of the most internationally recognized symbols of San Francisco, California, and the United States. It has been declared one of the Wonders of the Modern World by the American Society of Civil Engineers.', 'https://images.indiegogo.com/file_attachments/993310/files/20141106235403-golden-gate-bridge.jpg?1415346843', 4, 7)
                            """
         cursor.execute(query)
+        
+        query = """DROP TABLE IF EXISTS Transportation"""
+        cursor.execute(query)
 
-            ##################################################################
+        query = """CREATE TABLE Transportation(
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                INFO TEXT,
+                PHOTO VARCHAR(255) DEFAULT 'https://cdn3.iconfinder.com/data/icons/glypho-movie-and-video/64/theater-masks-512.png',
+                PLACE INTEGER REFERENCES Location (ID) ON DELETE CASCADE
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO Transportation(NAME,INFO,PHOTO,PLACE)
+                    VALUES ('Büyük İstanbul Otogarı', 'Esenler Bus Terminus (Turkish: Esenler Otogarı), is the central and largest bus terminus for intercity bus service in İstanbul, Turkey. Although the terminus is located in Bayrampaşa district it is named after Esenler district, which is closer.', 'http://i.milliyet.com.tr/YeniAnaResim/2016/04/23/fft99_mf6921598.Jpeg', 9),
+                           ('Ankara Esenboğa Airport', 'Esenboğa International Airport (IATA: ESB, ICAO: LTAC) (Turkish: Ankara Esenboğa Havalimanı or Esenboğa Uluslararası Havalimanı), is the international airport of Ankara, the capital city of Turkey. It has been operating since 1955. In 2014, the airport has served more than 11 million passengers in total, 4.9 million of which were domestic passengers. It ranked 4th in terms of total passenger traffic (after Ataturk Airport, Antalya Airport and Sabiha Gökçen Airport), 3rd in terms of domestic passenger traffic (after Ataturk Airport and Sabiha Gökçen Airport) among airports in Turkey', 'http://www.esenbogaairport.com//tr-TR/Lists/PressRelease/Attachments/44/Ankara_Esenboga.jpg', 12),
+                           ('İstanbul Atatürk Airport', 'Istanbul Atatürk Airport (IATA: IST, ICAO: LTBA) (Turkish: İstanbul Atatürk Havalimanı) is the main international airport serving Istanbul, and the biggest airport in Turkey by total number of passengers, destinations served and aircraft movements. Opened in 1924 in Yeşilköy, on the European side of the city, it is located 24 km (15 mi) west[2] of the city centre and serves as the main hub for Turkish Airlines. The citys other smaller international airport is Sabiha Gökçen International Airport.', 'http://www.ataturkairport.com//AHLPictureGalery/ist_ataturk_08_0116_2.jpg', 10),
+                           ('Sabiha Gökçen International Airport', 'Sabiha Gökçen International Airport (IATA: SAW, ICAO: LTFJ) is one of the two international airports serving İstanbul, the largest city in Turkey, the other being Atatürk Airport. Located 35 km (22 mi) southeast[1] of central İstanbul, Sabiha Gökçen is on the Asian side of the bi-continental city and serves as the hub for Pegasus Airlines as well as a base for Turkish Airlines and Borajet. The facility is named after Sabiha Gökçen, the first female combat pilot in Turkey.', 'http://www.istanbulhotels.in/UserFiles/ArticleFiles/sabiha-gokcen-international-airport18434019.jpg', 11)"""
+                                                      
+        cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS PEOPLE CASCADE"""
         cursor.execute(query)
@@ -185,131 +244,10 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
 
         query = """INSERT INTO PEOPLE (NAME, SURNAME)
                     VALUES ('Fatih ', 'Budak '),
-                           ('GÃƒÂ¼ray ', 'Ocak '),
+                           ('Güray ', 'Ocak '),
                            ('Mehmet ', 'Ozen '),
                            ('Berkan ', 'Dinar ')"""
         cursor.execute(query)
-            ###########
-
-        query = """DROP TABLE IF EXISTS LOCATION CASCADE"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE LOCATION (
-                ID SERIAL PRIMARY KEY,
-                CITYNAME VARCHAR(255) UNIQUE NOT NULL
-                )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO LOCATION (CITYNAME)
-                    VALUES ('Istanbul '),
-                           ( 'New York '),
-                           ('Pisa '),
-                           ( 'Rio de Janeiro '),
-                           ( 'London '),
-                           ( 'Barcelona '),
-                           ( 'Paris '),
-                           ('Moscow '),
-                           ( 'Koln ')"""
-        cursor.execute(query)
-            ###########
-
-        query = """DROP TABLE IF EXISTS LANDMARK"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE LANDMARK (
-                ID SERIAL PRIMARY KEY,
-                NAME VARCHAR(255) NOT NULL,
-                SCORE SCORES DEFAULT 0,
-                LOCATIONID INTEGER REFERENCES LOCATION(ID) ON DELETE CASCADE,
-                BYWHOMID INTEGER REFERENCES PEOPLE(ID) ON DELETE CASCADE,
-                INFO TEXT
-                )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO LANDMARK (NAME, SCORE, LOCATIONID, BYWHOMID, INFO)
-                    VALUES ('Maiden Tower ', 9.9, 1, 1, 'Information of Maiden Tower '),
-                           ('Statue of Liberty ', 8.7, 2, 2, 'Information of Statue of Liberty '),
-                           ('Leaning Tower of Pisa ', 7.2, 3, 3, 'Information of Leaning Tower of Pisa'),
-                           ('Christ the Redeemer ', 5.7, 4, 4, 'Information of Christ the Redeemer')"""
-        cursor.execute(query)
-            ###########
-
-        query = """DROP TABLE IF EXISTS USERS"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE USERS (
-                ID SERIAL PRIMARY KEY REFERENCES PEOPLE(ID) ON DELETE CASCADE,
-                USERNAME VARCHAR(255) NOT NULL,
-                EMAIL VARCHAR(255) NOT NULL,
-                AGE INTEGER,
-                WHENCE INTEGER REFERENCES LOCATION(ID) ON DELETE CASCADE
-                )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO USERS (USERNAME, EMAIL, AGE, WHENCE)
-                    VALUES ('budakf ', 'email of budakf ', 24, 1),
-                           ('ocakg ', 'email of ocakg ', 24, 2),
-                           ('ttozen ', 'email of ttozen ', 23, 3),
-                           ('dinar ', 'email of dinar ', 22, 4)"""
-        cursor.execute(query)
-            ###########
-
-            ##################################################################
-
-        query = """DROP TABLE IF EXISTS Cities CASCADE"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE Cities (
-                ID SERIAL PRIMARY KEY,
-                NAME VARCHAR(255),
-                COUNTRY VARCHAR(255) NOT NULL
-                )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO Cities (NAME, COUNTRY)
-                    VALUES ('Paris', 'France'),
-                           ('London', 'England'),
-                           ('Istanbul', 'Turkey'),
-                           ('Berlin', 'Germany')"""
-        cursor.execute(query)
-
-        query = """DROP TABLE IF EXISTS CafeRest"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE CafeRest (
-                ID SERIAL PRIMARY KEY,
-                NAME VARCHAR(255) NOT NULL,
-                CITY_ID INTEGER REFERENCES Cities ON DELETE SET NULL,
-                CUISINE VARCHAR(255) NULL,
-                SCORE SCORES DEFAULT 0,
-                VOTES INTEGER DEFAULT 0
-                )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO CafeRest (NAME, CITY_ID, CUISINE, SCORE)
-                    VALUES ('Le Cinq', 1, 'French', 9.2),
-                           ('The Ledbury', 2, 'European', 8.7),
-                           ('Lekker Cafe Restaurant', 3, 'Turkish', 9.4)"""
-        cursor.execute(query)
-
-        query = """DROP TABLE IF EXISTS Festival"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE Festival (
-                ID SERIAL PRIMARY KEY,
-                NAME VARCHAR(255) NOT NULL,
-                CITY_ID INTEGER REFERENCES Cities ON DELETE SET NULL,
-                CATEGORY FESTIVALS,
-                SCORE SCORES DEFAULT 0
-                )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO Festival (NAME, CITY_ID, CATEGORY, SCORE)
-                    VALUES ('Autumn Festival', 1, 'Seasonal', 7.1),
-                           ('Glastonbury', 2, 'Music', 9.2),
-                           ('Istanbul Film Festival', 3, 'Film', 8.5)"""
-        cursor.execute(query)
-
 
         connection.commit()
     return redirect(url_for('home_page'))
