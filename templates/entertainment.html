@@ -1,25 +1,36 @@
 {% extends "template.html" %}
+{% block title %}Entertainment{% endblock %}
 {% block content %}
-    <h1>Places of Entertainment</h1>
-    <form action="{{ url_for('entertainment_delete') }}" method = "post">
-    <table>
-    	<th>Select</th>
-    	<th>Name</th>
-    	<th><a href="{{url_for('places_page')}}">Place</a></th>
-    	<th>Score</th>
-        {%for place in entertainment %}
-    	<tr>
-    		<td><input type="radio" name="select" value="{{ place[0] }}"></td>
-    		<td><a href="{{url_for('entertainment_place', id = place[0]  ) }}">{{ place[1] }}</a></td>
-    		<td><a href="{{url_for('places_details', id = place[6])}}">{{ place[7] }}</a></td>
-    		<td>{{ place[2] }}</td>
-    	</tr>
-        {% endfor %}
-    </table>
-    <input type="submit" value="Delete Selected Record">
+    <div class="page-header">
+    	<h1>Places of Entertainment</h1>
+    </div>
+    <div class="container">
+    <form action="{{url_for('entertainment_delete')}}" method="post">
+        <div class="col-sm-2"></div>
+    	<div class="col-sm-2">Name</div>
+    	<div class="col-sm-2"><a href="{{url_for('activities_page')}}">Activities</a></div>
+    	<div class="col-sm-2"><a href="{{url_for('location_page')}}">Place</a></div>
+    	<div class="col-xs-1">Score</div>
+    	<br><br>
+    	{% for place in entertainment %}
+    	<div class="row">
+    		<div class="col-sm-2"><a href="{{url_for('entertainment_details', id = place[0]  ) }}"><img src="{{place[5]}}" class="img-thumbnail" alt="Photo"></a></div>
+    		<div class="col-sm-2">{{ place[1] }}</div>
+    		<div class="col-sm-2"><a href="{{url_for('activities_details', id = place[6])}}">{{ place[8] }}</a></div>
+    		<div class="col-sm-2"><a href="{{url_for('location_details', id = place[7])}}">{{ place[9] }}</a></div>
+    		<div class="col-xs-1">{{ place[2] }}</div>
+    		<input type="radio" name="select" value="{{ place[0] }}" class="items-to-hide">
+    		<p id="a"></p>
+    	</div>
+    	{% endfor %}
+    <br>
+    <input type="submit" value="Remove selected" class="items-to-hide">
     </form>
+    </div>
+    
+    <div class="container items-to-hide">
     <h2>Operations on the table</h2>
-    	<h3>Insert</h3>
+    <h3>Insert</h3>
     	<form action="{{ url_for('entertainment_insert') }}" method="post">
     		Name:<br>
     		<input type="text" name="entertainment_place_name">
@@ -33,22 +44,32 @@
     		Photo:<br>
     		<input type="url" name="entertainment_place_photo">
     		<br>
+    		Activity:<br>
+    		<select name="entertainment_activity">
+    		{% for activity in activities %}
+    			<option value="{{ activity[0] }}">{{ activity[1] }}</option>
+    		{% endfor %}
+    		</select>
+    		<br><br>
     		Place:<br>
     		<select name="entertainment_place">
-    		{% for place in places %}
+    		{% for place in location %}
     			<option value="{{ place[0] }}">{{ place[1] }}</option>
     		{% endfor %}
     		</select>
-    		<br>
+    		<br><br>
     		Info:<br>
     		<textarea rows="5" cols="50" name="entertainment_place_info"></textarea>
 			<br>
-    		<input type="submit" value="Insert">
+    		<input type="submit" value="Insert to database">
     	</form>
-    	<h3>Delete All</h3>
-    	<form action="{{url_for('entertainment_delete_all')}}" >
-    		<input type="submit" value="Delete all records">
+
+    	<h3>Delete</h3>
+    	<form action="{{url_for('entertainment_delete_all')}}">
+    		<input type="submit" value="Delete all">
     	</form>
+
     	<h3>Update</h3>
-    	<p>Click to the Entertainment Place Name</p>
+    	<p>to update go to page of entry by clicking its name</p>
+    </div>
 {% endblock %}
