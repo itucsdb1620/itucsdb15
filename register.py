@@ -17,6 +17,16 @@ def register_operation():
     photo ='http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg'
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
+            if username:
+                query = """SELECT PEOPLE.USERNAME FROM PEOPLE
+                        WHERE (PEOPLE.USERNAME = %s)"""
+                cursor.execute(query,(username, ))
+                user_data = json.dumps(cursor.fetchall())
+                exist = json.loads(user_data)
+
+                if exist:
+                    return redirect(url_for('register_page'))
+
             if name and surname and username and (password == repassword):
                 statement = """INSERT INTO PEOPLE (NAME, SURNAME, USERNAME, PASSWORD, PHOTO)
                         VALUES (%s,%s,%s,%s,%s )"""
