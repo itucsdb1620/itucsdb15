@@ -1,0 +1,38 @@
+{% extends "template.html" %}
+{% block title %}{{ people[0][1] }}{% endblock %}
+{% block content %}
+
+	<div class="page-header">
+		<h1> Page of {{ people[0][1] }}</h1>
+	</div>
+	<div class="container items-to-hide">
+
+	<img src="{{people[0][6]}}" alt="Photo" style="float:left;max-width:200px;max-height:200px;padding:5px 10px 0 0;">
+	<p style="padding:20px 0 0 0; white-space: pre-wrap;"> Name: {{ people[0][1] }} </br> Surname: {{ people[0][2] }} </br> Username: {{ people[0][3] }} </br> Email: {{ people[0][4] }} </br> Age: {{ people[0][5] }} </br> Whence: {{ people[0][8] }}
+	</p>
+	<br style="clear:both"><br>
+
+    <h2><a href="{{url_for('activities_page')}}"> Favourite Activity Type of {{ people[0][1] }} </a></h2>
+    {% for people in people %}
+    	<h3> {{ activity[0][0] }} </h3>
+    {% endfor %}
+	<br>
+	<h2> <a href="{{url_for('culture_page')}}"> Favourite Place of {{ people[0][1] }} </a> </h2>
+	<h1>  {{ culture[0][0] }} </h1>
+    <img src="{{ culture[0][2] }}" alt="Photo" style="float:left;max-width:200px;max-height:200px;padding:5px 10px 0 0;">
+    <p style="padding:20px 0 0 0; white-space: pre-wrap;"> {{ culture[0][1] }} </p>
+	<br>
+	<br> <br>
+
+    <h2> Favourite District of {{ people[0][1] }} </h2>
+    {% for people in people %}
+    	<h3>{{ place[0][0] }} </h3>
+    {% endfor %}
+
+	<img src="{{ place[0][2] }}" alt="Photo" style="float:left;max-width:200px;max-height:200px;padding:5px 10px 0 0;">
+    <p style="padding:20px 0 0 0; white-space: pre-wrap;"> {{ place[0][1] }} </p>
+	<br><br><br>
+	<br><br><br>
+	</div>
+{% endblock %}
+
