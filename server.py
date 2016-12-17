@@ -252,7 +252,7 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(255) NOT NULL,
                 SURNAME VARCHAR(255) NOT NULL,
-                USERNAME VARCHAR(255) NOT NULL,
+                USERNAME VARCHAR(255) UNIQUE NOT NULL,
                 PASSWORD VARCHAR(255) NOT NULL,
                 EMAIL VARCHAR(255),
                 AGE INTEGER,
@@ -260,15 +260,16 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
                 PHOTO VARCHAR(255),
                 BEST_ACTIVITY_ID INTEGER REFERENCES Activities(ID) ON DELETE CASCADE,
                 BEST_PLACE_ID INTEGER REFERENCES Location(ID) ON DELETE CASCADE,
-                BEST_CULTURE_ID INTEGER REFERENCES Culture(ID) ON DELETE CASCADE
+                BEST_CULTURE_ID INTEGER REFERENCES Culture(ID) ON DELETE CASCADE,
+                ISACTIVE BOOLEAN DEFAULT FALSE
                 )"""
         cursor.execute(query)
 
         query = """INSERT INTO PEOPLE (NAME, SURNAME, USERNAME, PASSWORD, EMAIL, AGE, WHENCE_ID, PHOTO, BEST_ACTIVITY_ID, BEST_PLACE_ID, BEST_CULTURE_ID)
-                    VALUES ('Fatih ', 'Budak ', 'budakf ', '123456789', 'email of budakf ', 24, 2, 'http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg', 1, 1, 1),
-                           ('Güray ', 'Ocak ', 'ocakg ', '123456789','email of ocakg ', 24, 2, 'https://pbs.twimg.com/profile_images/710169276980858880/eosxkWG0.jpg', 3, 2, 3),
-                           ('Mehmet ', 'Ozen ', 'tozen ', '123456789','email of tozen ', 23, 3,'http://i3.mirror.co.uk/incoming/article9325019.ece/ALTERNATES/s482b/Steven-Gerrard-teaser.jpg', 4, 4, 1),
-                           ('Berkan ', 'Dinar ', 'dinar ', '123456789','email of dinar ', 22, 4,'http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg', 2, 3, 2)"""
+                    VALUES ('Fatih', 'Budak ', 'budakf', '123456789', 'email of budakf ', 24, 2, 'http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg', 1, 1, 1),
+                           ('Güray', 'Ocak ', 'ocakg', '123456789','email of ocakg ', 24, 2, 'https://pbs.twimg.com/profile_images/710169276980858880/eosxkWG0.jpg', 3, 2, 3),
+                           ('Mehmet', 'Ozen ', 'tozen', '123456789','email of tozen ', 23, 3,'http://i3.mirror.co.uk/incoming/article9325019.ece/ALTERNATES/s482b/Steven-Gerrard-teaser.jpg', 4, 4, 1),
+                           ('Berkan', 'Dinar ', 'dinar', '123456789','email of dinar ', 22, 4,'http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg', 2, 3, 2)"""
         cursor.execute(query)
 
             ###########
@@ -326,16 +327,41 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
 
 @app.route('/login', methods=['GET','POST'])
 def login_page():
+    T=True
+    id=1
     if request.method == 'POST':
         session.pop('user', None)
         if request.form['password'] == 'password':
             session['user'] = request.form['username']
             return redirect(url_for('home_page'))
+
+        with dbapi2.connect(app.config['dsn']) as connection:
+            with connection.cursor() as cursor:
+                statement = """SELECT PEOPLE.ID, PEOPLE.USERNAME, PEOPLE.PASSWORD, PEOPLE.ISACTIVE FROM PEOPLE"""
+                cursor.execute(statement)
+
+                user_data = json.dumps(cursor.fetchall())
+                users = json.loads(user_data)
+
+                for user in users:
+                    if  request.form['username'] == user[1]:
+                        if  request.form['password'] == user[2]:
+                            if user[3]==False:
+                                id=user[0]
+                                statement = """UPDATE PEOPLE SET (ISACTIVE) = (%s) WHERE(ID = %s) """
+                                cursor.execute(statement, (T,id ) )
+                                return redirect(url_for('home_page'))
+
     return render_template('login.html')
 
 @app.route('/logout')
 def logout_page():
+    T=False
     session.pop('user', None)
+    with dbapi2.connect(app.config['dsn']) as connection:
+        with connection.cursor() as cursor:
+            statement = """UPDATE PEOPLE SET (ISACTIVE) = (%s) """
+            cursor.execute(statement, (T, ) )
     return redirect(url_for('home_page'))
 
 @app.before_request
