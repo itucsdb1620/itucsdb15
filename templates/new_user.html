@@ -1,0 +1,81 @@
+{% extends "template.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+		<div class="page-header">
+   		 	<h1> Page of {{ user[0][1] }}</h1>
+   		</div>
+
+	<img src="{{user[0][4]}}" alt="Photo" style="float:left;max-width:200px;max-height:200px;padding:5px 10px 0 0;">
+	<p style="padding:20px 0 0 0; white-space: pre-wrap;"> Name: {{ user[0][1] }} </br> Surname: {{ user[0][2] }} </br> Username: {{ user[0][3] }}
+	</p>
+	<br style="clear:both"><br>
+
+
+	<div class="container items-to-hide">
+	<h3> Hey {{ user[0][1] }}! Lets complete your profile </h3>
+	<br><br><br>
+
+	<form action="{{ url_for('add_info') }}" method="post">
+		<label for="email">Email:</label>
+  		<input type="email" name="email" class="form-control"><br>
+
+   		<label for="age">Age:</label>
+  		<input type="number" name="age" class="form-control" min="13" max="100"><br>
+
+		<label for="photo">Photo:</label>
+  		<input type="link" name="photo" class="form-control" placeholder="Enter link to add your profile photo "><br>
+		<br>
+
+		<label for="whence">Whence:</label>
+    	<select name="whence" class="form-control">
+    		{% for city in city %}
+    			<option value="{{ city[0] }}">{{ city[1] }}</option>
+    		{% endfor %}
+    	</select>
+    	<br>
+
+    	<label for="activity_type">Favourite Activity Type:</label>
+    	<select name="activity_type" class="form-control">
+    		{% for culture in culture %}
+    			<option value="{{ culture[0] }}">{{ culture[1] }} </option>
+    		{% endfor %}
+    	</select>
+		<br>
+
+		<label for="activity">Favourite Activity :</label>
+    	<select name="activity" class="form-control">
+    		{% for activity in activity %}
+    			<option value="{{ activity[0] }}">{{ activity[1] }}</option>
+    		{% endfor %}
+    	</select>
+		<br>
+
+		<label for="district">Favourite District :</label>
+    	<select name="district" class="form-control">
+    		{% for location in location %}
+    			<option value="{{ location[0] }}">{{ location[1] }}</option>
+    		{% endfor %}
+    	</select>
+		<br><br>
+
+		<input type="hidden" name="user_index" value="{{ user[0][0] }}">
+		<input type="submit" value="Add Information">
+	</form>
+	</div>
+	<br><br><br>
+
+
+{% endblock %}
+
+<!-- 	<label for="whence">Whence:</label>
+  		<input type="text" name="whence" class="form-control"><br>
+
+		<label for="activity_type">Favourite Activity Type:</label>
+  		<input type="text" name="activity_type" class="form-control"><br>
+
+  		<label for="activity">Favourite Activity:</label>
+  		<input type="text" name="activity" class="form-control"><br>
+
+		<label for="district">Favourite District:</label>
+  		<input type="text" name="district" class="form-control"><br> -->
+
