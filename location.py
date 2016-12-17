@@ -6,10 +6,10 @@ def location_page():
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
             statement = """SELECT Location.ID, Location.NAME, Location.INFO, Location.PHOTO,
-                        Cities.NAME, Countries.NAME FROM Cities JOIN Countries
-                        ON Cities.Country = Countries.ID
-                        LEFT OUTER JOIN Location
-                        ON Location.City=Cities.ID"""
+                        Cities.NAME, Countries.NAME FROM Location LEFT OUTER JOIN Cities
+                        ON Location.City = Cities.ID
+                        LEFT OUTER JOIN Countries
+                        ON Location.Country=Countries.ID"""
             cursor.execute(statement)
             location_data = json.dumps(cursor.fetchall())
             location = json.loads(location_data)
