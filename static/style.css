@@ -47,6 +47,10 @@ h1{
 	color: #e3564d;
 }
 
+.items-to-hide{
+	visibility:hidden;
+}
+
 li>a{
 	background-color:#38767c;
 }
