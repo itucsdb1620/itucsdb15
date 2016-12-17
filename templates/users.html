@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+{% block content %}
+
+	<div class="page-header">
+		<h1> Users List Page </h1>
+	</div>
+	<br><br>
+	<div class="container items-to-hide">
+	 {% for people in people %}
+	<img src="{{people[6]}}" alt="Photo" style="float:left;max-width:150px;max-height:150px;padding:5px 10px 0 0;">
+	<p style="padding:20px 0 0 0; white-space: pre-wrap;"> Name: {{ people[1] }} </br> Surname: {{ people[2] }} </br> Username: {{ people[3] }} </br> Email: {{ people[4] }} </br> Age: {{ people[5] }} </br> Whence: {{ people[8] }}
+	</p>
+
+	<a href="{{url_for('people_page', id=people[0] ) }}">Continue to Page of {{ people[1] }}....</a>
+	</br></br></br></br>
+	{% endfor %}
+	</div>
+{% endblock %}
+
