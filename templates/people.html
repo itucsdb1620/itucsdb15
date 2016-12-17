@@ -18,12 +18,12 @@
 	<br>
 	<h2> <a href="{{url_for('culture_page')}}"> Favourite Place of {{ people[0][1] }} </a> </h2>
 	<h1>  {{ culture[0][0] }} </h1>
-    <img src="{{ culture[0][2] }}" alt="Photo" style="float:left;max-width:200px;max-height:200px;padding:5px 10px 0 0;">
+    <img src="{{ culture[0][2] }}" alt="Photo" style="float:left;max-width:500px;max-height:500px;padding:5px 10px 0 0;">
     <p style="padding:20px 0 0 0; white-space: pre-wrap;"> {{ culture[0][1] }} </p>
 	<br>
 	<br> <br>
 
-    <h2> Favourite District of {{ people[0][1] }} </h2>
+    <h2> <a href="{{url_for('location_page')}}"> Favourite Location of {{ people[0][1] }} </a></h2>
     {% for people in people %}
     	<h3>{{ place[0][0] }} </h3>
     {% endfor %}
