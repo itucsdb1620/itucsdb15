@@ -4,6 +4,11 @@ from entertainment import *
 from transportation import *
 from activities import *
 from location import *
+from landmark import *
+from people import *
+from users import *
+from register import *
+from agency import *
 
 @app.route('/')
 def home_page():
@@ -83,7 +88,7 @@ def initialize_database():
                            ('Transportaion', 'To be added', 'http://c8.alamy.com/comp/A9F95W/germany-berlin-a-hybrid-bus-belonging-to-the-city-s-transportation-A9F95W.jpg', 'Travel')"""
         cursor.execute(query)
 
-        query = """DROP TABLE IF EXISTS Culture"""
+        query = """DROP TABLE IF EXISTS Culture CASCADE"""
         cursor.execute(query)
 
         query = """CREATE TABLE Culture (
@@ -134,7 +139,9 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
         query = """INSERT INTO Countries (NAME, INFO, PHOTO)
                     VALUES  ('Turkey', 'To be added', 'http://center-maxima.com/wp-content/uploads/2014/02/turkey.jpg'),
                             ('Germany', 'To be added', 'https://s-media-cache-ak0.pinimg.com/originals/81/a2/61/81a2617c60520a95701cf34834966035.png'),
-                            ('USA', 'To be added', 'http://www.cambridgedu.com/images/img/usa.png')"""
+                            ('USA', 'To be added', 'http://www.cambridgedu.com/images/img/usa.png'),
+                            ('Italy', 'To be added', 'https://s-media-cache-ak0.pinimg.com/originals/81/a2/61/81a2617c60520a95701cf34834966035.png'),
+                            ('Brasil', 'To be added', 'http://www.cambridgedu.com/images/img/usa.png')"""
         cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS Cities CASCADE"""
@@ -154,7 +161,11 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
                             ('Edirne', 'To be added', 'https://www.era111.com/files/import/images/en-guzel-edirne-resimleri.jpeg', 1),
                             ('Berlin', 'To be added', 'http://www.easyjet.com/en/holidays/shared/images/guides/germany/berlin.jpg', 2),
                             ('San Francisco', 'To be added', 'http://www.mrwallpaper.com/wallpapers/san-francisco-1600x900.jpg', 3),
-                            ('Ankara', 'To be Added', 'http://www.neredekal.com/res/haber/hb_b_20115444_l-b.jpg', 1)
+                            ('Ankara', 'To be Added', 'http://www.neredekal.com/res/haber/hb_b_20115444_l-b.jpg', 1),
+                            ('İstanbul', 'To be added ', 'https://lh6.googleusercontent.com/--whYuqd2Zso/U5gZkZxQMmI/AAAAAAAAu-E/A4VH6Cr2IX8/s1152/k%25C4%25B1zkulaesi.jpg', 1),
+                            ('New York', ' To be added', 'https://www.era111.com/files/import/images/en-guzel-edirne-resimleri.jpeg', 3),
+                            ('Pisa', 'To be added ', 'http://www.easyjet.com/en/holidays/shared/images/guides/germany/berlin.jpg', 3),
+                            ('Rio de Janeiro', 'To be added ', 'http://www.mrwallpaper.com/wallpapers/san-francisco-1600x900.jpg', 4)
                             """
         cursor.execute(query)
 
@@ -211,7 +222,7 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
                            ('Golden Bridge', 'The Golden Gate Bridge is a suspension bridge spanning the Golden Gate strait, the one-mile-wide (1.6 km), three-mile-long (4.8 km) channel between San Francisco Bay and the Pacific Ocean. The structure links the American city of San Francisco, California â€“ the northern tip of the San Francisco Peninsula â€“ to Marin County, carrying both U.S. Route 101 and California State Route 1 across the strait. The bridge is one of the most internationally recognized symbols of San Francisco, California, and the United States. It has been declared one of the Wonders of the Modern World by the American Society of Civil Engineers.', 'https://images.indiegogo.com/file_attachments/993310/files/20141106235403-golden-gate-bridge.jpg?1415346843', 4, 7)
                            """
         cursor.execute(query)
-        
+
         query = """DROP TABLE IF EXISTS Transportation"""
         cursor.execute(query)
 
@@ -229,8 +240,10 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
                            ('Ankara Esenboğa Airport', 'Esenboğa International Airport (IATA: ESB, ICAO: LTAC) (Turkish: Ankara Esenboğa Havalimanı or Esenboğa Uluslararası Havalimanı), is the international airport of Ankara, the capital city of Turkey. It has been operating since 1955. In 2014, the airport has served more than 11 million passengers in total, 4.9 million of which were domestic passengers. It ranked 4th in terms of total passenger traffic (after Ataturk Airport, Antalya Airport and Sabiha Gökçen Airport), 3rd in terms of domestic passenger traffic (after Ataturk Airport and Sabiha Gökçen Airport) among airports in Turkey', 'http://www.esenbogaairport.com//tr-TR/Lists/PressRelease/Attachments/44/Ankara_Esenboga.jpg', 12),
                            ('İstanbul Atatürk Airport', 'Istanbul Atatürk Airport (IATA: IST, ICAO: LTBA) (Turkish: İstanbul Atatürk Havalimanı) is the main international airport serving Istanbul, and the biggest airport in Turkey by total number of passengers, destinations served and aircraft movements. Opened in 1924 in Yeşilköy, on the European side of the city, it is located 24 km (15 mi) west[2] of the city centre and serves as the main hub for Turkish Airlines. The citys other smaller international airport is Sabiha Gökçen International Airport.', 'http://www.ataturkairport.com//AHLPictureGalery/ist_ataturk_08_0116_2.jpg', 10),
                            ('Sabiha Gökçen International Airport', 'Sabiha Gökçen International Airport (IATA: SAW, ICAO: LTFJ) is one of the two international airports serving İstanbul, the largest city in Turkey, the other being Atatürk Airport. Located 35 km (22 mi) southeast[1] of central İstanbul, Sabiha Gökçen is on the Asian side of the bi-continental city and serves as the hub for Pegasus Airlines as well as a base for Turkish Airlines and Borajet. The facility is named after Sabiha Gökçen, the first female combat pilot in Turkey.', 'http://www.istanbulhotels.in/UserFiles/ArticleFiles/sabiha-gokcen-international-airport18434019.jpg', 11)"""
-                                                      
+
         cursor.execute(query)
+
+        ##################################################################
 
         query = """DROP TABLE IF EXISTS PEOPLE CASCADE"""
         cursor.execute(query)
@@ -238,16 +251,75 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
         query = """CREATE TABLE PEOPLE (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(255) NOT NULL,
-                SURNAME VARCHAR(255) NOT NULL
+                SURNAME VARCHAR(255) NOT NULL,
+                USERNAME VARCHAR(255) NOT NULL,
+                PASSWORD VARCHAR(255) NOT NULL,
+                EMAIL VARCHAR(255),
+                AGE INTEGER,
+                WHENCE_ID INTEGER REFERENCES Cities(ID) ON DELETE CASCADE,
+                PHOTO VARCHAR(255),
+                BEST_ACTIVITY_ID INTEGER REFERENCES Activities(ID) ON DELETE CASCADE,
+                BEST_PLACE_ID INTEGER REFERENCES Location(ID) ON DELETE CASCADE,
+                BEST_CULTURE_ID INTEGER REFERENCES Culture(ID) ON DELETE CASCADE
                 )"""
         cursor.execute(query)
 
-        query = """INSERT INTO PEOPLE (NAME, SURNAME)
-                    VALUES ('Fatih ', 'Budak '),
-                           ('Güray ', 'Ocak '),
-                           ('Mehmet ', 'Ozen '),
-                           ('Berkan ', 'Dinar ')"""
+        query = """INSERT INTO PEOPLE (NAME, SURNAME, USERNAME, PASSWORD, EMAIL, AGE, WHENCE_ID, PHOTO, BEST_ACTIVITY_ID, BEST_PLACE_ID, BEST_CULTURE_ID)
+                    VALUES ('Fatih ', 'Budak ', 'budakf ', '123456789', 'email of budakf ', 24, 2, 'http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg', 1, 1, 1),
+                           ('Güray ', 'Ocak ', 'ocakg ', '123456789','email of ocakg ', 24, 2, 'https://pbs.twimg.com/profile_images/710169276980858880/eosxkWG0.jpg', 3, 2, 3),
+                           ('Mehmet ', 'Ozen ', 'tozen ', '123456789','email of tozen ', 23, 3,'http://i3.mirror.co.uk/incoming/article9325019.ece/ALTERNATES/s482b/Steven-Gerrard-teaser.jpg', 4, 4, 1),
+                           ('Berkan ', 'Dinar ', 'dinar ', '123456789','email of dinar ', 22, 4,'http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg', 2, 3, 2)"""
         cursor.execute(query)
+
+            ###########
+
+        query = """DROP TABLE IF EXISTS LANDMARK CASCADE"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE LANDMARK (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                SCORE SCORES DEFAULT 0,
+                PHOTO VARCHAR(255),
+                LOCATIONID INTEGER REFERENCES Cities(ID) ON DELETE CASCADE,
+                VOTES INTEGER DEFAULT 0,
+                INFO TEXT
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO LANDMARK (NAME, PHOTO, LOCATIONID, INFO)
+                    VALUES ('Maiden Tower ', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeO96yh3Q0CsmzyLGBGXpscCP5oLsM1HVxpVATlXy09o3dTNWD', 6,
+                            'The Maiden Tower also known as Leander s Tower (Tower of Leandros) since the medieval Byzantine period, is a tower lying on a small islet located at the southern entrance of the Bosphorus strait 200 m (220 yd) from the coast of Usküdar in Istanbul, Turkey.After the naval victory at Cyzicus, the ancient Athenian general Alcibiades possibly built a custom station for ships coming from the Black Sea on a small rock in front of Chrysopolis (today s Usküdar).[2] In 1110 Byzantine Emperor Alexius Comnenus built a wooden tower protected by a stone wall.[2] From the tower an iron chain stretched across to another tower erected on the European shore, at the quarter of Mangana in Constantinople.[2] The islet was then connected to the Asiatic shore through a defense wall, whose underwater remains are still visible.[2] During the Ottoman conquest of Constantinople (Istanbul) in 1453, the tower held a Byzantine garrison commanded by the Venetian Gabriele Trevisano.[2] Subsequently, the structure was used as a watchtower by the Ottoman Turks during the reign of Sultan Mehmed the Conqueror.' ),
+                           ('Statue of Liberty ','https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSbk4vnRjWyAGgU7GMxVl3VNjGoSIIYb7jDAuYhEu-VyiqBJgCvEg', 7,
+                           'The Statue of Liberty is a colossal neoclassical sculpture on Liberty Island in New York Harbor in New York City, in the United States. The copper statue, designed by Frederic Auguste Bartholdi, a French sculptor, was built by Gustave Eiffel and dedicated on October 28, 1886. It was a gift to the United States from the people of France. The statue is of a robed female figure representing Libertas, the Roman goddess, who bears a torch and a tabula ansata (a tablet evoking the law) upon which is inscribed the date of the American Declaration of Independence, July 4, 1776. A broken chain lies at her feet. The statue is an icon of freedom and of the United States, and was a welcoming sight to immigrants arriving from abroad.'),
+                           ('Leaning Tower of Pisa ','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-I2xUehvjKzrUF5yJKsw-9NEIOrjTwfuAdDfNtQep8jI2wrYj', 8,
+                           'The Leaning Tower of Pisa (Italian: Torre pendente di Pisa) or simply the Tower of Pisa  is the campanile, or freestanding bell tower, of the cathedral of the Italian city of Pisa, known worldwide for its unintended tilt. It is situated behind Pisa s cathedral and is the third oldest structure in the city s Cathedral Square (Piazza del Duomo) after the cathedral and the Pisa Baptistry. The tower s tilt began during construction, caused by an inadequate foundation on ground too soft on one side to properly support the structure s weight. The tilt increased in the decades before the structure was completed, and gradually increased until the structure was stabilized (and the tilt partially corrected) by efforts in the late 20th and early 21st centuries. The height of the tower is 55.86 metres (183.27 feet) from the ground on the low side and 56.67 metres (185.93 feet) on the high side. The width of the walls at the base is 2.44 m (8 ft 0.06 in). Its weight is estimated at 14,500 metric tons (16,000 short tons).[1] The tower has 296 or 294 steps; the seventh floor has two fewer steps on the north-facing staircase. Prior to restoration work performed between 1990 and 2001, the tower leaned at an angle of 5.5 degrees,[2][3][4] but the tower now leans at about 3.99 degrees.[5] This means that the top of the tower is displaced horizontally 3.9 metres (12 ft 10 in) from the centre.'),
+                           ('Christ the Redeemer ','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK88g7zwwUpvrqn6DEHysSdPouU4iuRpNZ8HQtoTTsAhf9nvSo', 9,
+                           'Christ the Redeemer (Portuguese: Cristo Redentor is an Art Deco statue of Jesus Christ in Rio de Janeiro, Brazil, created by French sculptor Paul Landowski and built by the Brazilian engineer Heitor da Silva Costa, in collaboration with the French engineer Albert Caquot. Romanian sculptor Gheorghe Leonida fashioned the face. The statue is 30 metres (98 ft) tall, not including its 8-metre (26 ft) pedestal, and its arms stretch 28 metres (92 ft) wide. The statue weighs 635 metric tons (625 long, 700 short tons), and is located at the peak of the 700-metre (2,300 ft) Corcovado mountain in the Tijuca Forest National Park overlooking the city of Rio. A symbol of Christianity across the world, the statue has also become a cultural icon of both Rio de Janeiro and Brazil, and is listed as one of the New Seven Wonders of the World.[3] It is made of reinforced concrete and soapstone, and was constructed between 1922 and 1931.')"""
+        cursor.execute(query)
+
+            ##################################################################
+        query = """DROP TABLE IF EXISTS AGENCY CASCADE"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE AGENCY(
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                SCORE SCORES DEFAULT 0,
+                PHOTO VARCHAR(255),
+                VOTES INTEGER DEFAULT 0,
+                INFO TEXT
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO AGENCY (NAME, PHOTO, INFO)
+                VALUES('STA Travel','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVz6MfrguKy_uhS4mxObQzAtMtgNdAi7udJNsQ1IhR3Wp0aS3I', 'http://www.statravel.co.uk/'),
+                    ('Star Tours','https://s23.postimg.org/mc3zr75wn/star.png','http://www.startours.co.uk/'),
+                    ('Insight Vacations','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ8n4SWkqSZQM6OOhY09RrZycG-geMf7xUhAiQipKSoMp959ks','https://www.insightvacations.com/eu'),
+                    ('Tucan Travel','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ZxcD0g0FYg4hrPAYexzFJCugurotFP0ZjnNXpO1qtB7tYj42Dg','https://www.tucantravel.com/')
+                    """
+        cursor.execute(query)
+            ##################################################################
 
         connection.commit()
     return redirect(url_for('home_page'))
@@ -286,10 +358,6 @@ def counter_page():
         count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
 
-@app.route('/agency')
-def agency_page():
-    now = datetime.datetime.now()
-    return render_template('agency.html', current_time=now.ctime())
 
 if __name__ == '__main__':
 
@@ -307,3 +375,4 @@ if __name__ == '__main__':
                                host='localhost' port=5432 dbname='itucsdb'"""
 
     app.run(host='0.0.0.0', port=port, debug=debug)
+
