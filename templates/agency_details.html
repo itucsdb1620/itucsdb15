@@ -1,0 +1,56 @@
+{% extends "template.html" %}
+{% block title %}{{ agency[0][1] }}{% endblock %}
+{% block content %}
+
+	<div class="page-header">
+   		 <h1> {{ agency[0][1] }} </h1>
+   	</div>
+	<img src="{{agency[0][3]}}" alt="Photo" style="float:left;max-width:500px;max-height:500px;padding:5px 10px 0 0;">
+	<p style="padding:20px 0 0 0; white-space: pre-wrap;"><a href ="{{ agency[0][5] }}">Click for more Information about {{ agency[0][1] }} </a></p>
+	<p style="font-weight: bold;">
+	<br style="clear:both"><br>
+
+	<h4> Lets vote {{ agency[0][1] }} </h4>
+	<form action="{{url_for('agency_vote')}}" method="post">
+		<input type="number" name="vote" min="1" max="10">
+		<input type="hidden" name="agency_vote_index" value="{{ agency[0][0] }}">
+		<br>
+		<input type="submit" value="Vote">
+   	</form>
+	</br></br></br></br>
+
+	<div class="container items-to-hide">
+	<form action="{{url_for('agency_update')}}" method="post">
+	<table>
+		<th>Attribute</th>
+		<th>Current Value</th>
+		<th>Updated Value</th>
+		<tr>
+			<td>Name</td>
+			<td>{{ agency[0][1] }}</td>
+			<td><input type="text" name="name_update"></td>
+		</tr>
+		<tr>
+			<td>Score</td>
+			<td>{{ agency[0][2] }}</td>
+			<td><input type="text" name="score_update"></td>
+		</tr>
+	 	<tr>
+			<td>Information</td>
+			<td>{{ agency[0][5] }}</td>
+
+			<td><textarea rows="15" cols="50" name="info_update"></textarea></td>
+		</tr>
+
+	</table>
+	<br>
+	 Photo:
+	<input type="url" name="photo_update" placeholder="Enter link to agency photo to add"></input> </td>
+	<br><br><br>
+	<input type="hidden" name="agency_index" value="{{ agency[0][0] }}">
+	<td><input type="submit" value="Update"></td>
+   	</form>
+   	</div>
+	</br></br><br>
+
+{% endblock %}
