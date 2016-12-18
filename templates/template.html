@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<title>Tourism - {% block title %}{% endblock %}</title>
+		<title>itucsdb1620 - {% block title %}{% endblock %}</title>
 
 		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}"/>
 		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
@@ -28,8 +28,9 @@
 					    <li><a href="{{ url_for('entertainment_page') }}">Entertainment</a></li>
 					    <li><a href="{{ url_for('transportation_page') }}">Transportation</a></li>
 					    <li><a href="{{ url_for('landmark_page') }}">Landmark</a></li>
-					     <li><a href="{{ url_for('agency_page') }}">Travel Agencies</a></li>
+					    <li><a href="{{ url_for('agency_page') }}">Travel Agencies</a></li>
 					    <li><a href="{{ url_for('users_page') }}">Users</a></li>
+					    <li><a href="{{ url_for('accommodation_page') }}">Accommodation</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 					    <li><a href="{{ url_for('login_page') }}">Login</a></li>
