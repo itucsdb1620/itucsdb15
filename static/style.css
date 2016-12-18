@@ -1,3 +1,7 @@
+body{
+	background-color: #fff9fc;
+}
+
 table, th, td{
     border: 1px solid black;
     border-collapse: collapse;
@@ -26,11 +30,6 @@ h1{
 	opacity:0.5;
 }
 
-.navbar{
-	background-color:#38767c;
-
-}
-
 .row{
 	height:140px;
 	overflow:hidden;
@@ -42,11 +41,6 @@ h1{
 	margin: 0 auto;
 }
 
-.navbar-custom{
-	background-color:#204043;
-	color: #e3564d;
-}
-
 .items-to-hide{
 	visibility:hidden;
 }
@@ -55,11 +49,23 @@ h1{
 	visibility:hidden;
 }
 
+.navbar{
+	background-color: #55537c;
+}
+
 li>a{
-	background-color:#38767c;
+	font-size: 120%;
+}
+
+ul>li:hover{
+	background-color:#28c8ad;
 }
 h1, h2, h3, h4 {
-  color: #1aade9;
+  color: #206886;
+}
+
+h1{
+	padding: 2%;
 }
 
 * {
@@ -75,7 +81,7 @@ box-sizing: border-box;
 	width: 300px;
 }
 .login-screen {
-background-color: #FFF;
+background-color: #55537c;
 padding: 20px;
 border-radius: 5px
 }
@@ -111,7 +117,7 @@ box-shadow: none;
 
 .login-btn {
   border: 2px solid transparent;
-  background: #3498DB;
+  background: #28c8ad;
   color: #ffffff;
   font-size: 16px;
   line-height: 25px;
@@ -127,12 +133,6 @@ box-shadow: none;
 }
 
 .login-btn:hover {
-  background-color: #2980B9;
+  background-color: #6eb5e4;
 }
-
-.login-link {
-  font-size: 12px;
-  color: #444;
-  display: block;
-  margin-top: 12px;
-}
+S
