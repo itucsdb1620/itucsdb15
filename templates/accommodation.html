@@ -1,0 +1,61 @@
+{% extends "template.html" %}
+{% block title %}Accommodation{% endblock %}
+{% block content %}
+	<div class="page-header">
+    	<h1>Accommodation Places</h1>
+    </div>
+    <div class="container">
+    <form action="{{url_for('accommodation_delete')}}" method="post">
+    	<div class="col-sm-2"></div>
+    	<div class="col-sm-2">Name</div>
+    	<div class="col-sm-2">Type</div>
+    	<div class="col-sm-2">Score</div>
+    	<br><br>
+    	{% for place in places %}
+    	<div class="row">
+    		<div class="col-sm-2"><a href="{{url_for('accommodation_details', id = place[0]  ) }}"><img src="{{place[5]}}" class="img-thumbnail" alt="Photo"></a></div>
+    		<div class="col-sm-2">{{ place[1] }}</div>
+    		<div class="col-sm-2">{{ place[6] }}</div>
+    		<div class="col-sm-2">{{ place[2] }}</div>
+    		<input type="radio" name="select" value="{{ place[0] }}" class="items-to-hide">
+    	</div>
+    	{% endfor %}
+    <input type="submit" value="Remove selected" class="items-to-hide">
+	</form>
+	</div>
+
+	<div class="container items-to-hide">
+	<h3>Insert</h3>
+	<form action="{{url_for('accommodation_insert')}}" method="post">
+    	Name:<br>
+    	<input type="text" name="accommodation_name">
+    	<br>
+    	Photo:<br>
+    	<input type="url" name="accommodation_photo">
+    	<br>
+    	Score:<br>
+    	<input type="number" name="accommodation_place_score" min="1" max="10">
+    	<br>
+    	Votes:<br>
+    	<input type="number" name="accommodation_place_votes">
+    	<br>
+    	Type:<br>
+    	<select name="accommodation_type">
+    		<option value="Hotel">Hotel</option>
+    		<option value="Hostel">Hostel</option>
+    		<option value="Motel">Motel</option>
+    		<option value="Rural Places">Rural Places</option>
+    	</select>
+    	<br>
+    	Info:<br>
+    	<textarea rows="5" cols="50" name="accommodation_info"></textarea>
+		<br>
+    	<input type="submit" value="Insert to database">
+	</form>
+
+	<h3>Delete all</h3>
+    <form action="{{url_for('accommodation_delete_all')}}">
+    	<input type="submit" value="Delete all">
+	</form>
+	</div>
+{% endblock %}
