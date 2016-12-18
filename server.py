@@ -64,15 +64,6 @@ def initialize_database():
                            OR (VALUE = 'Seasonal'))"""
         cursor.execute(query)
 
-        query = """DROP TABLE IF EXISTS COUNTER"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE COUNTER (N INTEGER)"""
-        cursor.execute(query)
-
-        query = """INSERT INTO COUNTER (N) VALUES (0)"""
-        cursor.execute(query)
-
         query = """DROP TABLE IF EXISTS Activities CASCADE"""
         cursor.execute(query)
 
@@ -410,21 +401,6 @@ def before_request():
     g.user = None
     if 'user' in session:
         g.user = session['user']
-
-@app.route('/count')
-def counter_page():
-    with dbapi2.connect(app.config['dsn']) as connection:
-        cursor = connection.cursor()
-
-        query = "UPDATE COUNTER SET N = N + 1"
-        cursor.execute(query)
-        connection.commit()
-
-        query = "SELECT N FROM COUNTER"
-        cursor.execute(query)
-        count = cursor.fetchone()[0]
-    return "This page was accessed %d times." % count
-
 
 if __name__ == '__main__':
 
