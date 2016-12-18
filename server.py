@@ -93,7 +93,7 @@ def initialize_database():
                            ('Dine', 'To be added', 'https://thumb9.shutterstock.com/display_pic_with_logo/337030/282446912/stock-photo-table-set-restaurant-282446912.jpg', 'Eat & Drink'),
                            ('Breakfast & Brunch', 'To be added', 'http://theeverygirl.com/sites/default/files/articles/inlineimages/Everygirl%20Brunch_1034.jpg', 'Eat & Drink'),
                            ('Patisserie', 'To be added', 'http://c8.alamy.com/comp/BG82RM/france-paris-interior-of-a-patisserie-BG82RM.jpg', 'Eat & Drink'),
-                           ('Drink (Alcohol)', 'To be added', 'https://thumb1.shutterstock.com/display_pic_with_logo/1433222/202914193/stock-photo-bar-and-desk-202914193.jpg', 'Eat & Drink'),
+                           ('Bar & Pub', 'To be added', 'https://thumb1.shutterstock.com/display_pic_with_logo/1433222/202914193/stock-photo-bar-and-desk-202914193.jpg', 'Eat & Drink'),
                            ('Swim', 'To be added', 'https://thumb9.shutterstock.com/display_pic_with_logo/764968/187844036/stock-photo-children-swimming-pool-187844036.jpg', 'Sport'),
                            ('Rest', 'To be added', 'https://thumb9.shutterstock.com/display_pic_with_logo/160510/123035896/stock-photo-hotel-room-123035896.jpg', 'Accommodation'),
                            ('Sightseeing', 'To be added', 'http://c8.alamy.com/comp/BHM71R/stanley-park-vancouver-bc-british-columbia-canada-sightseeing-tour-BHM71R.jpg', 'Travel'),
@@ -217,7 +217,10 @@ Other purposes of the Great Wall have included border controls, allowing the imp
         cursor.execute(query)
 
         query = """INSERT INTO Accommodation (NAME, INFO, PHOTO, TYPE, LOCATION_ID)
-                    VALUES ('My Hotel','This is good hotel','https://media-cdn.tripadvisor.com/media/photo-s/02/39/a9/e9/warwick-seattle-hotel.jpg','Hotel',1)"""
+                    VALUES ('My Hotel','Hotel','https://media-cdn.tripadvisor.com/media/photo-s/02/39/a9/e9/warwick-seattle-hotel.jpg','Hotel',1),
+                           ('My Hostel','Hostel','http://www.patiohostel.com/modules/accordion/images/image1.jpg','Hostel',4),
+                           ('My Motel','Motel','https://media-cdn.tripadvisor.com/media/photo-s/01/a2/f4/ff/motel-from-outside.jpg','Motel',6),
+                           ('My Rural Place','Rural','http://www.lovetoescape.com/images/SPHeaders/22647495_hg_Rural-holidays.jpg','Rural Places',7)"""
         cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS Entertainment"""
