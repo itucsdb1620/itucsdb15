@@ -4,12 +4,27 @@ from settings import *
 def accommodation_page():
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
-            query = """SELECT * FROM Accommodation ORDER BY SCORE DESC"""
+            query = """SELECT Accommodation.ID, Accommodation.NAME, Accommodation.SCORE,
+                       Accommodation.VOTES, Accommodation.INFO, Accommodation.PHOTO,
+                       Accommodation.TYPE, Accommodation.LOCATION_ID, Countries.Name, Cities.Name,
+                       Location.Name FROM Accommodation
+                       LEFT OUTER JOIN Location
+                       ON Accommodation.LOCATION_ID=Location.ID
+                       LEFT OUTER JOIN Cities
+                       ON Location.CITY=Cities.ID
+                       LEFT OUTER JOIN Countries
+                       ON Cities.COUNTRY=Countries.ID
+                       ORDER BY SCORE DESC"""
             cursor.execute(query)
             places_data = json.dumps(cursor.fetchall())
             places = json.loads(places_data)
             for place in places:
                 place[2] = "{:2.2f}".format(place[2])
+
+            query = """SELECT ID,NAME FROM Location"""
+            cursor.execute(query)
+            locations_data = json.dumps(cursor.fetchall())
+            locations = json.loads(locations_data)
 
     if g.user:
         if(g.user == "admin"):
@@ -19,16 +34,31 @@ def accommodation_page():
     else:
         usernum = 2
     now = datetime.datetime.now()
-    return render_template('accommodation.html', current_time=now.ctime(), places=places, usernum=usernum)
+    return render_template('accommodation.html', current_time=now.ctime(), places=places, locations=locations, usernum=usernum)
 
 @app.route('/accommodation/<int:id>')
 def accommodation_details(id):
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
-            statement = """SELECT * FROM Accommodation WHERE (ID = %s)"""
+            statement = """SELECT Accommodation.ID, Accommodation.NAME, Accommodation.SCORE,
+                           Accommodation.VOTES, Accommodation.INFO, Accommodation.PHOTO,
+                           Accommodation.TYPE, Accommodation.LOCATION_ID, Countries.Name, Cities.Name,
+                           Location.Name FROM Accommodation
+                           LEFT OUTER JOIN Location
+                           ON Accommodation.LOCATION_ID=Location.ID
+                           LEFT OUTER JOIN Cities
+                           ON Location.CITY=Cities.ID
+                           LEFT OUTER JOIN Countries
+                           ON Cities.COUNTRY=Countries.ID
+                           WHERE (Accommodation.ID = %s)"""
             cursor.execute(statement, (id,))
             places_data = json.dumps(cursor.fetchall())
             places = json.loads(places_data)
+
+            query = """SELECT ID,NAME FROM Location"""
+            cursor.execute(query)
+            location_data = json.dumps(cursor.fetchall())
+            locations = json.loads(location_data)
     if g.user:
         if(g.user == "admin"):
             usernum = 0
@@ -36,7 +66,7 @@ def accommodation_details(id):
             usernum = 1
     else:
         usernum = 2
-    return render_template('accommodation_details.html', places=places, usernum=usernum)
+    return render_template('accommodation_details.html', places=places, locations=locations, usernum=usernum)
 
 @app.route('/accommodation/insert', methods=["POST"])
 def accommodation_insert():
@@ -46,12 +76,18 @@ def accommodation_insert():
     info = request.form['accommodation_info']
     photo = request.form['accommodation_photo']
     type = request.form['accommodation_type']
+    location = request.form["accommodation_location"]
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
-            if name:
-                statement = """INSERT INTO Accommodation (NAME, INFO, SCORE, VOTES, PHOTO, TYPE)
-                        VALUES (%s, %s, %s, %s, %s, %s)"""
-                cursor.execute(statement, (name,info,score,votes,photo,type))
+            if name and score and votes and type and location:
+                query = """SELECT * FROM Location WHERE (ID = %s)"""
+                cursor.execute(query, (location,))
+                exists_data = json.dumps(cursor.fetchall())
+                exists = json.loads(exists_data)
+                if(exists):
+                    statement = """INSERT INTO Accommodation (NAME, INFO, SCORE, VOTES, PHOTO, TYPE, LOCATION_ID)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+                    cursor.execute(statement, (name,info,score,votes,photo,type,location))
 
     return redirect(url_for('accommodation_page'))
 
@@ -72,6 +108,7 @@ def accommodation_update():
     photo = request.form["accommodation_photo_update"]
     info = request.form["accommodation_info_update"]
     type = request.form["accommodation_type_update"]
+    location = request.form["accommodation_location_update"]
     id = request.form["accommodation_index"]
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
@@ -87,6 +124,9 @@ def accommodation_update():
             if type:
                 statement = """UPDATE Accommodation SET TYPE = (%s) WHERE (ID = %s)"""
                 cursor.execute(statement, (type,id))
+            if location:
+                statement = """UPDATE Accommodation SET LOCATION_ID = (%s) WHERE (ID = %s)"""
+                cursor.execute(statement, (location,id))
     return redirect(url_for('accommodation_details',id=id))
 
 @app.route('/accommodation/delete_all')
