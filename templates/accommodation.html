@@ -8,15 +8,21 @@
     <form action="{{url_for('accommodation_delete')}}" method="post">
     	<div class="col-sm-2"></div>
     	<div class="col-sm-2">Name</div>
-    	<div class="col-sm-2">Type</div>
-    	<div class="col-sm-2">Score</div>
+    	<div class="col-sm-1">Type</div>
+    	<div class="col-sm-1">Country</div>
+    	<div class="col-sm-1">City</div>
+    	<div class="col-sm-1"><a href="{{ url_for('location_page') }}">District</a></div>
+    	<div class="col-sm-1">Score</div>
     	<br><br>
     	{% for place in places %}
     	<div class="row">
     		<div class="col-sm-2"><a href="{{url_for('accommodation_details', id = place[0]  ) }}"><img src="{{place[5]}}" class="img-thumbnail" alt="Photo"></a></div>
     		<div class="col-sm-2">{{ place[1] }}</div>
-    		<div class="col-sm-2">{{ place[6] }}</div>
-    		<div class="col-sm-2">{{ place[2] }}</div>
+    		<div class="col-sm-1">{{ place[6] }}</div>
+    		<div class="col-sm-1">{{ place[8] }}</div>
+    		<div class="col-sm-1">{{ place[9] }}</div>
+    		<div class="col-sm-1"><a href="{{url_for('location_details', id=place[7] )}}">{{ place[10] }}</a></div>
+    		<div class="col-sm-1">{{ place[2] }}</div>
     		<input type="radio" name="select" value="{{ place[0] }}" class="items-to-hide">
     	</div>
     	{% endfor %}
@@ -45,6 +51,13 @@
     		<option value="Hostel">Hostel</option>
     		<option value="Motel">Motel</option>
     		<option value="Rural Places">Rural Places</option>
+    	</select>
+    	<br>
+    	Location:<br>
+    	<select name="accommodation_location">
+    		{% for location in locations %}
+    			<option value="{{ location[0] }}">{{ location[1] }}</option>
+    		{% endfor %}
     	</select>
     	<br>
     	Info:<br>

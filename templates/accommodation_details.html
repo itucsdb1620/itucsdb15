@@ -30,6 +30,26 @@
 			</td>
 		</tr>
 		<tr>
+			<td>Country</td>
+			<td>{{ places[0][8] }}</td>
+			<td>Can't update this</td>
+		</tr>
+		<tr>
+			<td>City</td>
+			<td>{{ places[0][9] }}</td>
+			<td>Can't update this</td>
+		</tr>
+		<tr>
+			<td>Location</td>
+			<td>{{ places[0][10] }}</td>
+			<td><select name="accommodation_location_update">
+    			{% for location in locations %}
+    				<option value="{{ location[0]}}">{{ location[1] }}</option>
+    			{% endfor %}
+				</select>
+			</td>
+		</tr>
+		<tr>
 			<td>Score</td>
 			<td>{{ places[0][2] }}</td>
 			<td>Vote below to update</td>
