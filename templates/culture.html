@@ -9,6 +9,8 @@
     	<div class="col-sm-2"></div>
     	<div class="col-sm-2">Name</div>
     	<div class="col-sm-2"><a href="{{url_for('activities_page')}}">Main activity</a></div>
+    	<div class="col-sm-2">Country</div>
+    	<div class="col-sm-2">City</div>
     	<div class="col-xs-1">Score</div>
     	<br><br>
     	{% for place in culture %}
@@ -16,6 +18,8 @@
     		<div class="col-sm-2"><a href="{{url_for('culture_details', id = place[0]  ) }}"><img src="{{place[5]}}" class="img-thumbnail" alt="Photo"></a></div>
     		<div class="col-sm-2">{{ place[1] }}</div>
     		<div class="col-sm-2"><a href="{{url_for('activities_details', id = place[6])}}">{{ place[7] }}</a></div>
+    		<div class="col-sm-2">{{ place[8] }}</div>
+    		<div class="col-sm-2">{{ place[9] }}</div>
     		<div class="col-xs-1">{{ place[2] }}</div>
     		<input type="radio" name="select" value="{{ place[0] }}" class="items-to-hide">
     	</div>
@@ -47,6 +51,12 @@
     		{% for activity in activities %}
     			<option value="{{ activity[0] }}">{{ activity[1] }}</option>
     		{% endfor %}
+    		</select>
+    		<br>
+    		<select name="cultural_place_city">
+			{% for city in cities %}
+				<option value="{{ city[0] }}">{{ city[1] }}</option>
+			{% endfor %}
     		</select>
     		<br><br>
     		Info:<br>

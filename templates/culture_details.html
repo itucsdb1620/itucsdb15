@@ -30,6 +30,21 @@
 			</td>
 		</tr>
 		<tr>
+			<td>Country</td>
+			<td>{{ culture[0][8] }}</td>
+			</td>
+		</tr>
+		<tr>
+			<td>City</td>
+			<td>{{ culture[0][9] }}</td>
+			<td><select name="cultural_city_update">
+    			{% for city in cities %}
+    				<option value="{{ city[0] }}">{{ city[1] }}</option>
+    			{% endfor %}
+				</select>
+			</td>
+		</tr>
+		<tr>
 			<td>Score</td>
 			<td>{{ culture[0][2] }}</td>
 			<td>Vote below to update</td>

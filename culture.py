@@ -7,9 +7,14 @@ def culture_page():
         with connection.cursor() as cursor:
             query = """SELECT Culture.ID, Culture.NAME, Culture.SCORE,
                         Culture.VOTES, Culture.INFO, Culture.PHOTO,
-                        Culture.ACTIVITY_ID, Activities.NAME FROM Culture
+                        Culture.ACTIVITY_ID, Activities.NAME, Countries.Name, Cities.Name
+                        FROM Culture
                         LEFT OUTER JOIN Activities
                         ON Culture.ACTIVITY_ID=Activities.ID
+                        LEFT OUTER JOIN Cities
+                        ON Culture.CITY_ID=Cities.ID
+                        LEFT OUTER JOIN Countries
+                        ON Cities.COUNTRY=Countries.ID
                         ORDER BY Culture.SCORE DESC"""
             cursor.execute(query)
             culture_data = json.dumps(cursor.fetchall())
@@ -21,6 +26,11 @@ def culture_page():
             activity_data = json.dumps(cursor.fetchall())
             activities = json.loads(activity_data)
 
+            query = """SELECT ID,NAME FROM Cities"""
+            cursor.execute(query)
+            city_data = json.dumps(cursor.fetchall())
+            cities = json.loads(city_data)
+
     now = datetime.datetime.now()
     if g.user:
         if(g.user == "admin"):
@@ -29,7 +39,7 @@ def culture_page():
             usernum = 1
     else:
         usernum = 2
-    return render_template('culture.html', current_time=now.ctime(), culture=culture, activities=activities, usernum=usernum)
+    return render_template('culture.html', current_time=now.ctime(), culture=culture, activities=activities, cities=cities, usernum=usernum)
     #return redirect(url_for('login_page'))
 
 @app.route('/culture/<int:id>')
@@ -38,9 +48,15 @@ def culture_details(id):
         with connection.cursor() as cursor:
             statement = """SELECT Culture.ID, Culture.NAME, Culture.SCORE,
                         Culture.VOTES, Culture.INFO, Culture.PHOTO,
-                        Culture.ACTIVITY_ID, Activities.NAME FROM Culture
+                        Culture.ACTIVITY_ID, Activities.NAME , Countries.Name, Cities.Name
+                        FROM Culture
                         LEFT OUTER JOIN Activities
-                        ON Culture.ACTIVITY_ID=Activities.ID WHERE (Culture.ID = %s)"""
+                        ON Culture.ACTIVITY_ID=Activities.ID
+                        LEFT OUTER JOIN Cities
+                        ON Culture.CITY_ID=Cities.ID
+                        LEFT OUTER JOIN Countries
+                        ON Cities.COUNTRY=Countries.ID
+                        WHERE (Culture.ID = %s)"""
             cursor.execute(statement, (id,))
             culture_data = json.dumps(cursor.fetchall())
             culture = json.loads(culture_data)
@@ -49,6 +65,11 @@ def culture_details(id):
             cursor.execute(query)
             activity_data = json.dumps(cursor.fetchall())
             activities = json.loads(activity_data)
+
+            query = """SELECT ID,NAME FROM Cities"""
+            cursor.execute(query)
+            city_data = json.dumps(cursor.fetchall())
+            cities = json.loads(city_data)
     if g.user:
         if(g.user == "admin"):
             usernum = 0
@@ -56,7 +77,7 @@ def culture_details(id):
             usernum = 1
     else:
         usernum = 2
-    return render_template('culture_details.html', culture=culture, activities=activities, usernum=usernum)
+    return render_template('culture_details.html', culture=culture, activities=activities, cities=cities, usernum=usernum)
 
 @app.route('/culture/insert', methods=["POST"])
 def culture_insert():
@@ -66,6 +87,7 @@ def culture_insert():
     info = request.form['cultural_place_info']
     photo = request.form['cultural_place_photo']
     activity = request.form['cultural_activity_id']
+    city = request.form['cultural_place_city']
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
             if name and score and votes and activity:
@@ -74,9 +96,9 @@ def culture_insert():
                 exists_data = json.dumps(cursor.fetchall())
                 exists = json.loads(exists_data)
                 if(exists):
-                    statement = """INSERT INTO Culture (NAME, SCORE, VOTES, INFO, PHOTO, ACTIVITY_ID)
-                        VALUES (%s, %s, %s, %s, %s, %s)"""
-                    cursor.execute(statement, (name,score,votes,info,photo,activity))
+                    statement = """INSERT INTO Culture (NAME, SCORE, VOTES, INFO, PHOTO, ACTIVITY_ID, CITY_ID)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+                    cursor.execute(statement, (name,score,votes,info,photo,activity,city))
 
     return redirect(url_for('culture_page'))
 
@@ -96,6 +118,7 @@ def culture_update():
     photo = request.form["cultural_photo_update"]
     info = request.form["cultural_info_update"]
     activity = request.form["culture_activity_update"]
+    city = request.form['cultural_city_update']
     id = request.form["cultural_index"]
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
@@ -111,6 +134,9 @@ def culture_update():
             if activity:
                 statement = """UPDATE Culture SET ACTIVITY_ID = (%s) WHERE (ID = %s)"""
                 cursor.execute(statement, (activity,id))
+            if city:
+                statement = """UPDATE Culture SET CITY_ID = (%s) WHERE (ID = %s)"""
+                cursor.execute(statement, (city,id))
     return redirect(url_for('culture_details',id=id))
 
 @app.route('/culture/delete_all')
