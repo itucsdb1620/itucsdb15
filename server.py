@@ -211,12 +211,13 @@ Other purposes of the Great Wall have included border controls, allowing the imp
                 VOTES INTEGER DEFAULT 0,
                 INFO TEXT,
                 PHOTO VARCHAR(255),
-                TYPE ACCOMMODATION_TYPES
+                TYPE ACCOMMODATION_TYPES,
+                LOCATION_ID INTEGER REFERENCES Location (ID) ON DELETE CASCADE
                 )"""
         cursor.execute(query)
 
-        query = """INSERT INTO Accommodation (NAME, INFO, PHOTO, TYPE)
-                    VALUES ('My Hotel','This is good hotel','https://media-cdn.tripadvisor.com/media/photo-s/02/39/a9/e9/warwick-seattle-hotel.jpg','Hotel')"""
+        query = """INSERT INTO Accommodation (NAME, INFO, PHOTO, TYPE, LOCATION_ID)
+                    VALUES ('My Hotel','This is good hotel','https://media-cdn.tripadvisor.com/media/photo-s/02/39/a9/e9/warwick-seattle-hotel.jpg','Hotel',1)"""
         cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS Entertainment"""
