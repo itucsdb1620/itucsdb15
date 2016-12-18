@@ -100,50 +100,6 @@ def initialize_database():
                            ('Transportaion', 'To be added', 'http://c8.alamy.com/comp/A9F95W/germany-berlin-a-hybrid-bus-belonging-to-the-city-s-transportation-A9F95W.jpg', 'Travel')"""
         cursor.execute(query)
 
-        query = """DROP TABLE IF EXISTS Culture CASCADE"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE Culture (
-                ID SERIAL PRIMARY KEY,
-                NAME VARCHAR(255) NOT NULL,
-                SCORE SCORES DEFAULT 0,
-                VOTES INTEGER DEFAULT 0,
-                INFO TEXT,
-                PHOTO VARCHAR(255),
-                ACTIVITY_ID INTEGER REFERENCES Activities (ID) ON DELETE CASCADE
-                )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO Culture (NAME, INFO, PHOTO, ACTIVITY_ID)
-                    VALUES ('The Great Wall of China', 'The Great Wall of China is a series of fortifications made of stone, brick, tamped earth, wood, and other materials, generally built along an east-to-west line across the historical northern borders of China to protect the Chinese states and empires against the raids and invasions of the various nomadic groups of the Eurasian Steppe. Several walls were being built as early as the 7th century BCE;[2] these, later joined together and made bigger and stronger, are now collectively referred to as the Great Wall.[3] Especially famous is the wall built 220–206 BCE by Qin Shi Huang, the first Emperor of China. Little of that wall remains. Since then, the Great Wall has on and off been rebuilt, maintained, and enhanced; the majority of the existing wall is from the Ming Dynasty (1368–1644).
-
-Other purposes of the Great Wall have included border controls, allowing the imposition of duties on goods transported along the Silk Road, regulation or encouragement of trade and the control of immigration and emigration. Furthermore, the defensive characteristics of the Great Wall were enhanced by the construction of watch towers, troop barracks, garrison stations, signaling capabilities through the means of smoke or fire, and the fact that the path of the Great Wall also served as a transportation corridor.',
-                            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/The_Great_Wall_of_China_at_Jinshanling-edit.jpg/240px-The_Great_Wall_of_China_at_Jinshanling-edit.jpg',1),
-                           ('Süreyya Opera House', 'Süreyya Opera House, also called Süreyya Cultural Center (Turkish: Süreyya Operası or Süreyya Kültür Merkezi), is an opera hall located in Kadıköy district of Istanbul, Turkey. The building is designed by Armenian architect Kegam Kavafyan[1] by order of a Deputy for Istanbul Süreyya İlmen, it was originally established in 1927 as the first musical theatre on the Anatolian part of Istanbul. However, due to lack of appropriate facilities and equipment in the theatre, operettas were never staged. The venue was rather used as a movie theatre until the building underwent a functional restoration and reopened as an opera house by the end of 2007.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/20131207_Istanbul_076.jpg/250px-20131207_Istanbul_076.jpg', 2),
-                           ('Hagia Sophia', 'Hagia Sophia (from the Greek: Ἁγία Σοφία, [aˈʝia soˈfia]), "Holy Wisdom"; Latin: Sancta Sophia or Sancta Sapientia; Turkish: Ayasofya) was a Greek Orthodox Christian patriarchal basilica (church), later an imperial mosque, and now a museum (Ayasofya Müzesi) in Istanbul, Turkey. From the date of its construction in 537 AD, and until 1453, it served as an Eastern Orthodox cathedral and seat of the Patriarch of Constantinople,[1] except between 1204 and 1261, when it was converted by the Fourth Crusaders to a Catholic cathedral under the Latin Empire. The building was later converted into an Ottoman mosque from 29 May 1453 until 1931. It was then secularized and opened as a museum on 1 February 1935.[2] Famous in particular for its massive dome, it is considered the epitome of Byzantine architecture[3] and is said to have "changed the history of architecture".[4] It remained the world''s largest cathedral for nearly a thousand years, until Seville Cathedral was completed in 1520.',
-                            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hagia_Sophia_Mars_2013.jpg/220px-Hagia_Sophia_Mars_2013.jpg',1),
-                           ('Broadway Theatre (53rd Street)', 'The Broadway Theatre (formerly Universal''s Colony Theatre, B.S. Moss'' Broadway Theatre, Earl Carroll''s Broadway Theatre, and Ciné Roma) is a Broadway theatre located in midtown Manhattan. It has a large seating capacity of 1,761, and unlike most Broadway theaters, it is actually located on Broadway, at number 1681.',
-                            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Promises_Promises_at_Broadway_Theatre.JPG/220px-Promises_Promises_at_Broadway_Theatre.JPG',2)"""
-        cursor.execute(query)
-
-        query = """DROP TABLE IF EXISTS Accommodation CASCADE"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE Accommodation (
-                ID SERIAL PRIMARY KEY,
-                NAME VARCHAR(255) NOT NULL,
-                SCORE SCORES DEFAULT 0,
-                VOTES INTEGER DEFAULT 0,
-                INFO TEXT,
-                PHOTO VARCHAR(255),
-                TYPE ACCOMMODATION_TYPES
-                )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO Accommodation (NAME, INFO, PHOTO, TYPE)
-                    VALUES ('My Hotel','This is good hotel','https://media-cdn.tripadvisor.com/media/photo-s/02/39/a9/e9/warwick-seattle-hotel.jpg','Hotel')"""
-        cursor.execute(query)
-
         query = """DROP TABLE IF EXISTS Countries CASCADE"""
         cursor.execute(query)
 
@@ -160,7 +116,8 @@ Other purposes of the Great Wall have included border controls, allowing the imp
                             ('Germany', 'To be added', 'https://s-media-cache-ak0.pinimg.com/originals/81/a2/61/81a2617c60520a95701cf34834966035.png'),
                             ('USA', 'To be added', 'http://www.cambridgedu.com/images/img/usa.png'),
                             ('Italy', 'To be added', 'https://s-media-cache-ak0.pinimg.com/originals/81/a2/61/81a2617c60520a95701cf34834966035.png'),
-                            ('Brasil', 'To be added', 'http://www.cambridgedu.com/images/img/usa.png')"""
+                            ('Brasil', 'To be added', 'http://www.cambridgedu.com/images/img/usa.png'),
+                            ('China','To be added.','https://www.ciee.org/study-abroad/images/countries/0048/headers/desktop/shanghai-china-summer-chinese-language-mountain-main.jpg')"""
         cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS Cities CASCADE"""
@@ -181,11 +138,11 @@ Other purposes of the Great Wall have included border controls, allowing the imp
                             ('Berlin', 'To be added', 'http://www.easyjet.com/en/holidays/shared/images/guides/germany/berlin.jpg', 2),
                             ('San Francisco', 'To be added', 'http://www.mrwallpaper.com/wallpapers/san-francisco-1600x900.jpg', 3),
                             ('Ankara', 'To be Added', 'http://www.neredekal.com/res/haber/hb_b_20115444_l-b.jpg', 1),
-                            ('İstanbul', 'To be added ', 'https://lh6.googleusercontent.com/--whYuqd2Zso/U5gZkZxQMmI/AAAAAAAAu-E/A4VH6Cr2IX8/s1152/k%25C4%25B1zkulaesi.jpg', 1),
+
                             ('New York', ' To be added', 'https://www.era111.com/files/import/images/en-guzel-edirne-resimleri.jpeg', 3),
-                            ('Pisa', 'To be added ', 'http://www.easyjet.com/en/holidays/shared/images/guides/germany/berlin.jpg', 3),
-                            ('Rio de Janeiro', 'To be added ', 'http://www.mrwallpaper.com/wallpapers/san-francisco-1600x900.jpg', 4)
-                            """
+                            ('Pisa', 'To be added ', 'http://www.easyjet.com/en/holidays/shared/images/guides/germany/berlin.jpg', 4),
+                            ('Rio de Janeiro', 'To be added ', 'http://www.mrwallpaper.com/wallpapers/san-francisco-1600x900.jpg', 5),
+                            ('Beijing', 'To be added', 'https://upload.wikimedia.org/wikipedia/commons/2/28/Wangfujing_street,_Beijing.JPG', 6)"""
         cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS Location CASCADE"""
@@ -202,19 +159,64 @@ Other purposes of the Great Wall have included border controls, allowing the imp
         cursor.execute(query)
 
         query = """INSERT INTO Location (NAME, PHOTO, CITY, COUNTRY)
-                    VALUES  ('Kadıköy', 'http://www.tatil.com/cmsImage/1449131787kadikoy2__730x352.jpg', 1, 2),
-                            ('Tophane', 'http://www.hurriyetdailynews.com/images/news/201311/n_57635_1.jpg', 1, 2),
-                            ('Taksim', 'http://www.tatiluzmani.tv/wp-content/uploads/2015/03/Taksim.jpg', 1, 2),
-                            ('Şişli', 'http://www.sislibocekilaclama.gen.tr/wp-content/uploads/2015/01/sisli.png', 1, 2),
-                            ('Reşitpaşa', 'http://www.sariyerposta.com/wp-content/uploads/32618398.jpg', 1, 2),
-                            ('Uzunköprü', 'http://www.gezilecekyerler.biz/wp-content/uploads/2016/08/Uzunk%C3%B6pr%C3%BC-Hangi-%C5%9Eehirde.jpg', 2, 2),
+                    VALUES  ('Kadıköy', 'http://www.tatil.com/cmsImage/1449131787kadikoy2__730x352.jpg', 1, 1),
+                            ('Tophane', 'http://www.hurriyetdailynews.com/images/news/201311/n_57635_1.jpg', 1, 1),
+                            ('Taksim', 'http://www.tatiluzmani.tv/wp-content/uploads/2015/03/Taksim.jpg', 1, 1),
+                            ('Şişli', 'http://www.sislibocekilaclama.gen.tr/wp-content/uploads/2015/01/sisli.png', 1, 1),
+                            ('Reşitpaşa', 'http://www.sariyerposta.com/wp-content/uploads/32618398.jpg', 1, 1),
+                            ('Uzunköprü', 'http://www.gezilecekyerler.biz/wp-content/uploads/2016/08/Uzunk%C3%B6pr%C3%BC-Hangi-%C5%9Eehirde.jpg', 2, 1),
                             ('San Jose', 'http://www.sanjoseca.gov/images/pages/N1736/DowntownSummer2005%20edited%20(1).JPG', 4, 3),
                             ('Reinickendorf', 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Ratusz_Reinickendorf.jpg', 3, 2),
-                            ('Esenler', 'http://i.milliyet.com.tr/YeniAnaResim/2015/05/26/fft99_mf5675408.Jpeg', 1, 2),
-                            ('Bakırköy', 'http://elmasilaclama.com/bocek-ilaclama/bakirkoy-fare-ilaclama.jpg', 1, 2),
-                            ('Pendik', 'http://i.sozcu.com.tr/wp-content/uploads/2016/01/04/pendik-dha.jpg', 1, 2),
-                            ('Akyurt-Çubuk', 'https://www.projepedia.com/media/upload/ANKARA/akyurt-ulasim.jpg', 5, 2)
+                            ('Esenler', 'http://i.milliyet.com.tr/YeniAnaResim/2015/05/26/fft99_mf5675408.Jpeg', 1, 1),
+                            ('Bakırköy', 'http://elmasilaclama.com/bocek-ilaclama/bakirkoy-fare-ilaclama.jpg', 1, 1),
+                            ('Pendik', 'http://i.sozcu.com.tr/wp-content/uploads/2016/01/04/pendik-dha.jpg', 1, 1),
+                            ('Akyurt-Çubuk', 'https://www.projepedia.com/media/upload/ANKARA/akyurt-ulasim.jpg', 5, 1)
                             """
+        cursor.execute(query)
+
+        query = """DROP TABLE IF EXISTS Culture CASCADE"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE Culture (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                SCORE SCORES DEFAULT 0,
+                VOTES INTEGER DEFAULT 0,
+                INFO TEXT,
+                PHOTO VARCHAR(255),
+                ACTIVITY_ID INTEGER REFERENCES Activities (ID) ON DELETE CASCADE,
+                CITY_ID INTEGER REFERENCES Cities (ID) ON DELETE CASCADE
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO Culture (NAME, INFO, PHOTO, ACTIVITY_ID, CITY_ID)
+                    VALUES ('The Great Wall of China', 'The Great Wall of China is a series of fortifications made of stone, brick, tamped earth, wood, and other materials, generally built along an east-to-west line across the historical northern borders of China to protect the Chinese states and empires against the raids and invasions of the various nomadic groups of the Eurasian Steppe. Several walls were being built as early as the 7th century BCE;[2] these, later joined together and made bigger and stronger, are now collectively referred to as the Great Wall.[3] Especially famous is the wall built 220–206 BCE by Qin Shi Huang, the first Emperor of China. Little of that wall remains. Since then, the Great Wall has on and off been rebuilt, maintained, and enhanced; the majority of the existing wall is from the Ming Dynasty (1368–1644).
+
+Other purposes of the Great Wall have included border controls, allowing the imposition of duties on goods transported along the Silk Road, regulation or encouragement of trade and the control of immigration and emigration. Furthermore, the defensive characteristics of the Great Wall were enhanced by the construction of watch towers, troop barracks, garrison stations, signaling capabilities through the means of smoke or fire, and the fact that the path of the Great Wall also served as a transportation corridor.',
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/The_Great_Wall_of_China_at_Jinshanling-edit.jpg/240px-The_Great_Wall_of_China_at_Jinshanling-edit.jpg',1,9),
+                           ('Süreyya Opera House', 'Süreyya Opera House, also called Süreyya Cultural Center (Turkish: Süreyya Operası or Süreyya Kültür Merkezi), is an opera hall located in Kadıköy district of Istanbul, Turkey. The building is designed by Armenian architect Kegam Kavafyan[1] by order of a Deputy for Istanbul Süreyya İlmen, it was originally established in 1927 as the first musical theatre on the Anatolian part of Istanbul. However, due to lack of appropriate facilities and equipment in the theatre, operettas were never staged. The venue was rather used as a movie theatre until the building underwent a functional restoration and reopened as an opera house by the end of 2007.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/20131207_Istanbul_076.jpg/250px-20131207_Istanbul_076.jpg', 2,1),
+                           ('Hagia Sophia', 'Hagia Sophia (from the Greek: Ἁγία Σοφία, [aˈʝia soˈfia]), "Holy Wisdom"; Latin: Sancta Sophia or Sancta Sapientia; Turkish: Ayasofya) was a Greek Orthodox Christian patriarchal basilica (church), later an imperial mosque, and now a museum (Ayasofya Müzesi) in Istanbul, Turkey. From the date of its construction in 537 AD, and until 1453, it served as an Eastern Orthodox cathedral and seat of the Patriarch of Constantinople,[1] except between 1204 and 1261, when it was converted by the Fourth Crusaders to a Catholic cathedral under the Latin Empire. The building was later converted into an Ottoman mosque from 29 May 1453 until 1931. It was then secularized and opened as a museum on 1 February 1935.[2] Famous in particular for its massive dome, it is considered the epitome of Byzantine architecture[3] and is said to have "changed the history of architecture".[4] It remained the world''s largest cathedral for nearly a thousand years, until Seville Cathedral was completed in 1520.',
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hagia_Sophia_Mars_2013.jpg/220px-Hagia_Sophia_Mars_2013.jpg',1,1),
+                           ('Broadway Theatre (53rd Street)', 'The Broadway Theatre (formerly Universal''s Colony Theatre, B.S. Moss'' Broadway Theatre, Earl Carroll''s Broadway Theatre, and Ciné Roma) is a Broadway theatre located in midtown Manhattan. It has a large seating capacity of 1,761, and unlike most Broadway theaters, it is actually located on Broadway, at number 1681.',
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Promises_Promises_at_Broadway_Theatre.JPG/220px-Promises_Promises_at_Broadway_Theatre.JPG',2,7)"""
+        cursor.execute(query)
+
+        query = """DROP TABLE IF EXISTS Accommodation CASCADE"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE Accommodation (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                SCORE SCORES DEFAULT 0,
+                VOTES INTEGER DEFAULT 0,
+                INFO TEXT,
+                PHOTO VARCHAR(255),
+                TYPE ACCOMMODATION_TYPES
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO Accommodation (NAME, INFO, PHOTO, TYPE)
+                    VALUES ('My Hotel','This is good hotel','https://media-cdn.tripadvisor.com/media/photo-s/02/39/a9/e9/warwick-seattle-hotel.jpg','Hotel')"""
         cursor.execute(query)
 
         query = """DROP TABLE IF EXISTS Entertainment"""
@@ -309,13 +311,13 @@ Other purposes of the Great Wall have included border controls, allowing the imp
         cursor.execute(query)
 
         query = """INSERT INTO LANDMARK (NAME, PHOTO, LOCATIONID, INFO)
-                    VALUES ('Maiden Tower ', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeO96yh3Q0CsmzyLGBGXpscCP5oLsM1HVxpVATlXy09o3dTNWD', 6,
+                    VALUES ('Maiden Tower ', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeO96yh3Q0CsmzyLGBGXpscCP5oLsM1HVxpVATlXy09o3dTNWD', 1,
                             'The Maiden Tower also known as Leander s Tower (Tower of Leandros) since the medieval Byzantine period, is a tower lying on a small islet located at the southern entrance of the Bosphorus strait 200 m (220 yd) from the coast of Usküdar in Istanbul, Turkey.After the naval victory at Cyzicus, the ancient Athenian general Alcibiades possibly built a custom station for ships coming from the Black Sea on a small rock in front of Chrysopolis (today s Usküdar).[2] In 1110 Byzantine Emperor Alexius Comnenus built a wooden tower protected by a stone wall.[2] From the tower an iron chain stretched across to another tower erected on the European shore, at the quarter of Mangana in Constantinople.[2] The islet was then connected to the Asiatic shore through a defense wall, whose underwater remains are still visible.[2] During the Ottoman conquest of Constantinople (Istanbul) in 1453, the tower held a Byzantine garrison commanded by the Venetian Gabriele Trevisano.[2] Subsequently, the structure was used as a watchtower by the Ottoman Turks during the reign of Sultan Mehmed the Conqueror.' ),
-                           ('Statue of Liberty ','https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSbk4vnRjWyAGgU7GMxVl3VNjGoSIIYb7jDAuYhEu-VyiqBJgCvEg', 7,
+                           ('Statue of Liberty ','https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSbk4vnRjWyAGgU7GMxVl3VNjGoSIIYb7jDAuYhEu-VyiqBJgCvEg', 6,
                            'The Statue of Liberty is a colossal neoclassical sculpture on Liberty Island in New York Harbor in New York City, in the United States. The copper statue, designed by Frederic Auguste Bartholdi, a French sculptor, was built by Gustave Eiffel and dedicated on October 28, 1886. It was a gift to the United States from the people of France. The statue is of a robed female figure representing Libertas, the Roman goddess, who bears a torch and a tabula ansata (a tablet evoking the law) upon which is inscribed the date of the American Declaration of Independence, July 4, 1776. A broken chain lies at her feet. The statue is an icon of freedom and of the United States, and was a welcoming sight to immigrants arriving from abroad.'),
-                           ('Leaning Tower of Pisa ','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-I2xUehvjKzrUF5yJKsw-9NEIOrjTwfuAdDfNtQep8jI2wrYj', 8,
+                           ('Leaning Tower of Pisa ','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-I2xUehvjKzrUF5yJKsw-9NEIOrjTwfuAdDfNtQep8jI2wrYj', 7,
                            'The Leaning Tower of Pisa (Italian: Torre pendente di Pisa) or simply the Tower of Pisa  is the campanile, or freestanding bell tower, of the cathedral of the Italian city of Pisa, known worldwide for its unintended tilt. It is situated behind Pisa s cathedral and is the third oldest structure in the city s Cathedral Square (Piazza del Duomo) after the cathedral and the Pisa Baptistry. The tower s tilt began during construction, caused by an inadequate foundation on ground too soft on one side to properly support the structure s weight. The tilt increased in the decades before the structure was completed, and gradually increased until the structure was stabilized (and the tilt partially corrected) by efforts in the late 20th and early 21st centuries. The height of the tower is 55.86 metres (183.27 feet) from the ground on the low side and 56.67 metres (185.93 feet) on the high side. The width of the walls at the base is 2.44 m (8 ft 0.06 in). Its weight is estimated at 14,500 metric tons (16,000 short tons).[1] The tower has 296 or 294 steps; the seventh floor has two fewer steps on the north-facing staircase. Prior to restoration work performed between 1990 and 2001, the tower leaned at an angle of 5.5 degrees,[2][3][4] but the tower now leans at about 3.99 degrees.[5] This means that the top of the tower is displaced horizontally 3.9 metres (12 ft 10 in) from the centre.'),
-                           ('Christ the Redeemer ','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK88g7zwwUpvrqn6DEHysSdPouU4iuRpNZ8HQtoTTsAhf9nvSo', 9,
+                           ('Christ the Redeemer ','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK88g7zwwUpvrqn6DEHysSdPouU4iuRpNZ8HQtoTTsAhf9nvSo', 8,
                            'Christ the Redeemer (Portuguese: Cristo Redentor is an Art Deco statue of Jesus Christ in Rio de Janeiro, Brazil, created by French sculptor Paul Landowski and built by the Brazilian engineer Heitor da Silva Costa, in collaboration with the French engineer Albert Caquot. Romanian sculptor Gheorghe Leonida fashioned the face. The statue is 30 metres (98 ft) tall, not including its 8-metre (26 ft) pedestal, and its arms stretch 28 metres (92 ft) wide. The statue weighs 635 metric tons (625 long, 700 short tons), and is located at the peak of the 700-metre (2,300 ft) Corcovado mountain in the Tijuca Forest National Park overlooking the city of Rio. A symbol of Christianity across the world, the statue has also become a cultural icon of both Rio de Janeiro and Brazil, and is listed as one of the New Seven Wonders of the World.[3] It is made of reinforced concrete and soapstone, and was constructed between 1922 and 1931.')"""
         cursor.execute(query)
 
