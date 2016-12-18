@@ -9,8 +9,15 @@ def activities_page():
             activities_data = json.dumps(cursor.fetchall())
             activities = json.loads(activities_data)
 
+    if g.user:
+        if(g.user == "admin"):
+            usernum = 0
+        else:
+            usernum = 1
+    else:
+        usernum = 2
     now = datetime.datetime.now()
-    return render_template('activities.html', current_time=now.ctime(), activities=activities)
+    return render_template('activities.html', current_time=now.ctime(), activities=activities, usernum=usernum)
 
 @app.route('/activities/<int:id>')
 def activities_details(id):

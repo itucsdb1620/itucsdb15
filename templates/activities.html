@@ -4,22 +4,25 @@
 	<div class="page-header">
     	<h1>List of Activities</h1>
     </div>
+    <div class="container">
     <form action="{{url_for('activities_delete')}}" method="post">
-    <table>
-    	<th>Select</th>
-    	<th>Name</th>
-    	<th>Activity Type</th>
+    	<div class="col-sm-2"></div>
+    	<div class="col-sm-2">Name</div>
+    	<div class="col-sm-2">Activity Type</div>
+    	<br><br>
     	{% for activity in activities %}
-    	<tr>
-    		<td><input type="radio" name="select" value="{{ activity[0] }}"></td>
-    		<td><a href="{{url_for('activities_details', id = activity[0]  ) }}">{{ activity[1] }}</a></td>
-    		<td>{{ activity[4] }}</td>
-    	</tr>
+    	<div class="row">
+    		<div class="col-sm-2"><a href="{{url_for('activities_details', id = activity[0]  ) }}"><img src="{{activity[3]}}" class="img-thumbnail" alt="Photo"></a></div>
+    		<div class="col-sm-2">{{ activity[1] }}</div>
+    		<div class="col-sm-2">{{ activity[4] }}</div>
+    		<input type="radio" name="select" value="{{ activity[0] }}" class="items-to-hide">
+    	</div>
     	{% endfor %}
-    </table>
-    <input type="submit" value="Remove selected">
+    <input type="submit" value="Remove selected" class="items-to-hide">
 	</form>
+	</div>
 
+	<div class="container items-to-hide">
 	<h3>Insert</h3>
 	<form action="{{url_for('activities_insert')}}" method="post">
     	Name:<br>
@@ -47,4 +50,5 @@
     <form action="{{url_for('activities_delete_all')}}">
     	<input type="submit" value="Delete all">
 	</form>
+	</div>
 {% endblock %}
