@@ -15,12 +15,15 @@ def home_page():
     if g.user:
         if (g.user == "admin"):
             usernum = 0
+            name = g.user
         else:
             usernum = 1
+            name = g.user
     else:
         usernum = 2
+        name = "Visitor"
     now = datetime.datetime.now()
-    return render_template('home.html', current_time=now.ctime(), usernum=usernum)
+    return render_template('home.html', current_time=now.ctime(), usernum=usernum, name=name)
 
 @app.route('/initdb')
 def initialize_database():
@@ -269,7 +272,8 @@ The Shubert Organization bought the theater in 1939 and renovated it extensively
                     VALUES ('Fatih', 'Budak ', 'budakf', '123456789', 'email of budakf ', 24, 2, 'http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg', 1, 1, 1),
                            ('Güray', 'Ocak ', 'ocakg', '123456789','email of ocakg ', 24, 2, 'https://pbs.twimg.com/profile_images/710169276980858880/eosxkWG0.jpg', 3, 2, 3),
                            ('Mehmet', 'Ozen ', 'tozen', '123456789','email of tozen ', 23, 3,'http://i3.mirror.co.uk/incoming/article9325019.ece/ALTERNATES/s482b/Steven-Gerrard-teaser.jpg', 4, 4, 1),
-                           ('Berkan', 'Dinar ', 'dinar', '123456789','email of dinar ', 22, 4,'http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg', 2, 3, 2)"""
+                           ('Berkan', 'Dinar ', 'dinar', '123456789','email of dinar ', 22, 4,'http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg', 2, 3, 2),
+                           ('Admin', 'Admin ', 'admin', 'admin','email of admin ', 22, 4,'http://previews.123rf.com/images/richcat/richcat1109/richcat110900082/10732608-Graphic-illustration-of-man-in-business-suit-as-user-icon-avatar-Stock-Vector.jpg', 2, 3, 2)"""
         cursor.execute(query)
 
             ###########
@@ -330,10 +334,17 @@ def login_page():
     T=True
     id=1
     if request.method == 'POST':
-        session.pop('user', None)
-        if request.form['password'] == 'password':
-            session['user'] = request.form['username']
-            return redirect(url_for('home_page'))
+        if(g.user):
+            session.pop('user', None)
+            with dbapi2.connect(app.config['dsn']) as connection:
+                with connection.cursor() as cursor:
+                    statement = """SELECT PEOPLE.ID, PEOPLE.USERNAME FROM PEOPLE WHERE(PEOPLE.USERNAME = %s)"""
+                    cursor.execute(statement, (g.user,))
+                    current_user_data = json.dumps(cursor.fetchall())
+                    current_user = json.loads(current_user_data)
+                    statement = """UPDATE PEOPLE SET (ISACTIVE) = (%s) WHERE(ID = %s)"""
+                    T=False
+                    cursor.execute(statement, (T,current_user[0][0] ) )
 
         with dbapi2.connect(app.config['dsn']) as connection:
             with connection.cursor() as cursor:
@@ -349,7 +360,9 @@ def login_page():
                             if user[3]==False:
                                 id=user[0]
                                 statement = """UPDATE PEOPLE SET (ISACTIVE) = (%s) WHERE(ID = %s) """
+                                T=True
                                 cursor.execute(statement, (T,id ) )
+                                session['user'] = user[1]
                                 return redirect(url_for('home_page'))
 
     return render_template('login.html')
@@ -357,11 +370,16 @@ def login_page():
 @app.route('/logout')
 def logout_page():
     T=False
-    session.pop('user', None)
-    with dbapi2.connect(app.config['dsn']) as connection:
-        with connection.cursor() as cursor:
-            statement = """UPDATE PEOPLE SET (ISACTIVE) = (%s) """
-            cursor.execute(statement, (T, ) )
+    if(g.user):
+        session.pop('user', None)
+        with dbapi2.connect(app.config['dsn']) as connection:
+            with connection.cursor() as cursor:
+                statement = """SELECT PEOPLE.ID, PEOPLE.USERNAME FROM PEOPLE WHERE(PEOPLE.USERNAME = %s)"""
+                cursor.execute(statement, (g.user,))
+                current_user_data = json.dumps(cursor.fetchall())
+                current_user = json.loads(current_user_data)
+                statement = """UPDATE PEOPLE SET (ISACTIVE) = (%s) WHERE(ID = %s)"""
+                cursor.execute(statement, (T,current_user[0][0] ) )
     return redirect(url_for('home_page'))
 
 @app.before_request
