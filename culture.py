@@ -2,7 +2,6 @@ from settings import *
 
 @app.route('/culture')
 def culture_page():
-    #if g.user:
     with dbapi2.connect(app.config['dsn']) as connection:
         with connection.cursor() as cursor:
             query = """SELECT Culture.ID, Culture.NAME, Culture.SCORE,
@@ -40,7 +39,6 @@ def culture_page():
     else:
         usernum = 2
     return render_template('culture.html', current_time=now.ctime(), culture=culture, activities=activities, cities=cities, usernum=usernum)
-    #return redirect(url_for('login_page'))
 
 @app.route('/culture/<int:id>')
 def culture_details(id):
