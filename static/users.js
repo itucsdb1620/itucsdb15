@@ -8,8 +8,19 @@ function hideFromUser(x)
 
 		while(x[i])
 		{
-				x[i].style.visibility = "visible";
-				i++
+			x[i].style.visibility = "visible";
+			i++;
+		}
+	}
+	else if(x==1)
+	{
+		var x = document.getElementsByClassName("users-only");
+		var i=0;
+
+		while(x[i])
+		{
+			x[i].style.visibility = "visible";
+			i++;
 		}
 	}
 
