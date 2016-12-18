@@ -49,8 +49,14 @@ def culture_details(id):
             cursor.execute(query)
             activity_data = json.dumps(cursor.fetchall())
             activities = json.loads(activity_data)
-
-    return render_template('culture_details.html', culture=culture, activities=activities)
+    if g.user:
+        if(g.user == "admin"):
+            usernum = 0
+        else:
+            usernum = 1
+    else:
+        usernum = 2
+    return render_template('culture_details.html', culture=culture, activities=activities, usernum=usernum)
 
 @app.route('/culture/insert', methods=["POST"])
 def culture_insert():
