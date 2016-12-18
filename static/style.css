@@ -51,6 +51,10 @@ h1{
 	visibility:hidden;
 }
 
+.users-only{
+	visibility:hidden;
+}
+
 li>a{
 	background-color:#38767c;
 }
