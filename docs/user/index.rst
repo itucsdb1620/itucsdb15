@@ -4,9 +4,9 @@ User Guide
 **explain how your application works from the user perspective, use
 screenshots whereever appropriate**
 
-**to add a picture, use the following example**::
+**to add a picture, use the following example**
 
-   .. figure:: picture.png
+   .. figure:: screenshots/a.png
       :scale: 50 %
       :alt: map to buried treasure
 
