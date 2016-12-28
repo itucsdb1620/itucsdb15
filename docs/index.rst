@@ -1,15 +1,13 @@
-Welcome to itucsdb's documentation!
-===================================
+Welcome to itucsdb1620's documentation!
+=======================================
 
-:Team: Team Name
+:Team: Forest
 
 :Members:
 
-   * Member 1
-   * Member 2
-   * Member 3
-   * Member 4
-   * Member 5
+   * Mehmet Tankut Özen
+   * Berkan Dinar
+   * Fatih Budak
 
 **project description goes here (a few paragraphs)**
 

@@ -44,8 +44,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'itucsdb'
-copyright = '2015, Team Name'
+project = 'itucsdb1620'
+copyright = '2016, Forest'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -177,7 +177,7 @@ html_use_index = False
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'itucsdbdoc'
+htmlhelp_basename = 'itucsdb1620doc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -227,7 +227,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'itucsdb', 'itucsdb Documentation',
+    ('index', 'itucsdb1620', 'itucsdb1620 Documentation',
      ['Team Name'], 1)
 ]
 
