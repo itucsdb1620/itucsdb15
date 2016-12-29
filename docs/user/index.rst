@@ -1,9 +1,7 @@
 User Guide
 ==========
 
-   .. figure:: images/a.png
-      :scale: 50 %
-      :alt: map to buried treasure
+**This section explains and shows the various pages of the web application from user and admin perspectives**
 
 .. toctree::
 

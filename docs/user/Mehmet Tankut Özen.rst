@@ -15,6 +15,8 @@ Parts Implemented by Mehmet Tankut Özen
       :alt: activities main page
       :align: center
 
+      **Activities Main Page**
+
 1.1.2 Details Page
 ++++++++++++++++++
 
@@ -22,6 +24,8 @@ Parts Implemented by Mehmet Tankut Özen
       :scale: 50 %
       :alt: activities details page
       :align: center
+
+      **Activities Details Page**
 
 1.2 Culture Page
 ----------------
@@ -34,6 +38,8 @@ Parts Implemented by Mehmet Tankut Özen
       :alt: culture main page
       :align: center
 
+      **Culture Main Page**
+
 1.2.2 Details Page
 ++++++++++++++++++
 
@@ -42,6 +48,8 @@ Parts Implemented by Mehmet Tankut Özen
       :alt: culture details page
       :align: center
 
+      **Culture Details Page**
+
 1.2.3 Voting
 ++++++++++++
 
@@ -49,6 +57,8 @@ Parts Implemented by Mehmet Tankut Özen
       :scale: 50 %
       :alt: culture voting page
       :align: center
+
+      **Culture Voting System**
 
 1.3 Accommodation Page
 ----------------------
@@ -61,6 +71,8 @@ Parts Implemented by Mehmet Tankut Özen
       :alt: accommodation main page
       :align: center
 
+      **Accommodation Main Page**
+
 1.3.2 Details Page
 ++++++++++++++++++
 
@@ -69,6 +81,8 @@ Parts Implemented by Mehmet Tankut Özen
       :alt: accommodation main page
       :align: center
 
+      **Accommodation Details Page**
+
 1.3.3 Voting
 ++++++++++++
 
@@ -76,6 +90,8 @@ Parts Implemented by Mehmet Tankut Özen
       :scale: 50 %
       :alt: accommodation main page
       :align: center
+
+      **Accommodation Voting System**
 
 2 Admin Perspective
 ===================
@@ -88,6 +104,8 @@ Parts Implemented by Mehmet Tankut Özen
       :alt: activities main admin page
       :align: center
 
+      **Activities Main Page From Admin Perspective**
+
 2.2 Culture Page
 ----------------
 
@@ -96,6 +114,8 @@ Parts Implemented by Mehmet Tankut Özen
       :alt: culture main admin page
       :align: center
 
+      **Culture Main Page From Admin Perspective**
+
 2.3 Accommodation Page
 ----------------------
 
@@ -103,3 +123,5 @@ Parts Implemented by Mehmet Tankut Özen
       :scale: 50 %
       :alt: accommodation main admin page
       :align: center
+
+      **Accommodation Main Page From Admin Perspective**
