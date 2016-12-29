@@ -16,7 +16,7 @@ Parts Implemented by Berkan Dinar
 
 * Users can click on images of entertainment places in order to reach their detailed information pages, also it is possible to reach activities main page, location main page as well as activities details page, location details page from this interface by clicking their name.
 
-   .. figure:: images/berkan/Entertainment.png
+   .. figure:: images/Berkan/Entertainment.png
       :scale: 50 %
       :alt: Entertainment Main Page
       :align: center
@@ -28,7 +28,7 @@ Parts Implemented by Berkan Dinar
 
 * In details page; information about entertainment places are revealed. Also updating all the information about the selected entertainment place can be done here.
 
-   .. figure:: images/berkan/EnterDetails.png
+   .. figure:: images/Berkan/EnterDetails.png
       :scale: 50 %
       :alt: entertainment details page
       :align: center
@@ -40,7 +40,7 @@ Parts Implemented by Berkan Dinar
 
 * In order to reveal voting section, the user must be login in as a registered user of the site.
 
-   .. figure:: images/berkan/Vote.png
+   .. figure:: images/Berkan/Vote.png
       :scale: 50 %
       :alt: Entertainment voting page
       :align: center
@@ -57,7 +57,7 @@ Parts Implemented by Berkan Dinar
 
 * Users can click on images of locations in order to reach their detailed information pages.
 
-   .. figure:: images/berkan/Location.png
+   .. figure:: images/Berkan/Location.png
       :scale: 50 %
       :alt: location main page
       :align: center
@@ -69,9 +69,9 @@ Parts Implemented by Berkan Dinar
 
 * In details page; information about locations are revealed. Also updating all the information about the selected location can be done here.
 
-   .. figure:: images/berkan/LocDetails.png
+   .. figure:: images/Berkan/LocDetails.png
       :scale: 50 %
-      :alt: culture details page
+      :alt: location details page
       :align: center
 
       **Location Details Page**
@@ -86,7 +86,7 @@ Parts Implemented by Berkan Dinar
 
 * Users can click on images of transportation places in order to reach their detailed information pages, also it is possible to reach location main page as well as location details page from this interface by clicking their name.
 
-   .. figure:: images/berkan/Transportation.png
+   .. figure:: images/Berkan/Transportation.png
       :scale: 50 %
       :alt: transportation main page
       :align: center
@@ -98,7 +98,7 @@ Parts Implemented by Berkan Dinar
 
 * In details page; information about transportation places are revealed. Also updating all the information about the selected transportation place can be done here.
 
-   .. figure:: images/berkan/TransDetails.png
+   .. figure:: images/Berkan/TransDetails.png
       :scale: 50 %
       :alt: transportation details page
       :align: center
@@ -119,7 +119,7 @@ Parts Implemented by Berkan Dinar
 
    .. figure:: images/berkan/EnterAdmin.png
       :scale: 50 %
-      :alt: activities main admin page
+      :alt: entertainment main admin page
       :align: center
 
       **Entertainment Main Page From Admin Perspective**
@@ -127,11 +127,11 @@ Parts Implemented by Berkan Dinar
 2.2 Location Page
 -----------------
 
-* In order to insert an entertainment place the admin must provide a name, other columns are optional
+* In order to insert an location place the admin must provide a name, other columns are optional
 * To delete wanted location should be selected by the radio button, then remove selected button should be clicked
 * To delete all rows of the table, the admin can click delete all button at the bottom of this page
 
-   .. figure:: images/berkan/LocAdmin.png
+   .. figure:: images/Berkan/LocAdmin.png
       :scale: 50 %
       :alt: location main admin page
       :align: center
@@ -145,7 +145,7 @@ Parts Implemented by Berkan Dinar
 * To delete wanted transportation should be selected by the radio button, then remove selected button should be clicked
 * To delete all rows of the table, the admin can click delete all button at the bottom of this page
 
-   .. figure:: images/berkan/TransAdmin.png
+   .. figure:: images/Berkan/TransAdmin.png
       :scale: 50 %
       :alt: transportation main admin page
       :align: center
