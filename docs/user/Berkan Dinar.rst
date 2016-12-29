@@ -16,7 +16,7 @@ Parts Implemented by Berkan Dinar
 
 * Users can click on images of entertainment places in order to reach their detailed information pages, also it is possible to reach activities main page, location main page as well as activities details page, location details page from this interface by clicking their name.
 
-   .. figure:: images/Berkan/Mainpage.png
+   .. figure:: images/Berkan/Mainpage.jpg
       :scale: 50 %
       :alt: Entertainment Main Page
       :align: center
@@ -117,7 +117,7 @@ Parts Implemented by Berkan Dinar
 * To delete wanted entertainment place should be selected by the radio button, then remove selected button should be clicked
 * To delete all rows of the table, the admin can click delete all button at the bottom of this page
 
-   .. figure:: images/berkan/EntertainmentAdmin.jpg
+   .. figure:: images/Berkan/EntertainmentAdmin.jpg
       :scale: 50 %
       :alt: entertainment main admin page
       :align: center
