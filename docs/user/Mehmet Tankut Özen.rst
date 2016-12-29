@@ -38,7 +38,7 @@ Parts Implemented by Mehmet Tankut Özen
 1.2 Culture Page
 ----------------
 
-**Activity pages show list of cultural places, their photo, their main activity, country/city they belong to and their score**
+**Culture pages show list of cultural places, their photo, their main activity, country/city they belong to and their score**
 
 1.2.1 Main Page
 +++++++++++++++

@@ -10,7 +10,7 @@ General Information
 
 **The project uses :**
 
-   * Python with Flask framework
+   * Python with Flask framework and Psycopg2 extension
 
    * HTML
 
@@ -19,6 +19,10 @@ General Information
    * Javascript
 
    * Postgresql
+
+   * Vagrant with VirtualBox
+
+   * Github for collaboration
 
    * Bluemix for deployment
 
