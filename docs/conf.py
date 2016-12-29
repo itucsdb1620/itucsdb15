@@ -197,8 +197,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'itucsdb.tex', 'itucsdb Documentation',
-   'Team Name', 'manual'),
+  ('index', 'itucsdb1620.tex', 'itucsdb1620 Documentation',
+   'Forest', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -228,7 +228,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'itucsdb1620', 'itucsdb1620 Documentation',
-     ['Team Name'], 1)
+     ['Forest'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -241,8 +241,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'itucsdb', 'itucsdb Documentation',
-   'Team Name', 'itucsdb', 'One line description of project.',
+  ('index', 'itucsdb1620', 'itucsdb1620 Documentation',
+   'Forest', 'itucsdb1620', 'One line description of project.',
    'Miscellaneous'),
 ]
 
