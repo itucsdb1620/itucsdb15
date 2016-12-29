@@ -4,11 +4,39 @@ Parts Implemented by Mehmet Tankut Özen
 1 Database Design
 =================
 
+**3 tables(Activities, Culture and Accommodation) are implemented by Mehmet Tankut Özen**
+
+**Culture and Accommodation tables use foreign key relations**
+
+**There are two domain variables added for these tables (other than scores domain which used by most of the tables throughout the application**
+
+Activity types define all the possible activity types and **Activity** table does not accept any activity type that does not exist in this domain
+
+.. code-block:: sql
+    :linenos:
+
+      CREATE DOMAIN ACTIVITY_TYPES AS VARCHAR(255)
+         CHECK ((VALUE = 'Cultural') OR (VALUE = 'Eat & Drink')
+         OR (VALUE = 'Sport') OR (VALUE = 'Accommodation')
+         OR (VALUE = 'Travel'))
+
+Accommodation types define all the possible accommodation types and **Accommodation** table does not accept any accommodation type that does not exist in this domain
+
+.. code-block:: sql
+    :linenos:
+
+      CREATE DOMAIN ACCOMMODATION_TYPES AS VARCHAR(255)
+         CHECK ((VALUE = 'Hotel') OR (VALUE = 'Hostel')
+         OR (VALUE = 'Motel') OR (VALUE = 'Rural Places'))
+
 1.1 Database Tables
 -------------------
 
 1.1.1 Activities Table
 ++++++++++++++++++++++
+
+* **Activites** table does not use a foreign key but it provides a foreign key to most of the tables, such as **Culture** table
+* It uses the **ACTIVITY_TYPES** domain which was previously defined
 
                 +---------------+----------------+-----------+-----------+-----------+
                 | Name          | Type           | Not Null  |Primary K. |Foreign K. |
@@ -24,6 +52,8 @@ Parts Implemented by Mehmet Tankut Özen
                 | TYPE          | ACTIVITY_TYPES |   0       |  0        |  0        |
                 +---------------+----------------+-----------+-----------+-----------+
 
+* Postgresql Implementation:
+
 .. code-block:: sql
     :linenos:
 
@@ -37,6 +67,8 @@ Parts Implemented by Mehmet Tankut Özen
 
 1.1.2 Culture Table
 +++++++++++++++++++
+
+* **Culture** table has foreign key relationship with **Activities** table and **Cities** table (implemented by Berkan Dinar)
 
                 +---------------+--------------+-----------+-----------+-----------+
                 | Name          | Type         | Not Null  |Primary K. |Foreign K. |
@@ -58,6 +90,7 @@ Parts Implemented by Mehmet Tankut Özen
                 | CITY_ID       | INTEGER      |   0       |  0        |  1        |
                 +---------------+--------------+-----------+-----------+-----------+
 
+* Postgresql Implementation:
 
 .. code-block:: sql
     :linenos:
@@ -75,6 +108,9 @@ Parts Implemented by Mehmet Tankut Özen
 
 1.1.3 Accommodation Table
 +++++++++++++++++++++++++
+
+* **Accommodation** table has foreign key relationship with **Location** table (implemented by Berkan Dinar)
+* It uses the **ACCOMMODATION_TYPES** domain which was previously defined
 
                 +---------------+---------------------+-----------+-----------+-----------+
                 | Name          | Type                | Not Null  |Primary K. |Foreign K. |
@@ -96,6 +132,7 @@ Parts Implemented by Mehmet Tankut Özen
                 | LOCATION_ID   | INTEGER             |   0       |  0        |  1        |
                 +---------------+---------------------+-----------+-----------+-----------+
 
+* Postgresql Implementation:
 
 .. code-block:: sql
     :linenos:
@@ -111,8 +148,8 @@ Parts Implemented by Mehmet Tankut Özen
          LOCATION_ID INTEGER REFERENCES Location (ID) ON DELETE CASCADE
          )
 
-2 Code
-======
+2 Application Program Source Codes
+==================================
 
 2.1 Python(Flask) Files
 -----------------------
@@ -120,7 +157,15 @@ Parts Implemented by Mehmet Tankut Özen
 2.1.1 Activities.py
 +++++++++++++++++++
 
+This file used for implementing all the routing and all the CRUD operations on **Activities** table
+
 **Main Page**
+
+* Connected to database by context manager
+* A query for select all executed
+* The data kept in JSON format
+* User type number assigned
+* The data sent to responsible HTML file
 
 .. code-block:: python
     :linenos:
@@ -146,6 +191,12 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Details Page**
 
+* Routing requires an **int** (sent from Main Page) to be sent, which represents the **ID** of a row from the **Activities** table
+* Connected to database by context manager
+* A query executed to select the correct row from the table
+* The data kept in JSON format
+* The data sent to responsible HTML file
+
 .. code-block:: python
     :linenos:
 
@@ -160,6 +211,12 @@ Parts Implemented by Mehmet Tankut Özen
           return render_template('activities_details.html', activities=activities)
 
 **Insert**
+
+* Correctly activited by **POST** method
+* Data that was sent from Main Page to be inserted stored in variables
+* Connected to database by context manager
+* A query executed to insert the row into the table with correct information
+* Redirected to the Main Page
 
 .. code-block:: python
     :linenos:
@@ -181,6 +238,12 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Delete**
 
+* Correctly activited by **POST** method
+* Row data that was sent from Main Page to be deleted stored in variables
+* Connected to database by context manager
+* A query executed to delete the row from the table
+* Redirected to the Main Page
+
 .. code-block:: python
     :linenos:
 
@@ -196,6 +259,14 @@ Parts Implemented by Mehmet Tankut Özen
           return redirect(url_for('activities_page'))
 
 **Update**
+
+* Correctly activited by **POST** method
+* Row data that was sent from Main Page to be updated stored in variables
+* Connected to database by context manager
+* Checked if data to update sent from the details page
+* If data sent from the Details Page a query executed to update the row of the table
+* Check then update operation done for every single column of the table
+* Redirected to the Details Page
 
 .. code-block:: python
     :linenos:
@@ -225,6 +296,10 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Delete All**
 
+* Connected to database by context manager
+* A query executed to delete all the rows from the table
+* Redirected to the Main Page
+
 .. code-block:: python
     :linenos:
 
@@ -241,7 +316,16 @@ Parts Implemented by Mehmet Tankut Özen
 2.1.2 Culture.py
 ++++++++++++++++
 
+This file used for implementing all the routing and all the CRUD operations on **Culture** table
+
 **Main Page**
+
+* Connected to database by context manager
+* A query executed with the help of **LEFT OUTER JOIN** on **Activities** table, **Cities** table and **Countries** table
+* The data kept in JSON format
+* The score data is formatted to meaningfully represent the score
+* User type number assigned
+* The data sent to responsible HTML file
 
 .. code-block:: python
     :linenos:
@@ -288,6 +372,15 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Details Page**
 
+* Routing requires an **int** (sent from Main Page) to be sent, which represents the **ID** of a row from the **Culture** table
+* Connected to database by context manager
+* A query executed to select the correct row from the table with the help of **LEFT OUTER JOIN** on **Activities** table, **Cities** table and **Countries** table
+* Another query executed on **Activities** table to select correct row from the the table which is defined by the foreign key provided from the previous query
+* Another query executed on **Cities** table to select correct row from the the table which is defined by the foreign key provided from the previous query
+* The data kept in JSON format
+* User type number assigned
+* The data sent to responsible HTML file
+
 .. code-block:: python
     :linenos:
 
@@ -330,6 +423,13 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Insert**
 
+* Correctly activited by **POST** method
+* Data that was sent from Main Page to be inserted stored in variables
+* Connected to database by context manager
+* A query executed to check whether the provided activity exists in **Activites** table (used by foreign key relationship)
+* A query executed to insert the row into the table with correct information
+* Redirected to the Main Page
+
 .. code-block:: python
     :linenos:
 
@@ -358,6 +458,12 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Delete**
 
+* Correctly activited by **POST** method
+* Row data that was sent from Main Page to be deleted stored in variables
+* Connected to database by context manager
+* A query executed to delete the row from the table
+* Redirected to the Main Page
+
 .. code-block:: python
     :linenos:
 
@@ -371,6 +477,14 @@ Parts Implemented by Mehmet Tankut Özen
           return redirect(url_for('culture_page'))
 
 **Update**
+
+* Correctly activited by **POST** method
+* Row data that was sent from Main Page to be updated stored in variables
+* Connected to database by context manager
+* Checked if data to update sent from the Details Page
+* If data sent from the Details Page a query executed to update the row of the table
+* Check then update operation done for every single column of the table
+* Redirected to the Details Page
 
 .. code-block:: python
     :linenos:
@@ -404,6 +518,10 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Delete All**
 
+* Connected to database by context manager
+* A query executed to delete all the rows from the table
+* Redirected to the Main Page
+
 .. code-block:: python
     :linenos:
 
@@ -417,6 +535,13 @@ Parts Implemented by Mehmet Tankut Özen
           return redirect(url_for('culture_page'))
 
 **Voting**
+
+* Correctly activited by **POST** method
+* Score data that was sent from Details Page to be updated stored in a variable
+* Connected to database by context manager
+* Check if a vote is actually sent
+* If the data is correctly received a query executed to update the **SCORE** column of the table and **VOTES** incremented by 1
+* Redirected to the Details Page
 
 .. code-block:: python
     :linenos:
@@ -437,7 +562,16 @@ Parts Implemented by Mehmet Tankut Özen
 2.1.3 Accommodation.py
 ++++++++++++++++++++++
 
+This file used for implementing all the routing and all the CRUD operations on **Accommodation** table
+
 **Main Page**
+
+* Connected to database by context manager
+* A query executed with the help of **LEFT OUTER JOIN** on **Location** table, **Cities** table and **Countries** table
+* The data kept in JSON format
+* The score data is formatted to meaningfully represent the score
+* User type number assigned
+* The data sent to responsible HTML file
 
 .. code-block:: python
     :linenos:
@@ -480,6 +614,14 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Details Page**
 
+* Routing requires an **int** (sent from Main Page) to be sent, which represents the **ID** of a row from the **Accommodation** table
+* Connected to database by context manager
+* A query executed to select the correct row from the table with the help of **LEFT OUTER JOIN** on **Location** table, **Cities** table and **Countries** table
+* Another query executed on **Location** table to select correct row from the the table which is defined by the foreign key provided from the previous query
+* The data kept in JSON format
+* User type number assigned
+* The data sent to responsible HTML file
+
 .. code-block:: python
     :linenos:
 
@@ -517,6 +659,13 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Insert**
 
+* Correctly activited by **POST** method
+* Data that was sent from Main Page to be inserted stored in variables
+* Connected to database by context manager
+* A query executed to check whether the provided activity exists in **Location** table (used by foreign key relationship)
+* A query executed to insert the row into the table with correct information
+* Redirected to the Main Page
+
 .. code-block:: python
     :linenos:
 
@@ -545,6 +694,12 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Delete**
 
+* Correctly activited by **POST** method
+* Row data that was sent from Main Page to be deleted stored in variables
+* Connected to database by context manager
+* A query executed to delete the row from the table
+* Redirected to the Main Page
+
 .. code-block:: python
     :linenos:
 
@@ -560,6 +715,14 @@ Parts Implemented by Mehmet Tankut Özen
           return redirect(url_for('accommodation_page'))
 
 **Update**
+
+* Correctly activited by **POST** method
+* Row data that was sent from Main Page to be updated stored in variables
+* Connected to database by context manager
+* Checked if data to update sent from the Details Page
+* If data sent from the Details Page a query executed to update the row of the table
+* Check then update operation done for every single column of the table
+* Redirected to the Details Page
 
 .. code-block:: python
     :linenos:
@@ -593,6 +756,10 @@ Parts Implemented by Mehmet Tankut Özen
 
 **Delete All**
 
+* Connected to database by context manager
+* A query executed to delete all the rows from the table
+* Redirected to the Main Page
+
 .. code-block:: python
     :linenos:
 
@@ -606,6 +773,13 @@ Parts Implemented by Mehmet Tankut Özen
           return redirect(url_for('accommodation_page'))
 
 **Voting**
+
+* Correctly activited by **POST** method
+* Score data that was sent from Details Page to be updated stored in a variable
+* Connected to database by context manager
+* Check if a vote is actually sent
+* If the data is correctly received a query executed to update the **SCORE** column of the table and **VOTES** incremented by 1
+* Redirected to the Details Page
 
 .. code-block:: python
     :linenos:
