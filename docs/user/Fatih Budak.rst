@@ -11,7 +11,7 @@ Parts Implemented by Fatih Budak
 
 **Register page is used to register new user**
 
-   .. figure:: images/fatih/register_login/register.png
+   .. figure:: images/fatih/register_login/register.PNG
       :scale: 50 %
       :alt: register page
       :align: center
@@ -21,7 +21,7 @@ Parts Implemented by Fatih Budak
 
 **Registered user use login page to sign in this web site**
 
-   .. figure:: images/fatih/register_login/login.png
+   .. figure:: images/fatih/register_login/login.PNG
       :scale: 50 %
       :alt: login page
       :align: center
@@ -36,12 +36,12 @@ Parts Implemented by Fatih Budak
 
 * If users click favourite activity, favourite location and favourite place of the user, they go to activiy, location, and place pages
 
-   .. figure:: images/fatih/user/main1.png
+   .. figure:: images/fatih/user/main1.PNG
       :scale: 50 %
       :alt: user main1 page
       :align: center
 
-   .. figure:: images/fatih/user/main2.png
+   .. figure:: images/fatih/user/main2.PNG
       :scale: 50 %
       :alt: user main2 page
       :align: center
@@ -56,7 +56,7 @@ Parts Implemented by Fatih Budak
 
 * Users can click on images of landmarks so as to reach their detailed information pages about landmarks
 
-   .. figure:: images/fatih/landmark/main.png
+   .. figure:: images/fatih/landmark/main.PNG
       :scale: 50 %
       :alt: landmark main page
       :align: center
@@ -66,7 +66,7 @@ Parts Implemented by Fatih Budak
 
 * In details page, information about landmark are revealed.
 
-   .. figure:: images/fatih/landmark/details.png
+   .. figure:: images/fatih/landmark/details.PNG
       :scale: 50 %
       :alt: landmark details page
       :align: center
@@ -76,7 +76,7 @@ Parts Implemented by Fatih Budak
 
 * In order to reveal voting section, the user must be login in as a registered user of the site.
 
-   .. figure:: images/fatih/landmark/vote.png
+   .. figure:: images/fatih/landmark/vote.PNG
       :scale: 50 %
       :alt: landmark voting page
       :align: center
@@ -91,7 +91,7 @@ Parts Implemented by Fatih Budak
 
 * Users can click on images of agencies so as to reach their detailed information pages about agencies
 
-   .. figure:: images/fatih/agency/main.png
+   .. figure:: images/fatih/agency/main.PNG
       :scale: 50 %
       :alt: agency main page
       :align: center
@@ -101,7 +101,7 @@ Parts Implemented by Fatih Budak
 
 * In details page, information about agency are revealed.
 
-   .. figure:: images/fatih/agency/details.png
+   .. figure:: images/fatih/agency/details.PNG
       :scale: 50 %
       :alt: agency main page
       :align: center
@@ -111,7 +111,7 @@ Parts Implemented by Fatih Budak
 
 * In order to reveal voting section, the user must be login in as a registered user of the site.
 
-   .. figure:: images/fatih/agency/vote.png
+   .. figure:: images/fatih/agency/vote.PNG
       :scale: 50 %
       :alt: agency main page
       :align: center
@@ -120,7 +120,7 @@ Parts Implemented by Fatih Budak
 -------------------
 * Users List page lists some registered user on web site as a sample.
 
-   .. figure:: images/fatih/users/main.png
+   .. figure:: images/fatih/users/main.PNG
       :scale: 50 %
       :alt: users main page
       :align: center
@@ -138,12 +138,12 @@ Parts Implemented by Fatih Budak
 * To delete wanted landmark should be selected by the radio button, then remove selected button should be clicked
 * To delete all rows of the table, the admin can click delete all button at the bottom of this page
 
-   .. figure:: images/fatih/admin/landmark1.png
+   .. figure:: images/fatih/admin/landmark1.PNG
       :scale: 50 %
       :alt: admin-landmark main1 page
       :align: center
 
-   .. figure:: images/fatih/admin/landmark2.png
+   .. figure:: images/fatih/admin/landmark2.PNG
       :scale: 50 %
       :alt: admin-landmark main2 page
       :align: center
@@ -156,12 +156,12 @@ Parts Implemented by Fatih Budak
 * To delete all rows of the table, the admin can click delete all button at the bottom of this page
 
 
-   .. figure:: images/fatih/admin/agency1.png
+   .. figure:: images/fatih/admin/agency1.PNG
       :scale: 50 %
       :alt: admin-agency main1 page
       :align: center
 
-   .. figure:: images/fatih/admin/agency2.png
+   .. figure:: images/fatih/admin/agency2.PNG
       :scale: 50 %
       :alt: admin-agency main2 page
       :align: center
